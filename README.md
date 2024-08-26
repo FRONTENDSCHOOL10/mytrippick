@@ -1,2 +1,2 @@
-# mytrippick
+# MyTripPick
 멋쟁이 사자처럼 프론트엔드 스쿨 9조 파이널 프로젝트 저장소
