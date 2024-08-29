@@ -1,0 +1,41 @@
+{
+  "type": "module",
+  "private": true,
+  "name": "my-vite-custom-template-react",
+  "version": "0.0.1",
+  "description": "나만의 인생 여행지를 올려 다른 사람들과 공유하고 가장 높은 순위를 가진 여행지 선정하는 앱",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint \"./src/**\" --report-unused-disable-directives --ignore-pattern .gitignore"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.8.0",
+    "@types/node": "22.0.0",
+    "@types/prop-types": "15.7.12",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react": "4.3.1",
+    "eslint": "9.x",
+    "eslint-plugin-react": "7.35.0",
+    "eslint-plugin-react-hooks": "4.6.2",
+    "eslint-plugin-react-refresh": "0.4.9",
+    "globals": "15.8.0",
+    "prop-types": "15.8.1",
+    "vite": "5.3.5"
+  },
+  "dependencies": {
+    "axios": "1.7.5",
+    "clsx": "2.1.1",
+    "framer-motion": "11.3.30",
+    "immer": "10.1.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-helmet-async": "2.0.5",
+    "react-router-dom": "6.26.1",
+    "swiper": "11.1.11",
+    "use-immer": "0.10.0",
+    "zustand": "4.5.5"
+  }
+}
