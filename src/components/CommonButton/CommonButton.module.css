@@ -1,0 +1,29 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  position: absolute;
+  height: 44px;
+  margin: 0 12px;
+  padding: 0 16px;
+  background-color: transparent;
+  font-size: 20px;
+  line-height: 150%;
+  border-radius: 100px;
+}
+
+.default {
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.submit {
+  background-color: #fff;
+  color: #000;
+}
+
+.disabled {
+  border: 1px solid #ddd;
+  background-color: #ddd;
+}
