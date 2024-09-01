@@ -1,0 +1,45 @@
+:root {
+  /* ------------ color ----------- */
+  --white: #fff;
+  --black: #000;
+  --contrast: #8eff00;
+
+  --dimmed-thumb: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 30%
+  );
+  --dimmed: rgba(0, 0, 0, 0.7);
+
+  /* ------------ rounded ----------- */
+  --rounded-none: 0;
+  --rounded-md: 10px;
+  --rounded-lg: 20px;
+  --rounded-full: 9999px;
+
+  /* ------------- space ------------ */
+  --space-none: 0;
+  --space-half: 2px;
+  --space-1: 4px;
+  --space-1-half: 6px;
+  --space-2: 8px;
+  --space-2-half: 10px;
+  --space-3: 12px;
+  --space-3-half: 14px;
+  --space-4: 16px;
+  --space-4-half: 18px;
+  --space-5: 20px;
+  --space-5-half: 22px;
+  --space-6: 24px;
+  --space-6-half: 26px;
+  --space-7: 28px;
+  --space-7-half: 30px;
+  --space-8: 32px;
+  --space-8-half: 34px;
+  --space-9: 36px;
+  --space-9-half: 38px;
+  --space-10: 40px;
+  --space-10-half: 42px;
+
+  --ease-out-expo: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
