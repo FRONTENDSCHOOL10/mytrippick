@@ -43,27 +43,28 @@ function AppInput({
   };
 
   return (
-    <>
+    <div className={S.AppInput}>
       <label htmlFor={id} hidden={labelHidden}>
         {label}
       </label>
-      <input
-        type={types}
-        id={id}
-        className={S.component}
-        name={name}
-        placeholder={placeholder}
-        defaultValue={defaultValue}
-        onChange={onChange}
-      />
-      <button hidden={buttonAlive} onClick={handleToggle}>
-        {isVisible ? (
-          <img src="/icons/non-visible.svg" alt="안보이기" />
-        ) : (
-          <img src="/icons/visible.svg" />
-        )}
-      </button>
-    </>
+      <div className={S.inputWrapper}>
+        <input
+          type={types}
+          id={id}
+          name={name}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+          onChange={onChange}
+        />
+        <button hidden={buttonAlive} onClick={handleToggle}>
+          {isVisible ? (
+            <img src="/icons/non-visible.svg" alt="안보이기" />
+          ) : (
+            <img src="/icons/visible.svg" />
+          )}
+        </button>
+      </div>
+    </div>
   );
 }
 
