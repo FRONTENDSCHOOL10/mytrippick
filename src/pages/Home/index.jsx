@@ -1,4 +1,8 @@
 function Home() {
-  return <h1>메인페이지</h1>;
+  return (
+    <main>
+      <h1>메인페이지</h1>
+    </main>
+  );
 }
 export default Home;
