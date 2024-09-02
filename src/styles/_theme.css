@@ -1,1 +1,9 @@
-/* 테마 작성 */
+:root {
+  --foreground: var(--white);
+  --background: var(--black);
+}
+
+body {
+  background: var(--background, #000);
+  color: var(--foreground, #fff);
+}
