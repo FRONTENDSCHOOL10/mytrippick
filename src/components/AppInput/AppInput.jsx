@@ -1,5 +1,7 @@
 import { useState, useId } from 'react';
 import { string, bool, func } from 'prop-types';
+import NonVisible from '@/assets/svg/non-visible.svg?react';
+import Visible from '@/assets/svg/visible.svg?react';
 import S from './AppInput.module.css';
 
 AppInput.propTypes = {
@@ -58,9 +60,9 @@ function AppInput({
         />
         <button hidden={buttonAlive} onClick={handleToggle}>
           {isVisible ? (
-            <img src="/icons/non-visible.svg" alt="안보이기" />
+            <NonVisible className={S.eyes} />
           ) : (
-            <img src="/icons/visible.svg" />
+            <Visible className={S.eyes} />
           )}
         </button>
       </div>
