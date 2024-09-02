@@ -8,8 +8,8 @@ const Header = () => {
   return (
     <header className={S.header}>
       <h1>
-        <NavLink to="/" role="presentation" aria-hidden="true">
-          <Logo className={S.logo} />
+        <NavLink to="/" className={S.logo} title="마이트립픽 홈">
+          <Logo aria-hidden="true" />
         </NavLink>
       </h1>
       <HamburgerBtn />
