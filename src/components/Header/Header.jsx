@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className={S.header}>
       <h1>
-        <NavLink to="/" className={S.logo} title="마이트립픽 홈">
+        <NavLink to="/" className={S.logo} aria-label="마이트립픽 홈">
           <Logo aria-hidden="true" />
         </NavLink>
       </h1>
