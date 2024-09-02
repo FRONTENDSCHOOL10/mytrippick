@@ -1,14 +1,18 @@
 import { useState } from 'react';
+import Liked from '@/assets/svg/liked.svg?react';
+import Unliked from '@/assets/svg/unliked.svg?react';
+import Bookmarked from '@/assets/svg/bookmarked.svg?react';
+import Unbookmarked from '@/assets/svg/unbookmarked.svg?react';
 import { oneOf, bool, func } from 'prop-types';
-import S from './ToggleButton.module.css';
+import S from './ToggleBtn.module.css';
 
-ToggleButton.propTypes = {
+ToggleBtn.propTypes = {
   type: oneOf(['like', 'bookmark']).isRequired,
   checked: bool,
   onToggle: func,
 };
 
-function ToggleButton({ type, checked = false, onToggle }) {
+function ToggleBtn({ type, checked = false, onToggle }) {
   const [isChecked, setIsChecked] = useState(checked);
 
   const handleClick = () => {
@@ -19,37 +23,36 @@ function ToggleButton({ type, checked = false, onToggle }) {
     }
   };
 
-  let altText;
+  let ariaLabel;
   if (isChecked) {
     if (type === 'like') {
-      altText = '좋아요';
+      ariaLabel = '좋아요 해제';
     } else {
-      altText = '북마크 추가';
+      ariaLabel = '북마크 삭제';
     }
   } else {
     if (type === 'like') {
-      altText = '좋아요 해제';
+      ariaLabel = '좋아요';
     } else {
-      altText = '북마크 삭제';
+      ariaLabel = '북마크 추가';
     }
   }
 
   return (
-    <button className={S.button} onClick={handleClick}>
-      <img
-        src={
-          isChecked
-            ? type === 'like'
-              ? '/public/liked.svg'
-              : '/public/bookmarked.svg'
-            : type === 'like'
-            ? '/public/unliked.svg'
-            : '/public/unbookmarked.svg'
-        }
-        alt={altText}
-      />
+    <button className={S.button} onClick={handleClick} aria-label={ariaLabel}>
+      {isChecked ? (
+        type === 'like' ? (
+          <Liked className={S.likeIcon} />
+        ) : (
+          <Bookmarked className={S.bookmarkIcon} />
+        )
+      ) : type === 'like' ? (
+        <Unliked className={S.likeIcon} />
+      ) : (
+        <Unbookmarked className={S.bookmarkIcon} />
+      )}
     </button>
   );
 }
 
-export default ToggleButton;
+export default ToggleBtn;
