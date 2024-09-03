@@ -9,7 +9,7 @@ CommonBtn.propTypes = {
   small: bool,
   fill: bool,
   children: node.isRequired,
-  handleClick: func,
+  onClick: func,
 };
 
 function CommonBtn({
@@ -19,7 +19,7 @@ function CommonBtn({
   small = false,
   fill = false,
   children,
-  handleClick,
+  onClick,
 }) {
   let type = 'button';
   if (submit) type = 'submit';
@@ -36,7 +36,7 @@ function CommonBtn({
     <button
       type={type}
       disabled={disabled}
-      onClick={handleClick}
+      onClick={onClick}
       className={btnClass}
     >
       {children}
