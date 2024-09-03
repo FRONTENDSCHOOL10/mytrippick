@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import Liked from '@/assets/svg/liked.svg?react';
-import Unliked from '@/assets/svg/unliked.svg?react';
 import Bookmarked from '@/assets/svg/bookmarked.svg?react';
+import Liked from '@/assets/svg/liked.svg?react';
 import Unbookmarked from '@/assets/svg/unbookmarked.svg?react';
-import { oneOf, bool, func } from 'prop-types';
+import Unliked from '@/assets/svg/unliked.svg?react';
+import { bool, func, oneOf } from 'prop-types';
+import { useState } from 'react';
 import S from './ToggleBtn.module.css';
 
 ToggleBtn.propTypes = {
