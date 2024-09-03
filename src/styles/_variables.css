@@ -41,5 +41,9 @@
   --space-10: 40px;
   --space-10-half: 42px;
 
-  --ease-out-expo: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  --container-m-sm: var(--space-3);
+  --container-m-md: var(--space-4);
+
+  /* ------------- easing ------------ */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
 }
