@@ -1,0 +1,22 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.likeIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.bookmarkIcon {
+  width: 24px;
+  height: 24px;
+}
