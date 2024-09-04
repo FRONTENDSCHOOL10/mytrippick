@@ -4,13 +4,13 @@ import { Outlet } from 'react-router-dom';
 
 function RootLayout() {
   return (
-    <>
+    <div className="wrapper">
       <Header />
-      <main>
+      <main className="content">
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

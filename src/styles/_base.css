@@ -1,7 +1,7 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 html{overflow-x:hidden;-webkit-text-size-adjust:100%;}
-:root{--base-font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;}
-body{font-family: var(--base-font-family);overflow-x:inherit;margin:0;box-sizing: border-box;-webkit-font-smoothing:antialiased}
+:root{--base-font-family:"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;}
+body{font-family:var(--base-font-family);overflow-x:inherit;margin:0;box-sizing: border-box;-webkit-font-smoothing:antialiased;background:var(--background,#000);color:var(--foreground,#fff);width:100%;height:100%;max-height: 844px}
 *,*::before,*::after{box-sizing:inherit}
 ul, ol{list-style:none;padding:0;margin:0;}
 nav ol,nav ul{margin-block:0;padding-inline-start:0;list-style-type:none}
@@ -23,9 +23,8 @@ button,input,select,textarea{margin:0;font-family:inherit;font-size:1rem;line-he
 [type=search]::-webkit-search-decoration{-webkit-appearance:none}
 ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
 button,input{overflow:visible}
-button,input{text-transform:none}
 button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {border-style:none;padding:0;}
-[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;cursor:pointer}
+[type=button],[type=reset],[type=submit]
 [type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}
 fieldset{padding:0;border: 0;margin: 0;}
 legend{box-sizing:inherit;display:table;color:inherit;max-width:100%;padding:0;white-space:normal}
@@ -36,5 +35,5 @@ summary{display:list-item}
 :disabled{cursor:not-allowed}
 :focus{outline:0}
 :focus-visible{outline:2.5px solid var(--focus,#0869dfc0);outline-offset:.5px;border-radius:2px}
-button{border:none;outline:none;background-color:inherit;cursor:pointer;}
+button{border:none;outline:none;background-color:inherit;cursor:pointer;-webkit-appearance:button;}
 a{color: inherit;}
