@@ -2,36 +2,31 @@ import Bookmarked from '@/assets/svg/bookmarked.svg?react';
 import Liked from '@/assets/svg/liked.svg?react';
 import Unbookmarked from '@/assets/svg/unbookmarked.svg?react';
 import Unliked from '@/assets/svg/unliked.svg?react';
-import { bool, func, oneOf } from 'prop-types';
-import { useState } from 'react';
+import useGlobalStore from '@/stores/useGlobalStore';
+import { bool } from 'prop-types';
 import S from './ToggleBtn.module.css';
 
 ToggleBtn.propTypes = {
-  type: oneOf(['like', 'bookmark']).isRequired,
-  checked: bool,
-  onToggle: func,
+  Bookmark: bool,
 };
 
-function ToggleBtn({ type, checked = false, onToggle }) {
-  const [isChecked, setIsChecked] = useState(checked);
+function ToggleBtn({ Bookmark = false }) {
+  const isToggled = useGlobalStore((state) => state.isToggled);
+  const setIsToggled = useGlobalStore((state) => state.setIsToggled);
 
   const handleClick = () => {
-    const newChecked = !isChecked;
-    setIsChecked(newChecked);
-    if (onToggle) {
-      onToggle(newChecked);
-    }
+    setIsToggled(!isToggled);
   };
 
   let ariaLabel;
-  if (isChecked) {
-    if (type === 'like') {
+  if (isToggled) {
+    if (Bookmark === false) {
       ariaLabel = '좋아요 해제';
     } else {
       ariaLabel = '북마크 삭제';
     }
   } else {
-    if (type === 'like') {
+    if (Bookmark === false) {
       ariaLabel = '좋아요';
     } else {
       ariaLabel = '북마크 추가';
@@ -40,16 +35,16 @@ function ToggleBtn({ type, checked = false, onToggle }) {
 
   return (
     <button className={S.button} onClick={handleClick} aria-label={ariaLabel}>
-      {isChecked ? (
-        type === 'like' ? (
-          <Liked className={S.likeIcon} />
+      {isToggled ? (
+        Bookmark === false ? (
+          <Liked />
         ) : (
-          <Bookmarked className={S.bookmarkIcon} />
+          <Bookmarked />
         )
-      ) : type === 'like' ? (
-        <Unliked className={S.likeIcon} />
+      ) : Bookmark === false ? (
+        <Unliked />
       ) : (
-        <Unbookmarked className={S.bookmarkIcon} />
+        <Unbookmarked />
       )}
     </button>
   );
