@@ -3,6 +3,9 @@
   --white: #fff;
   --black: #000;
   --contrast: #8eff00;
+  --gray-500: rgba(32, 32, 32, 1);
+  --text-text-100: rgba(102, 102, 102, 1);
+  --text-text-200: #888;
 
   --dimmed-thumb: linear-gradient(
     180deg,
