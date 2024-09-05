@@ -6,6 +6,9 @@ const useGlobalStore = create((set) => ({
 
   isFocusTrapped: false,
   setIsFocusTrapped: (isFocusTrapped) => set({ isFocusTrapped }),
+
+  isToggled: false,
+  setIsToggled: (isToggled) => set({ isToggled }),
 }));
 
 export default useGlobalStore;

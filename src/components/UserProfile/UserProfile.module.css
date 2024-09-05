@@ -1,0 +1,22 @@
+.user {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  justify-content: start;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--rounded-full);
+  }
+
+  p {
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 140%;
+    color: var(--white);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
