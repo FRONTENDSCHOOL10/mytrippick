@@ -1,4 +1,33 @@
 @import './_utils.css';
-@import './_theme.css';
 @import './_base.css';
 @import './_variables.css';
+@import './_typography.css';
+
+:root {
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  font-size: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #222;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wrapper {
+  min-height: 844px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
