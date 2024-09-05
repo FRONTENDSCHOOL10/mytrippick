@@ -1,0 +1,3 @@
+.backBtn svg path {
+  stroke: var(--brand);
+}
