@@ -35,6 +35,6 @@
 }
 
 .copyright {
-  font-size: 15px;
-  color: #888;
+  font-size: 13px;
+  color: var(--text-200);
 }

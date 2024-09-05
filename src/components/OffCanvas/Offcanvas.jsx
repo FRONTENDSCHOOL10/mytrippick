@@ -34,10 +34,10 @@ const Offcanvas = () => {
       onKeyDown={handleKeyDown}
     >
       <ul>
-        <li tabIndex="0">Menu Item 1</li>
-        <li tabIndex="0">Menu Item 2</li>
-        <li tabIndex="0">Menu Item 3</li>
-        <li tabIndex="0">Menu Item 4</li>
+        <li>Menu Item 1</li>
+        <li>Menu Item 2</li>
+        <li>Menu Item 3</li>
+        <li>Menu Item 4</li>
       </ul>
     </div>
   );
