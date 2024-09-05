@@ -37,6 +37,8 @@ const useGlobalStore = create((set) => ({
       nickname: '',
     });
   },
+  isToggled: false,
+  setIsToggled: (isToggled) => set({ isToggled }),
 }));
 
 export default useGlobalStore;

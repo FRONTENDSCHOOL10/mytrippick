@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import S from './Offcanvas.module.css';
 import Menu from '../Menu/Menu';
 
-export default function Offcanvas() {
+const Offcanvas = () => {
   const isMenuOpen = useGlobalStore((state) => state.isMenuOpen);
   const setIsFocusTrapped = useGlobalStore((state) => state.setIsFocusTrapped);
   const menuRef = useRef();
@@ -11,9 +11,9 @@ export default function Offcanvas() {
   useEffect(() => {
     if (isMenuOpen) {
       menuRef.current.focus();
-      setIsFocusTrapped(true); // 메뉴가 열리면 포커스 트랩 활성화
+      setIsFocusTrapped(true);
     } else {
-      setIsFocusTrapped(false); // 메뉴가 닫히면 포커스 트랩 비활성화
+      setIsFocusTrapped(false);
     }
   }, [isMenuOpen, setIsFocusTrapped]);
 
@@ -37,4 +37,6 @@ export default function Offcanvas() {
       <Menu />
     </div>
   );
-}
+};
+
+export default Offcanvas;
