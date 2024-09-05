@@ -1,6 +1,6 @@
-import { NavLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import useGlobalStore from '@/stores/useGlobalStore';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import S from './Menu.module.css';
 
 function Menu() {
@@ -36,7 +36,7 @@ function Menu() {
             />
             <section className={S.profileDetails}>
               <p title="사용자 닉네임">{nickname}</p>
-              <nav>
+              <nav className={S.profileLinks}>
                 <NavLink
                   aria-label="마이페이지로 이동"
                   title="마이페이지로 이동"
@@ -45,6 +45,7 @@ function Menu() {
                 >
                   마이페이지
                 </NavLink>
+                <span role="none" className={S.divider}></span>
                 <button
                   aria-label="로그아웃 버튼"
                   title="로그아웃"
@@ -66,11 +67,15 @@ function Menu() {
             >
               로그인
             </NavLink>
+            <span
+              role="none"
+              className={`${S.divider} ${S.beforeLoginDivider}`}
+            ></span>
             <NavLink
               aria-label="회원가입 페이지"
               title="회원가입 페이지로 이동"
               to="/register"
-              className={S.authLink}
+              className={`${S.authJoin} ${S.authLink}`}
               onClick={() => useGlobalStore.setState({ isMenuOpen: false })}
             >
               회원가입
