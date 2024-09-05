@@ -18,23 +18,28 @@ function ToggleBtn({ Bookmark = false }) {
     setIsToggled(!isToggled);
   };
 
-  let ariaLabel;
+  let labelText;
   if (isToggled) {
     if (Bookmark === false) {
-      ariaLabel = '좋아요 해제';
+      labelText = '좋아요 해제';
     } else {
-      ariaLabel = '북마크 삭제';
+      labelText = '북마크 삭제';
     }
   } else {
     if (Bookmark === false) {
-      ariaLabel = '좋아요';
+      labelText = '좋아요';
     } else {
-      ariaLabel = '북마크 추가';
+      labelText = '북마크 추가';
     }
   }
 
   return (
-    <button className={S.button} onClick={handleClick} aria-label={ariaLabel}>
+    <button
+      className={S.button}
+      onClick={handleClick}
+      aria-label={labelText}
+      title={labelText}
+    >
       {isToggled ? (
         Bookmark === false ? (
           <Liked />

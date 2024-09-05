@@ -3,69 +3,68 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-family: 'Pretendard Variable';
+  font-family: var(--base-font-family);
   font-weight: 500;
   line-height: 100%;
-  color: var(--white);
+  color: var(--white, #fff);
 }
 
 .smBtn {
   margin: 0 auto;
-  padding: 8px 12px;
-  border: 1px solid #6e6e6e; /* line-300 */
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border: 1px solid var(--line-300, #6e6e6e);
   font-size: 14px;
-  border-radius: 8px;
+  border-radius: var(--rounded-xs, 8px);
 
   &:hover {
-    border: 1px solid #bababa; /* line-200 */
-    background-color: #202020; /* gray-500 */
+    border: 1px solid var(--line-200, #8a8a8a);
+    background-color: var(--gray-500, #202020);
   }
 }
 
 .lgBtn {
-  margin: 0 16px;
-  padding: 0 16px;
+  padding: 0 var(--space-4, 16px);
   height: 44px;
   font-size: 17px;
-  border-radius: 12px;
+  border-radius: var(--rounded-md, 12px);
 }
 
 .outline {
-  border: 1px solid #6e6e6e; /* line-300 */
+  border: 1px solid var(--line-300, #6e6e6e);
 
   &:hover {
-    border: 1px solid #bababa; /* line-200 */
-    background-color: #202020; /* gray-500 */
+    border: 1px solid var(--line-200, #8a8a8a);
+    background-color: var(--gray-500, #202020);
   }
 
-  &[disabled] {
-    border: 1px solid #3d3d3d; /* line-400 */
-    color: #666; /* text-400 */
+  &:disabled {
+    border: 1px solid var(--line-400, #3d3d3d);
+    color: var(--text-400, #666666);
 
     &:hover {
-      border: 1px solid #3d3d3d; /* line-400 */
+      border: 1px solid var(--line-400, #3d3d3d);
       background-color: transparent;
     }
   }
 }
 
 .fill {
-  border: 1px solid #8eff00; /* brand */
-  background-color: #8eff00; /* brand */
-  color: var(--black);
+  border: 1px solid var(--brand, #8eff00);
+  background-color: var(--brand, #8eff00);
+  color: var(--black, #050505);
 
   &:hover {
-    border: 1px solid #68ba00; /* brand-hover */
-    background-color: #68ba00; /* brand-hover */
+    border: 1px solid var(--brand-hover, #68ba00);
+    background-color: var(--brand-hover, #68ba00);
   }
 
-  &[disabled] {
-    border: 1px solid #3e7000; /* brand-disabled */
-    background-color: #3e7000; /* brand-disabled */
+  &:disabled {
+    border: 1px solid var(--brand-disabled, #3e7000);
+    background-color: var(--brand-disabled, #3e7000);
 
     &:hover {
-      border: 1px solid #3e7000; /* brand-disabled */
-      background-color: #3e7000; /* brand-disabled */
+      border: 1px solid var(--brand-disabled, #3e7000);
+      background-color: var(--brand-disabled, #3e7000);
     }
   }
 }
