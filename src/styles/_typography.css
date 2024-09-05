@@ -58,6 +58,13 @@
 
 .body2 {
   font-family: var(--base-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.body3 {
+  font-family: var(--base-font-family);
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
