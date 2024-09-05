@@ -1,7 +1,7 @@
 import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useRef } from 'react';
-import S from './Offcanvas.module.css';
 import Menu from '../Menu/Menu';
+import S from './Offcanvas.module.css';
 
 const Offcanvas = () => {
   const isMenuOpen = useGlobalStore((state) => state.isMenuOpen);
