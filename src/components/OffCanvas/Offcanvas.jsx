@@ -1,6 +1,7 @@
 import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useRef } from 'react';
 import S from './Offcanvas.module.css';
+import Menu from '../Menu/Menu';
 
 export default function Offcanvas() {
   const isMenuOpen = useGlobalStore((state) => state.isMenuOpen);
@@ -33,12 +34,7 @@ export default function Offcanvas() {
       tabIndex={-1}
       onKeyDown={handleKeyDown}
     >
-      <ul>
-        <li tabIndex="0">Menu Item 1</li>
-        <li tabIndex="0">Menu Item 2</li>
-        <li tabIndex="0">Menu Item 3</li>
-        <li tabIndex="0">Menu Item 4</li>
-      </ul>
+      <Menu />
     </div>
   );
 }
