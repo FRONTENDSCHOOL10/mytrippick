@@ -1,8 +1,9 @@
-import { createBrowserRouter } from 'react-router-dom';
-import { configRoutes, getNavigationItems } from '@/utils';
 import RootLayout from '@/layouts/RootLayout';
+import { configRoutes, getNavigationItems } from '@/utils';
+import { createBrowserRouter } from 'react-router-dom';
 
 import HomePage from '@/pages/Home';
+import PostDetailPage from '@/pages/PostDetail';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 
@@ -23,6 +24,11 @@ const navigation = [
     text: '회원가입',
     path: '/register',
     element: <RegisterPage />,
+  },
+  {
+    text: '게시글 상세',
+    path: '/post/:id',
+    element: <PostDetailPage />,
   },
 ];
 

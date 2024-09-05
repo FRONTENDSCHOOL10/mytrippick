@@ -1,5 +1,4 @@
-import BackBtn from "@/components/BackBtn/BackBtn";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet-async';
 
 function Home() {
   return (
@@ -20,7 +19,6 @@ function Home() {
       </Helmet>
       <section>
         <h1>메인페이지</h1>
-        <BackBtn />
       </section>
     </>
   );
