@@ -1,5 +1,6 @@
 import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useRef } from 'react';
+import Menu from '../Menu/Menu';
 import S from './Offcanvas.module.css';
 
 const Offcanvas = () => {
@@ -33,12 +34,7 @@ const Offcanvas = () => {
       tabIndex={-1}
       onKeyDown={handleKeyDown}
     >
-      <ul>
-        <li tabIndex="0">Menu Item 1</li>
-        <li tabIndex="0">Menu Item 2</li>
-        <li tabIndex="0">Menu Item 3</li>
-        <li tabIndex="0">Menu Item 4</li>
-      </ul>
+      <Menu />
     </div>
   );
 };
