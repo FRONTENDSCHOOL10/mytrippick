@@ -50,6 +50,7 @@
   /* -------------------------------------------- */
 
   --rounded-none: 0;
+  --rounded-xs: 8px;
   --rounded-sm: 10px;
   --rounded-md: 12px;
   --rounded-lg: 20px;
