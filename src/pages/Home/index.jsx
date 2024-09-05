@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import S from "./Home.module.css";
 
 function Home() {
   return (
@@ -18,7 +19,9 @@ function Home() {
         <meta property="og:site:author" content="리액트에서-구해조" />
       </Helmet>
       <section>
-        <h1>메인페이지</h1>
+        <h1 className={`headline4 ${S.sectionTitle}`}>
+          인기 여행지 랭킹 TOP 3
+        </h1>
       </section>
     </>
   );
