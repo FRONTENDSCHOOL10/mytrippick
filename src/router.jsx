@@ -5,6 +5,7 @@ import RootLayout from '@/layouts/RootLayout';
 import HomePage from '@/pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
+import MapSearchPage from './pages/MapSearch';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -23,6 +24,11 @@ const navigation = [
     text: '회원가입',
     path: '/register',
     element: <RegisterPage />,
+  },
+  {
+    text: '내 주변 여행지 찾기',
+    path: '/map-search',
+    element: <MapSearchPage />,
   },
 ];
 
