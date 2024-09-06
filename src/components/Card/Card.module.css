@@ -210,4 +210,60 @@
       }
     }
   }
+
+  .listCard {
+    width: 181px;
+    position: relative;
+
+    .placePic {
+      width: 100%;
+      border-radius: var(--rounded-md);
+    }
+
+    .cardHeader {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px 8px 0 0;
+    }
+
+    .placeInfos {
+      display: flex;
+      flex-flow: column;
+      gap: 5px;
+      margin-top: 10px;
+
+      p {
+        color: var(--white);
+        font-family: 'Pretendard Variable';
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 140%;
+      }
+
+      .placePosition {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+
+        .marker {
+          width: 12px;
+          height: 12px;
+          path {
+            fill: var(--text-100);
+          }
+        }
+
+        span {
+          color: var(--text-100);
+          font-family: 'Pretendard Variable';
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 140%;
+        }
+      }
+    }
+  }
 }

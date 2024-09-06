@@ -3,8 +3,9 @@ import MarkerFill from '@/assets/svg/marker-fill.svg?react';
 import S from './Card.module.css';
 import ToggleBtn from '../ToggleBtn/ToggleBtn';
 
-function Card({ type = 'rank', fullSize = false }) {
+function Card({ type, fullSize = false }) {
   const rankStyled = type == 'rank' && fullSize ? S.rankCardFull : S.rankCard;
+
   const placeInfo =
     type === 'rank' ? (
       <article className={rankStyled}>
@@ -46,12 +47,12 @@ function Card({ type = 'rank', fullSize = false }) {
         <div className={S.cardHeader}>
           <ToggleBtn Bookmark />
         </div>
-        <p>아쿠아 플래넷</p>
         <div className={S.placeInfos}>
-          <span>
-            <MarkerFill />
-            서울, 도봉구
-          </span>
+          <p>아쿠아 플래넷</p>
+          <div className={S.placePosition}>
+            <MarkerFill className={S.marker} />
+            <span>서울, 도봉구</span>
+          </div>
         </div>
       </article>
     );
