@@ -1,14 +1,20 @@
 .offcanvas {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 100%;
   height: 100%;
-  background: var(--contrast);
+  min-height: 844px;
+  background: var(--brand);
   color: var(--black);
   transform: translateX(100%);
-  transition: transform 0.8s var(--ease-out-expo);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-out-expo), transform 0s;
+  z-index: 9999;
+  will-change: opacity, transform;
 }
 .open {
   transform: translateX(0);
-  transition: transform 0.8s var(--ease-out-expo);
+  opacity: 1;
+  transition: opacity 0.8s var(--ease-out-expo), transform 0s;
 }

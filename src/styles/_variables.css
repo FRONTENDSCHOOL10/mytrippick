@@ -1,12 +1,42 @@
 :root {
-  /* ------------ color ----------- */
-  --white: #fff;
-  --black: #000;
-  --contrast: #8eff00;
-  --gray-500: rgba(32, 32, 32, 1);
-  --text-text-100: rgba(102, 102, 102, 1);
-  --text-text-200: #888;
+  /* -------------------------------------------- */
+  /*                     color                    */
+  /* -------------------------------------------- */
 
+  /* common */
+  --black: #050505;
+  --white: #fff;
+  --like: #E81919;
+  --error: #FF4A4A;
+
+  /* base */
+  --foreground: var(--white);
+  --background: var(--black);
+
+  /* brand */
+  --brand: #8eff00;
+  --brand-disabled: #3E7000;
+  --brand-hover: #68BA00;
+
+  /* gray */
+  --gray-500: #202020;
+  --gray-600: #161616;
+
+  /* text */
+  --text-100: #AAAAAA;
+  --text-200: #888888;
+  --text-300: #6E6E6E;
+  --text-400: #666666;
+  --text-brand-100: #498500;
+  --text-brand-200: #3E7000;
+
+  /* line */
+  --line-200: #8A8A8A;
+  --line-300: #6E6E6E;
+  --line-400: #3D3D3D;
+  --line-500: #272727;
+
+  /* dimmed */
   --dimmed-thumb: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.8) 0%,
@@ -14,13 +44,23 @@
   );
   --dimmed: rgba(0, 0, 0, 0.7);
 
-  /* ------------ rounded ----------- */
+
+  /* -------------------------------------------- */
+  /*                    rounded                   */
+  /* -------------------------------------------- */
+
   --rounded-none: 0;
-  --rounded-md: 10px;
+  --rounded-xs: 8px;
+  --rounded-sm: 10px;
+  --rounded-md: 12px;
   --rounded-lg: 20px;
   --rounded-full: 9999px;
 
-  /* ------------- space ------------ */
+
+  /* -------------------------------------------- */
+  /*                     space                    */
+  /* -------------------------------------------- */
+
   --space-none: 0;
   --space-half: 2px;
   --space-1: 4px;
@@ -44,9 +84,14 @@
   --space-10: 40px;
   --space-10-half: 42px;
 
+  /* container-margin */
   --container-m-sm: var(--space-3);
   --container-m-md: var(--space-4);
 
-  /* ------------- easing ------------ */
+  /* -------------------------------------------- */
+  /*                    easing                    */
+  /* -------------------------------------------- */
+  
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
 }

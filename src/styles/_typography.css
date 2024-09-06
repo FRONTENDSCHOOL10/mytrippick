@@ -1,0 +1,107 @@
+.headline1 {
+  font-family: var(--base-font-family);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.headline2 {
+  font-family: var(--base-font-family);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.headline3 {
+  font-family: var(--base-font-family);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.headline4 {
+  font-family: var(--base-font-family);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.title1 {
+  font-family: var(--base-font-family);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.title2 {
+  font-family: var(--base-font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.title3 {
+  font-family: var(--base-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.body1 {
+  font-family: var(--base-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.body2 {
+  font-family: var(--base-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.body3 {
+  font-family: var(--base-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.lank {
+  font-family: var(--base-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.input {
+  font-family: var(--base-font-family);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.label {
+  font-family: var(--base-font-family);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.description {
+  font-family: var(--base-font-family);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.caption {
+  font-family: var(--base-font-family);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
