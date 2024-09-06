@@ -58,11 +58,14 @@ function AppInput({
           defaultValue={defaultValue}
           onChange={onChange}
         />
-        <button hidden={buttonAlive} onClick={handleToggle}>
+        <button type="button" hidden={buttonAlive} onClick={handleToggle}>
           {isVisible ? (
-            <NonVisible className={S.eyes} />
+            <NonVisible
+              className={S.eyes}
+              aria-label="비밀번호 다시 가리는 버튼"
+            />
           ) : (
-            <Visible className={S.eyes} />
+            <Visible className={S.eyes} aria-label="비밀번호 볼 수 있는 버튼" />
           )}
         </button>
       </div>
