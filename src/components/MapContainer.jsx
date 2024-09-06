@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useGeolocation from '@/hooks/useGeolocation';
+import AppInput2 from './AppInput/AppInput2';
 import AppInput from './AppInput/AppInput';
 
 const { kakao } = window;
@@ -73,7 +74,11 @@ const MapContainer = () => {
           zIndex: 1000,
         }}
       >
-        <AppInput type="text" name="keyword" placeholder="Search places" />
+        <AppInput2
+          type="text"
+          name="keyword"
+          placeholder="여행지를 검색해보세요"
+        />
         <button id="search-btn" style={{ marginLeft: '5px' }}>
           Search
         </button>
