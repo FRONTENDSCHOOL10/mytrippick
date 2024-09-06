@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import MarkerFill from '@/assets/svg/marker-fill.svg?react';
 import S from './Card.module.css';
 
-function ListCard({ type }) {
+function ListCard({ type = 'rank' }) {
   const placeInfo =
     type === 'rank' ? (
       <article>
@@ -10,15 +10,15 @@ function ListCard({ type }) {
           <p>
             <span>1.</span>아쿠아 플래넷
           </p>
-          <div>
-            <span>556</span>
-            <button>❤</button>
-          </div>
+          <span>
+            <MarkerFill />
+            서울, 도봉구
+          </span>
         </div>
-        <span>
-          <MarkerFill />
-          서울, 도봉구
-        </span>
+        <div>
+          <span>556</span>
+          <button>❤</button>
+        </div>
       </article>
     ) : (
       <article>

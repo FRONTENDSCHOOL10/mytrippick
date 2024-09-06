@@ -1,0 +1,5 @@
+.component {
+  img {
+    border-radius: var(--rounded-md);
+  }
+}
