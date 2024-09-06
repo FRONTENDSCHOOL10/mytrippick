@@ -1,5 +1,7 @@
+import MapContainer from '@/components/MapContainer';
+
 function MapSearchPage() {
-  return <h1>check</h1>;
+  return <MapContainer />;
 }
 
 export default MapSearchPage;
