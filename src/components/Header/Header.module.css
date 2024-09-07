@@ -1,12 +1,22 @@
 .header {
-  position: relative; /* fixed를 relative로 변경 */
+  position: fixed;
+  top: 0;
   width: 100%;
-  height: 70px;
+  height: var(--header-height);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 0 var(--container-m-sm) 0 var(--container-m-md);
+  background: var(--black);
+  z-index: 9999;
+  max-width: 500px;
+  transition: transform 0.8s var(--ease-out-expo);
+}
+
+.hide {
+  transform: translateY(-100%);
+  transition: transform 0.8s var(--ease-out-expo);
 }
 
 .logo {
