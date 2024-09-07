@@ -79,7 +79,6 @@
 
 .linkItem.disabled {
   color: var(--text-brand-100);
-  cursor: default;
 }
 
 .linkItem.disabled:after {
