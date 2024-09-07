@@ -4,8 +4,8 @@ const useGlobalStore = create((set) => ({
   isMenuOpen: false,
   setIsMenuOpen: (isMenuOpen) => set({ isMenuOpen }),
 
-  isFocusTrapped: false,
-  setIsFocusTrapped: (isFocusTrapped) => set({ isFocusTrapped }),
+  scrollDirection: null,
+  setScrollDirection: (direction) => set({ scrollDirection: direction }),
 
   isLoggedIn: false,
   profileImage: '',

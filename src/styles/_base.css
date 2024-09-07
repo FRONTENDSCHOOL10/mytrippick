@@ -12,14 +12,12 @@ html {
 body {
   font-family: var(--base-font-family);
   overflow-x: inherit;
-  margin: 0;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  background: var(--background, #000);
-  color: var(--foreground, #fff);
-  width: 100%;
-  height: 100%;
-  max-height: 844px;
+  width: 500px;
+  background: var(--black);
+  color: var(--white);
+  margin: 0 auto;
 }
 *,
 *::before,
