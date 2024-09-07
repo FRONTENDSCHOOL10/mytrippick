@@ -48,20 +48,46 @@
   list-style-type: none;
 }
 
-.linkItem {
-  display: block;
+.navLinks ul li {
   padding: var(--space-1-half) var(--space-4);
   margin-block-end: var(--space-2);
+}
+
+.linkItem {
+  display: inline-block;
+  position: relative;
   text-decoration: none;
   color: var(--black, #000);
 }
 
-.linkItem:hover {
-  color: #325a00;
+.linkItem:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  bottom: 0;
+  left: 0;
+  background-color: var(--black, #000);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.linkItem:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
-.disabled {
+.linkItem.disabled {
   color: var(--text-brand-100);
+  cursor: default;
+}
+
+.linkItem.disabled:after {
+  transform: none;
+  background-color: var(--brand);
+}
+.linkItem.disabled:hover:after {
+  transform: none;
 }
 
 .modalOverlay {
@@ -173,12 +199,19 @@
   color: var(--text-brand-200);
 }
 
+.profileDetails nav a:hover {
+  color: var(--black, #000);
+}
+
 .profileDetails button {
   font-size: 14px;
   line-height: 1;
   font-weight: 600;
   color: var(--text-brand-200);
   padding: var(--space-1-half) 0;
+  &:hover {
+    color: var(--black, #000);
+  }
 }
 
 nav a:not(:last-child) {
