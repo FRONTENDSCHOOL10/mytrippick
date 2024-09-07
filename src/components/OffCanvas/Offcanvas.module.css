@@ -5,6 +5,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: 9999;
+  pointer-events: none;
 }
 
 .inner {
@@ -16,6 +17,7 @@
   color: var(--black);
   transform: translateX(100%);
   transition: transform 0.8s var(--ease-out-expo);
+  pointer-events: none;
 }
 
 .inner header {
@@ -33,6 +35,7 @@
 [aria-modal='true'] {
   transform: translateX(0);
   transition: transform 0.8s var(--ease-out-expo);
+  pointer-events: auto;
 }
 
 [aria-modal='true'] header {
