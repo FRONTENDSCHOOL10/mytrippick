@@ -106,7 +106,7 @@
   }
 
   .rankCardFull {
-    width: 366px;
+    width: 100%;
     position: relative;
 
     .placePic {

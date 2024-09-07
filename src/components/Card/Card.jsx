@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
 import MarkerFill from '@/assets/svg/marker-fill.svg?react';
-import S from './Card.module.css';
+import { Link } from 'react-router-dom';
 import ToggleBtn from '../ToggleBtn/ToggleBtn';
+import S from './Card.module.css';
 
 function Card({ type, fullSize = false }) {
   const rankStyled = type == 'rank' && fullSize ? S.rankCardFull : S.rankCard;
@@ -19,7 +19,7 @@ function Card({ type, fullSize = false }) {
             <img src="/testUserPic(delete-later).png" alt="" />
             <p>사용자</p>
           </div>
-          <ToggleBtn Bookmark />
+          <ToggleBtn bookmark />
         </article>
         <article className={S.places}>
           <div className={S.placeInfos}>
@@ -45,7 +45,7 @@ function Card({ type, fullSize = false }) {
           alt=""
         />
         <div className={S.cardHeader}>
-          <ToggleBtn Bookmark />
+          <ToggleBtn bookmark />
         </div>
         <div className={S.placeInfos}>
           <p>아쿠아 플래넷</p>
