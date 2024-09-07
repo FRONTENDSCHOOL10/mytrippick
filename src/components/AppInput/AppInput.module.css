@@ -47,14 +47,13 @@
     }
 
     button {
+      display: flex;
       border: none;
       border-radius: 12px;
       background-color: var(--gray-500);
 
       .eyes {
-        path {
-          stroke: var(--text-text-100);
-        }
+        align-items: center;
       }
     }
   }
