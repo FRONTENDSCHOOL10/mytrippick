@@ -14,7 +14,7 @@ body {
   overflow-x: inherit;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  width: 500px;
+  max-width: 500px;
   background: var(--black);
   color: var(--white);
   margin: 0 auto;
