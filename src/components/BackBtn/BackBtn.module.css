@@ -1,0 +1,17 @@
+.backBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.arrow {
+  width: 36px;
+  height: 36px;
+}
+
+.backBtn svg path {
+  stroke: var(--brand);
+}
