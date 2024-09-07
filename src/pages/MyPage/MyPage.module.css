@@ -4,11 +4,12 @@
   gap: var(--space-6);
   margin: var(--space-10) var(--container-m-md) var(--space-7-half);
 
-  button {
+  a {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: var(--space-2);
+    flex-shrink: 0;
     width: 40px;
     height: 40px;
     border-radius: var(--rounded-full);
@@ -35,7 +36,6 @@
 
 .profileText {
   flex-wrap: wrap;
-  max-width: 226px;
 
   p {
     margin-top: 2px;
@@ -71,9 +71,12 @@
   flex-flow: row wrap;
   gap: 4px;
 
-  img {
+  a {
     width: calc((100% - 8px) / 3);
     aspect-ratio: 22/31;
+  }
+
+  img {
     border-radius: var(--rounded-xs);
   }
 }
