@@ -1,4 +1,7 @@
+import Card from '@/components/Card/Card';
 import { Helmet } from 'react-helmet-async';
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import S from './Home.module.css';
 
 function Home() {
@@ -18,10 +21,30 @@ function Home() {
         />
         <meta property="og:site:author" content="리액트에서-구해조" />
       </Helmet>
-      <section>
-        <h1 className={`headline4 ${S.sectionTitle}`}>
-          인기 여행지 랭킹 TOP 3
-        </h1>
+      <h1 className={`headline4 ${S.sectionTitle}`}>인기 여행지 랭킹 TOP 3</h1>
+      <Swiper
+        className={S.rankList}
+        slidesPerView="auto"
+        spaceBetween={30}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+      >
+        <SwiperSlide>
+          <Card type="rank" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Card type="rank" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Card type="rank" />
+        </SwiperSlide>
+      </Swiper>
+      <section className={S.postList}>
+        <Card />
       </section>
     </>
   );

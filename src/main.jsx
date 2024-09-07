@@ -1,7 +1,10 @@
+import App from '@/App.jsx';
 import '@/styles/main.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from '@/App.jsx';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const container = document.getElementById('react-app');
 
