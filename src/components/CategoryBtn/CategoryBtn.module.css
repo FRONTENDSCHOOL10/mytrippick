@@ -1,5 +1,27 @@
 .component {
-}
+  position: relative;
 
-input[type='radio'] {
+  input {
+    position: absolute;
+    appearance: none;
+    top: 10px;
+    left: 15px;
+  }
+
+  label {
+    display: inline-flex;
+    padding: 5px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    border: 1px solid var(--line-300);
+    background-color: var(--black);
+    color: var(--white);
+  }
+
+  input:checked + label {
+    background-color: var(--white);
+    color: var(--black);
+  }
 }
