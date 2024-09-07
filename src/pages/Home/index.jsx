@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet-async";
-import S from "./Home.module.css";
+import { Helmet } from 'react-helmet-async';
+import S from './Home.module.css';
 
 function Home() {
   return (

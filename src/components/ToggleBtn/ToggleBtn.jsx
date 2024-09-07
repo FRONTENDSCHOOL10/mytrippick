@@ -4,29 +4,34 @@ import Unbookmarked from '@/assets/svg/unbookmarked.svg?react';
 import Unliked from '@/assets/svg/unliked.svg?react';
 import useGlobalStore from '@/stores/useGlobalStore';
 import { bool } from 'prop-types';
+import { useId } from 'react';
 import S from './ToggleBtn.module.css';
 
 ToggleBtn.propTypes = {
-  Bookmark: bool,
+  bookmark: bool,
 };
 
-function ToggleBtn({ Bookmark = false }) {
-  const isToggled = useGlobalStore((state) => state.isToggled);
-  const setIsToggled = useGlobalStore((state) => state.setIsToggled);
+function ToggleBtn({ bookmark = false }) {
+  const ToggleBtnId = useId();
 
-  const handleClick = () => {
-    setIsToggled(!isToggled);
-  };
+  const { toggles, toggle } = useGlobalStore((state) => ({
+    toggles: state.toggles,
+    toggle: state.toggle,
+  }));
+
+  const isToggled = toggles[ToggleBtnId] || false;
+
+  const handleClick = () => toggle(ToggleBtnId);
 
   let labelText;
   if (isToggled) {
-    if (Bookmark === false) {
+    if (bookmark === false) {
       labelText = '좋아요 해제';
     } else {
       labelText = '북마크 삭제';
     }
   } else {
-    if (Bookmark === false) {
+    if (bookmark === false) {
       labelText = '좋아요';
     } else {
       labelText = '북마크 추가';
@@ -39,14 +44,15 @@ function ToggleBtn({ Bookmark = false }) {
       onClick={handleClick}
       aria-label={labelText}
       title={labelText}
+      id={ToggleBtnId}
     >
       {isToggled ? (
-        Bookmark === false ? (
+        bookmark === false ? (
           <Liked />
         ) : (
           <Bookmarked />
         )
-      ) : Bookmark === false ? (
+      ) : bookmark === false ? (
         <Unliked />
       ) : (
         <Unbookmarked />
