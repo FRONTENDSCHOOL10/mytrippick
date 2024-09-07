@@ -1,4 +1,5 @@
 import Logo from '@/assets/svg/logo.svg?react';
+import useGlobalStore from '@/stores/useGlobalStore';
 import { NavLink, useLocation } from 'react-router-dom';
 import BackBtn from '../BackBtn/BackBtn';
 import HamburgerBtn from '../HamburgerBtn/HamburgerBtn';
@@ -9,8 +10,12 @@ const Header = () => {
   const location = useLocation();
   const isDetailPage = location.pathname.includes('/post/');
 
+  const scrollDirection = useGlobalStore((state) => state.scrollDirection);
+
   return (
-    <header className={S.header}>
+    <header
+      className={`${S.header} ${scrollDirection === 'down' ? S.hide : ''} `}
+    >
       {isDetailPage ? (
         <BackBtn />
       ) : (

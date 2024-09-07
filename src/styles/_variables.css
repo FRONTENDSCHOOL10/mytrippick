@@ -6,8 +6,8 @@
   /* common */
   --black: #050505;
   --white: #fff;
-  --like: #E81919;
-  --error: #FF4A4A;
+  --like: #e81919;
+  --error: #ff4a4a;
 
   /* base */
   --foreground: var(--white);
@@ -15,25 +15,25 @@
 
   /* brand */
   --brand: #8eff00;
-  --brand-disabled: #3E7000;
-  --brand-hover: #68BA00;
+  --brand-disabled: #3e7000;
+  --brand-hover: #68ba00;
 
   /* gray */
   --gray-500: #202020;
   --gray-600: #161616;
 
   /* text */
-  --text-100: #AAAAAA;
+  --text-100: #aaaaaa;
   --text-200: #888888;
-  --text-300: #6E6E6E;
+  --text-300: #6e6e6e;
   --text-400: #666666;
   --text-brand-100: #498500;
-  --text-brand-200: #3E7000;
+  --text-brand-200: #3e7000;
 
   /* line */
-  --line-200: #8A8A8A;
-  --line-300: #6E6E6E;
-  --line-400: #3D3D3D;
+  --line-200: #8a8a8a;
+  --line-300: #6e6e6e;
+  --line-400: #3d3d3d;
   --line-500: #272727;
 
   /* dimmed */
@@ -43,7 +43,6 @@
     rgba(0, 0, 0, 0) 30%
   );
   --dimmed: rgba(0, 0, 0, 0.7);
-
 
   /* -------------------------------------------- */
   /*                    rounded                   */
@@ -55,7 +54,6 @@
   --rounded-md: 12px;
   --rounded-lg: 20px;
   --rounded-full: 9999px;
-
 
   /* -------------------------------------------- */
   /*                     space                    */
@@ -88,10 +86,13 @@
   --container-m-sm: var(--space-3);
   --container-m-md: var(--space-4);
 
+  /* header */
+  --header-height: 70px;
+
   /* -------------------------------------------- */
   /*                    easing                    */
   /* -------------------------------------------- */
-  
+
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
 }
