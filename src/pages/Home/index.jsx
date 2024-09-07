@@ -2,9 +2,11 @@ import Card from '@/components/Card/Card';
 import { Helmet } from 'react-helmet-async';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import data from '@/data/dummyData.json';
 import S from './Home.module.css';
 
 function Home() {
+  console.log(data);
   return (
     <>
       <Helmet>
@@ -25,23 +27,25 @@ function Home() {
       <Swiper
         className={S.rankList}
         slidesPerView="auto"
-        spaceBetween={30}
-        loop={true}
         pagination={{
           clickable: true,
         }}
         navigation={true}
         modules={[Pagination, Navigation]}
       >
-        <SwiperSlide>
-          <Card type="rank" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card type="rank" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card type="rank" />
-        </SwiperSlide>
+        {data.data?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <Card
+              type="rank"
+              thumbnailImg={item.thumbnailImg}
+              userImg={item.userImg}
+              userName={item.userName}
+              likedNum={item.likedNum}
+              title={item.title}
+              location={item.location}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
       <section className={S.postList}>
         <Card />

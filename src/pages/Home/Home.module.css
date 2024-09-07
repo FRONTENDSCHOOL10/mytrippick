@@ -7,13 +7,13 @@
   padding: 0 var(--container-m-sm);
 }
 
-.rankList :global(.swiper) {
+.rankList :global(.swiper-slide) {
   width: fit-content;
-  margin-block-end: var(--space-2, 8px);
+  margin-inline-end: var(--space-2, 8px);
 }
 
 .rankList :global(.swiper-slide):last-child {
-  margin-block-end: var(--space-2, 0);
+  margin-inline-end: var(--space-2, 0);
 }
 
 .postList {

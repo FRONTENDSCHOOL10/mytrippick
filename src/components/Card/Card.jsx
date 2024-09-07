@@ -2,37 +2,55 @@ import MarkerFill from '@/assets/svg/marker-fill.svg?react';
 import { Link } from 'react-router-dom';
 import ToggleBtn from '../ToggleBtn/ToggleBtn';
 import S from './Card.module.css';
+import { string, bool, number } from 'prop-types';
 
-function Card({ type, fullSize = false }) {
+Card.propTypes = {
+  type: string,
+  fullSize: bool,
+  thumbnailImg: string,
+  likedNum: number,
+  title: string,
+  location: string,
+  userImg: string,
+  userName: string,
+};
+
+function Card({
+  type,
+  fullSize = false,
+  thumbnailImg,
+  likedNum,
+  title,
+  location,
+  userImg,
+  userName,
+}) {
   const rankStyled = type == 'rank' && fullSize ? S.rankCardFull : S.rankCard;
 
   const placeInfo =
     type === 'rank' ? (
       <article className={rankStyled}>
-        <img
-          className={S.placePic}
-          src="/testingPic(delete-later).png"
-          alt=""
-        />
+        <img className={S.placePic} src={thumbnailImg} alt="" />
         <article className={S.cardHeader}>
           <div className={S.userInfos}>
-            <img src="/testUserPic(delete-later).png" alt="" />
-            <p>사용자</p>
+            <img src={userImg} alt="" />
+            <p>{userName}</p>
           </div>
           <ToggleBtn bookmark />
         </article>
         <article className={S.places}>
           <div className={S.placeInfos}>
             <p>
-              <span>1. </span>아쿠아 플래넷
+              <span>1. </span>
+              {title}
             </p>
             <div className={S.placePosition}>
               <MarkerFill className={S.marker} />
-              <span>서울, 도봉구</span>
+              <span>{location}</span>
             </div>
           </div>
           <div className={S.heartWrapper}>
-            <span>556</span>
+            <span>{likedNum}</span>
             <ToggleBtn />
           </div>
         </article>
