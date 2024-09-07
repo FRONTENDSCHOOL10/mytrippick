@@ -44,6 +44,8 @@ function AppInput({
     }
   };
 
+  const buttonText = isVisible ? '비밀번호 감추기' : '비밀번호 보기';
+
   return (
     <div className={S.AppInput}>
       <label htmlFor={id} hidden={labelHidden}>
@@ -58,11 +60,17 @@ function AppInput({
           defaultValue={defaultValue}
           onChange={onChange}
         />
-        <button type="button" hidden={buttonAlive} onClick={handleToggle}>
+        <button
+          type="button"
+          title={buttonText}
+          hidden={buttonAlive}
+          onClick={handleToggle}
+        >
           {isVisible ? (
             <NonVisible
               className={S.eyes}
               aria-label="비밀번호 다시 가리는 버튼"
+              title="비밀번호 가리기"
             />
           ) : (
             <Visible className={S.eyes} aria-label="비밀번호 볼 수 있는 버튼" />
