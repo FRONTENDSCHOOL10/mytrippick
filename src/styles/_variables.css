@@ -86,8 +86,9 @@
   --container-m-sm: var(--space-3);
   --container-m-md: var(--space-4);
 
-  /* header */
+  /* common-height */
   --header-height: 70px;
+  --footer-height: 180px;
 
   /* -------------------------------------------- */
   /*                    easing                    */
