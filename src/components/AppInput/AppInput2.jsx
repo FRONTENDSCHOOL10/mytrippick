@@ -3,7 +3,7 @@ import { string, bool, func } from 'prop-types';
 import NonVisible from '@/assets/svg/non-visible.svg?react';
 import Visible from '@/assets/svg/visible.svg?react';
 import SearchIcon from '@/assets/svg/search.svg?react';
-import S from './AppInput.module.css';
+import S from './AppInput2.module.css';
 
 AppInput2.propTypes = {
   label: string.isRequired,
