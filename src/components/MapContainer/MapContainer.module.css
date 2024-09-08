@@ -1,0 +1,22 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .searchBox {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+  }
+  
+  .searchButton {
+    margin-left: 5px;
+  }
+  
+  .map {
+    width: 100%;
+    height: 100%;
+  }
+  

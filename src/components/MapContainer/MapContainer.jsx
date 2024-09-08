@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import useGeolocation from '@/hooks/useGeolocation';
-import AppInput2 from './AppInput/AppInput2';
+import AppInput2 from '../AppInput/AppInput2';
+import S from './MapContainer.module.css';
+
 
 const { kakao } = window;
 
@@ -64,27 +66,22 @@ const MapContainer = () => {
   }, [location]);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '500px' }}>
-      <div
-        style={{
-          position: 'absolute',
-          top: '10px',
-          left: '10px',
-          zIndex: 1000,
-        }}
-      >
+    <div className={S.container}>
+      <div className={S.searchBox}>
         <AppInput2
+          label='주소 검색창'
           type="text"
-          name="keyword"
+          name="??"
           placeholder="여행지를 검색해보세요"
         />
-        <button id="search-btn" style={{ marginLeft: '5px' }}>
+        <button id="search-btn" className={S.searchButton}>
           Search
         </button>
       </div>
-      <div id="map" style={{ width: '100%', height: '130%' }}></div>
+      <div id="map" className={S.map}></div>
     </div>
   );
+  
 };
 
 export default MapContainer;
