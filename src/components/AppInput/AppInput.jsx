@@ -15,12 +15,12 @@ AppInput.propTypes = {
 };
 
 function AppInput({
-  label,
+  label = '',
   labelHidden = true,
-  type,
-  name,
-  defaultValue,
-  placeholder,
+  type = 'text',
+  name = '',
+  defaultValue = '',
+  placeholder = '',
   onChange,
 }) {
   const [types, setTypes] = useState(type);
