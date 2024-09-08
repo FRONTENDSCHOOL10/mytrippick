@@ -3,7 +3,6 @@ import useGeolocation from '@/hooks/useGeolocation';
 import AppInput2 from '../AppInput/AppInput2';
 import S from './MapContainer.module.css';
 
-
 const { kakao } = window;
 
 const MapContainer = () => {
@@ -23,55 +22,16 @@ const MapContainer = () => {
 
     const map = new kakao.maps.Map(mapContainer, mapOption);
 
-    const ps = new kakao.maps.services.Places();
-
-    const searchPlaces = (keyword) => {
-      if (!keyword) return;
-
-      ps.keywordSearch(keyword, placesSearchCB);
-    };
-
-    const placesSearchCB = (data, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const bounds = new kakao.maps.LatLngBounds();
-
-        for (let i = 0; i < data.length; i++) {
-          displayMarker(data[i]);
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }
-
-        map.setBounds(bounds);
-      }
-    };
-
-    const displayMarker = (place) => {
-      const marker = new kakao.maps.Marker({
-        map: map,
-        position: new kakao.maps.LatLng(place.y, place.x),
-      });
-
-      kakao.maps.event.addListener(marker, 'click', function () {
-        const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-        infowindow.setContent(
-          `<div style="padding:5px;font-size:12px;">${place.place_name}</div>`
-        );
-        infowindow.open(map, marker);
-      });
-    };
-
-    document.getElementById('search-btn').addEventListener('click', () => {
-      const keyword = document.getElementById('keyword').value;
-      searchPlaces(keyword);
-    });
+    // db에서 전체 리뷰 좌표를 받아서 마커 생성하는 로직 작성하기
   }, [location]);
 
   return (
     <div className={S.container}>
       <div className={S.searchBox}>
         <AppInput2
-          label='주소 검색창'
+          label="주소 검색창"
           type="text"
-          name="??"
+          name="keyword"
           placeholder="여행지를 검색해보세요"
         />
         <button id="search-btn" className={S.searchButton}>
@@ -81,7 +41,6 @@ const MapContainer = () => {
       <div id="map" className={S.map}></div>
     </div>
   );
-  
 };
 
 export default MapContainer;
