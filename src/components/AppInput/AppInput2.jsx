@@ -13,6 +13,7 @@ AppInput2.propTypes = {
   defaultValue: string,
   placeholder: string.isRequired,
   onChange: func,
+  onSearch: func, // 추가된 prop
 };
 
 function AppInput2({
@@ -23,9 +24,11 @@ function AppInput2({
   defaultValue,
   placeholder,
   onChange,
+  onSearch, // 추가된 prop
 }) {
   const [types, setTypes] = useState(type);
   const [isVisible, setIsVisible] = useState(false);
+  const [inputValue, setInputValue] = useState(defaultValue || '');
 
   const id = useId();
 
@@ -45,20 +48,42 @@ function AppInput2({
     }
   };
 
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && onSearch) {
+      onSearch(inputValue);
+    }
+  };
+
+  const handleSearchClick = () => {
+    if (onSearch) {
+      onSearch(inputValue);
+    }
+  };
+
   return (
     <div className={S.AppInput}>
       <label htmlFor={id} hidden={labelHidden}>
         {label}
       </label>
       <div className={S.inputWrapper}>
-        <SearchIcon className={S.searchIcon} />
+        <button onClick={handleSearchClick}>
+          <SearchIcon />
+        </button>
         <input
           type={types}
           id={id}
           name={name}
           placeholder={placeholder}
-          defaultValue={defaultValue}
-          onChange={onChange}
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         <button hidden={buttonAlive} onClick={handleToggle}>
           {isVisible ? (

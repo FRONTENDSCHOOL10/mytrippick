@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import useGeolocation from '@/hooks/useGeolocation';
 import AppInput2 from './AppInput/AppInput2';
-import AppInput from './AppInput/AppInput';
 
 const { kakao } = window;
 
@@ -83,7 +82,7 @@ const MapContainer = () => {
           Search
         </button>
       </div>
-      <div id="map" style={{ width: '100%', height: '100%' }}></div>
+      <div id="map" style={{ width: '100%', height: '130%' }}></div>
     </div>
   );
 };

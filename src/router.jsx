@@ -27,14 +27,14 @@ const navigation = [
     element: <RegisterPage />,
   },
   {
-    text: '내 주변 여행지 찾기',
-    path: '/map-search',
-    element: <MapSearchPage />,
-  },
-  {
     text: '게시글 상세',
     path: '/post/:id',
     element: <PostDetailPage />,
+  },
+  {
+    text: '내 주변 여행지 찾기',
+    path: '/map-search',
+    element: <MapSearchPage />,
   },
 ];
 
