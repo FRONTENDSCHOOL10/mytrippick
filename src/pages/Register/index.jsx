@@ -1,5 +1,61 @@
+import AppInput from '@/components/AppInput/AppInput';
+import S from './Register.module.css';
+import CommonBtn from '@/components/CommonBtn/CommonBtn';
+
 function Register() {
-  return <h1>회원가입페이지</h1>;
+  return (
+    <section className={S.component}>
+      <h1 className="headline1">회원가입</h1>
+      <form action="">
+        <article className="inputContainer">
+          <AppInput
+            label={'이메일 주소'}
+            labelHidden={false}
+            type={'email'}
+            name={'email'}
+            placeholder={'ID@example.com'}
+          />
+          <span>sss</span>
+        </article>
+
+        <article className="inputContainer">
+          <AppInput
+            label={'비밀번호'}
+            labelHidden={false}
+            type={'password'}
+            name={'password'}
+            placeholder={'비밀번호를 입력해주세요.'}
+          />
+          <p>영문, 숫자, 특수문자 중 2가지 조합 8~15자</p>
+        </article>
+
+        <article className="inputContainer">
+          <AppInput
+            label={'비밀번호 확인'}
+            labelHidden={false}
+            type={'password'}
+            name={'checkPassword'}
+            placeholder={'비밀번호를 한번 더 입력해주세요.'}
+          />
+          <p></p>
+        </article>
+
+        <article className="inputContainer">
+          <AppInput
+            label={'닉네임'}
+            labelHidden={false}
+            type={'text'}
+            name={'nickName'}
+            placeholder={'닉네임을 입력해주세요.'}
+          />
+        </article>
+
+        <CommonBtn submit={true} disabled={true} small={false} fill={true}>
+          가입하기
+        </CommonBtn>
+      </form>
+    </section>
+  );
 }
 
 export default Register;

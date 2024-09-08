@@ -1,0 +1,18 @@
+.component {
+  padding: 0 var(--container-m-sm) 0 var(--container-m-md);
+  width: 100%;
+
+  h1 {
+    margin: var(--space-10) 0;
+    color: var(--white, var(--color-white, #fff));
+  }
+
+  form {
+    display: flex;
+    flex-flow: column;
+    gap: var(--space-6);
+    button {
+      margin-top: var(--space-6);
+    }
+  }
+}
