@@ -4,6 +4,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import data from '@/data/dummyData.json';
 import S from './Home.module.css';
+import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
 
 function Home() {
   console.log(data);
@@ -47,6 +48,7 @@ function Home() {
           </SwiperSlide>
         ))}
       </Swiper>
+      <CategoryBtn />
       <section className={S.postList}>
         <Card />
       </section>
