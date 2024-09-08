@@ -1,32 +1,32 @@
 {
   "data": [
     {
-      "id": "diaa124",
+      "id": "zxdo934",
       "thumbnailImg": "/testingPic(delete-later).png",
       "likedNum": 556,
-      "title": "드부로브니크",
-      "location": "크로아티아",
-      "category": "여행",
-      "userImg": "/testUserPic(delete-later).png",
-      "userName": "사용자"
-    },
-    {
-      "id": 2,
-      "thumbnailImg": "/testingPic(delete-later).png",
-      "likedNum": 556,
-      "title": "아쿠아 플래넷",
-      "location": "서울, 도봉구",
+      "title": "아쿠아플래넷",
+      "location": "전남, 여수시",
       "category": "맛집",
       "userImg": "/testUserPic(delete-later).png",
       "userName": "사용자"
     },
     {
-      "id": 3,
+      "id": "dlkp781",
       "thumbnailImg": "/testingPic(delete-later).png",
       "likedNum": 556,
-      "title": "아쿠아 플래넷",
-      "location": "서울, 도봉구",
+      "title": "이호테우해변",
+      "location": "제주, 제주시",
       "category": "문화생활",
+      "userImg": "/testUserPic(delete-later).png",
+      "userName": "사용자"
+    },
+    {
+      "id": "diaa124",
+      "thumbnailImg": "/testingPic(delete-later).png",
+      "likedNum": 556,
+      "title": "점봉산곰배령",
+      "location": "강원, 양야군",
+      "category": "여행",
       "userImg": "/testUserPic(delete-later).png",
       "userName": "사용자"
     }
