@@ -4,8 +4,8 @@ const useGlobalStore = create((set) => ({
   isMenuOpen: false,
   setIsMenuOpen: (isMenuOpen) => set({ isMenuOpen }),
 
-  isFocusTrapped: false,
-  setIsFocusTrapped: (isFocusTrapped) => set({ isFocusTrapped }),
+  scrollDirection: null,
+  setScrollDirection: (direction) => set({ scrollDirection: direction }),
 
   isLoggedIn: false,
   profileImage: '',
@@ -37,8 +37,14 @@ const useGlobalStore = create((set) => ({
       nickname: '',
     });
   },
-  isToggled: false,
-  setIsToggled: (isToggled) => set({ isToggled }),
+  toggles: {},
+  toggle: (id) =>
+    set((state) => ({
+      toggles: {
+        ...state.toggles,
+        [id]: !state.toggles[id],
+      },
+    })),
 }));
 
 export default useGlobalStore;

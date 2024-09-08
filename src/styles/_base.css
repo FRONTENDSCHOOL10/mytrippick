@@ -1,39 +1,188 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
-html{overflow-x:hidden;-webkit-text-size-adjust:100%;}
-:root{--base-font-family:"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;}
-body{font-family:var(--base-font-family);overflow-x:inherit;margin:0;box-sizing: border-box;-webkit-font-smoothing:antialiased;background:var(--background,#000);color:var(--foreground,#fff);width:100%;height:100%;max-height: 844px}
-*,*::before,*::after{box-sizing:inherit}
-ul, ol{list-style:none;padding:0;margin:0;}
-nav ol,nav ul{margin-block:0;padding-inline-start:0;list-style-type:none}
-nav a{text-decoration:none;color:inherit}
-h1,h2,h3,h4,h5,h6,p{overflow-wrap:break-word;font: inherit;margin:0;}
-hr{box-sizing:content-box;height:0;overflow:visible}
-b,strong{font-weight:700}
-code,kbd,pre,samp{font-size:1rem}
-small{font-size:.75rem}
-sub,sup{position:relative;vertical-align:baseline;font-size:.625rem;line-height:0}
-sup{top:-.5em}
-sub{bottom:-.25em}
-canvas,img,svg,video{max-width:100%}
-img{vertical-align:middle}
-abbr[title]{cursor:help;text-decoration:none}
-button,input,select,textarea{margin:0;font-family:inherit;font-size:1rem;line-height:1.2;text-transform: none;}
-[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}
-[type=search]{-webkit-appearance:textfield;outline-offset:-2px}
-[type=search]::-webkit-search-decoration{-webkit-appearance:none}
-::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
-button,input{overflow:visible}
-button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {border-style:none;padding:0;}
-[type=button],[type=reset],[type=submit]
-[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}
-fieldset{padding:0;border: 0;margin: 0;}
-legend{box-sizing:inherit;display:table;color:inherit;max-width:100%;padding:0;white-space:normal}
-progress{vertical-align:baseline}
-details{display:block}
-summary{display:list-item}
-[hidden]{display:none!important}
-:disabled{cursor:not-allowed}
-:focus{outline:0}
-:focus-visible{outline:2.5px solid var(--focus,#0869dfc0);outline-offset:.5px;border-radius:2px}
-button{border:none;outline:none;background-color:inherit;cursor:pointer;-webkit-appearance:button;}
-a{color: inherit;}
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+html {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+:root {
+  --base-font-family: 'Pretendard Variable', Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+}
+body {
+  font-family: var(--base-font-family);
+  overflow-x: inherit;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  width: 500px;
+  background: var(--black);
+  color: var(--white);
+  margin: 0 auto;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+nav ol,
+nav ul {
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style-type: none;
+}
+nav a {
+  text-decoration: none;
+  color: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  overflow-wrap: break-word;
+  font: inherit;
+  margin: 0;
+}
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+b,
+strong {
+  font-weight: 700;
+}
+code,
+kbd,
+pre,
+samp {
+  font-size: 1rem;
+}
+small {
+  font-size: 0.75rem;
+}
+sub,
+sup {
+  position: relative;
+  vertical-align: baseline;
+  font-size: 0.625rem;
+  line-height: 0;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+canvas,
+img,
+svg,
+video {
+  max-width: 100%;
+}
+img {
+  vertical-align: middle;
+}
+abbr[title] {
+  cursor: help;
+  text-decoration: none;
+}
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-transform: none;
+}
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+  height: auto;
+}
+[type='search'] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+button,
+input {
+  overflow: visible;
+}
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+[type='button'],
+[type='reset'],
+[type='submit'] [type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring,
+button:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+fieldset {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+legend {
+  box-sizing: inherit;
+  display: table;
+  color: inherit;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+progress {
+  vertical-align: baseline;
+}
+details {
+  display: block;
+}
+summary {
+  display: list-item;
+}
+[hidden] {
+  display: none !important;
+}
+:disabled {
+  cursor: not-allowed;
+}
+:focus {
+  outline: 0;
+}
+:focus-visible {
+  outline: 2.5px solid var(--focus, #0869dfc0);
+  outline-offset: 0.5px;
+  border-radius: 2px;
+}
+button {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+a {
+  color: inherit;
+  text-decoration-line: none;
+}
