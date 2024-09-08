@@ -14,13 +14,12 @@
 
   .inputWrapper {
     display: flex;
-    width: 324px;
     height: 44px;
-    padding: 0 16px;
+    padding: 10px var(--space-4, 16px);
     flex-flow: row;
     align-items: center;
     background-color: var(--gray-500);
-    border-radius: 12px;
+    border-radius: var(--rounded-md);
 
     input {
       border: none;
@@ -28,33 +27,18 @@
       width: 100%;
       background-color: var(--gray-500);
       color: var(--white);
-      font-family: 'Pretendard Variable';
-      font-size: 17px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 100%; /* 17px */
-      letter-spacing: -0.34px;
     }
 
     input::placeholder {
-      color: var(--text-text-200, #888);
-      font-family: 'Pretendard Variable';
-      font-size: 17px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 100%; /* 17px */
-      letter-spacing: -0.34px;
+      color: var(--text-200, #888);
     }
 
     button {
+      margin: 0;
       display: flex;
       border: none;
-      border-radius: 12px;
+      border-radius: var(--rounded-md);
       background-color: var(--gray-500);
-
-      .eyes {
-        align-items: center;
-      }
     }
   }
 }
