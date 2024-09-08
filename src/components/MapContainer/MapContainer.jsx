@@ -7,6 +7,7 @@ const { kakao } = window;
 
 const MapContainer = () => {
   const location = useGeolocation();
+  let map;
 
   useEffect(() => {
     if (!location.loaded) return;
@@ -20,10 +21,21 @@ const MapContainer = () => {
       level: 3,
     };
 
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-
-    // db에서 전체 리뷰 좌표를 받아서 마커 생성하는 로직 작성하기
+    map = new kakao.maps.Map(mapContainer, mapOption);
   }, [location]);
+
+  const handleSearch = (keyword) => {
+    const ps = new kakao.maps.services.Places();
+    
+    ps.keywordSearch(keyword, (data, status) => {
+      if (status === kakao.maps.services.Status.OK && data.length > 0) {
+        const firstPlace = data[0];
+        const newCenter = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+        map.setCenter(newCenter);
+        //마커 추가 로직
+      }
+    });
+  };
 
   return (
     <div className={S.container}>
@@ -33,6 +45,7 @@ const MapContainer = () => {
           type="text"
           name="keyword"
           placeholder="여행지를 검색해보세요"
+          onSearch={handleSearch}
         />
         <button id="search-btn" className={S.searchButton}>
           Search
