@@ -6,9 +6,12 @@
   
   .searchBox {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 10px; /* 세로 위치를 원하시는 대로 조정 가능합니다 */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
+    display: flex;
+    align-items: center; /* 버튼과 입력 필드의 수직 정렬 */
   }
   
   .searchButton {

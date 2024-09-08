@@ -43,13 +43,10 @@ const MapContainer = () => {
         <AppInput2
           label="주소 검색창"
           type="text"
-          name="keyword"
+          name="주소 검색창"
           placeholder="여행지를 검색해보세요"
           onSearch={handleSearch}
         />
-        <button id="search-btn" className={S.searchButton}>
-          Search
-        </button>
       </div>
       <div id="map" className={S.map}></div>
     </div>
