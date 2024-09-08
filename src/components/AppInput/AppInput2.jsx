@@ -13,7 +13,7 @@ AppInput2.propTypes = {
   defaultValue: string,
   placeholder: string.isRequired,
   onChange: func,
-  onSearch: func, // 추가된 prop
+  onSearch: func,
 };
 
 function AppInput2({
@@ -24,7 +24,7 @@ function AppInput2({
   defaultValue,
   placeholder,
   onChange,
-  onSearch, // 추가된 prop
+  onSearch,
 }) {
   const [types, setTypes] = useState(type);
   const [isVisible, setIsVisible] = useState(false);
