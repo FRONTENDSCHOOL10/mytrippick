@@ -1,14 +1,25 @@
 .component {
   width: 100%;
   figure {
+    position: relative;
     aspect-ratio: 330/465;
+
+    .dimThumb {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--dimmed-thumb);
+    }
   }
 
   .rankCard {
     width: 330px;
     position: relative;
 
-    .placePic {
+    .placePhoto {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -25,6 +36,7 @@
       top: 0;
       left: 0;
       padding: 12px 12px 0 12px;
+      z-index: 1;
 
       .userInfos {
         display: flex;
@@ -36,15 +48,6 @@
           height: var(--space-10);
           border-radius: var(--rounded-full);
         }
-
-        p {
-          color: var(--white);
-          font-family: 'Pretendard Variable';
-          font-size: 15px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: 140%;
-        }
       }
     }
 
@@ -53,21 +56,31 @@
       display: flex;
       flex-flow: row;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+
       margin-top: 10px;
 
       .placeInfos {
+        width: 100%;
         display: flex;
-        flex-flow: column;
-        gap: 5px;
+        flex-flow: row;
+        padding-inline-end: var(--space-4, 16px);
 
-        p {
-          color: var(--white);
-          font-family: 'Pretendard Variable';
-          font-size: 18px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: 140%;
+        .rankNum {
+          display: flex;
+
+          &::after {
+            content: '·';
+            display: inline-block;
+            width: auto;
+            margin: 0 var(--space-1-half, 6px) 0 var(--space-1, 4px);
+            color: var(--white);
+            vertical-align: middle;
+          }
+        }
+
+        .placeTitle {
+          width: 100%;
         }
 
         .placePosition {
@@ -75,15 +88,10 @@
           flex-flow: row;
           align-items: center;
           gap: 2px;
-          padding-left: 15px;
+          margin-block-start: 5px;
 
           span {
             color: var(--text-100);
-            font-family: 'Pretendard Variable';
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 140%;
           }
 
           .marker {
@@ -117,7 +125,7 @@
     width: 100%;
     position: relative;
 
-    .placePic {
+    .placePhoto {
       width: 100%;
       border-radius: var(--rounded-md);
     }
@@ -131,6 +139,7 @@
       top: 0;
       left: 0;
       padding: 12px 12px 0 12px;
+      z-index: 1;
 
       .userInfos {
         display: flex;
@@ -223,7 +232,7 @@
     width: 100%;
     position: relative;
 
-    .placePic {
+    .placePhoto {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -235,6 +244,7 @@
       top: 0;
       right: 0;
       padding: 10px 8px 0 0;
+      z-index: 1;
     }
 
     .placeInfos {
@@ -242,15 +252,6 @@
       flex-flow: column;
       gap: 5px;
       margin-top: 10px;
-
-      p {
-        color: var(--white);
-        font-family: 'Pretendard Variable';
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 140%;
-      }
 
       .placePosition {
         display: flex;
