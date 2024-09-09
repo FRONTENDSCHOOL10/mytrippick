@@ -6,6 +6,7 @@
   overflow: hidden;
   z-index: 9999;
   pointer-events: none;
+  visibility: hidden;
 }
 
 .inner {
@@ -36,6 +37,7 @@
   transform: translateX(0);
   transition: transform 0.8s var(--ease-out-expo);
   pointer-events: auto;
+  visibility: visible;
 }
 
 [aria-modal='true'] header {
