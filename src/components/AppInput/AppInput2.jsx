@@ -1,100 +1,50 @@
-import { useState, useId } from 'react';
-import { string, bool, func } from 'prop-types';
-import NonVisible from '@/assets/svg/non-visible.svg?react';
-import Visible from '@/assets/svg/visible.svg?react';
+import React, { useState, useId } from 'react';
+import PropTypes from 'prop-types';
 import SearchIcon from '@/assets/svg/search.svg?react';
+import XButton from '@/assets/svg/xbutton.svg?react';
 import S from './AppInput2.module.css';
 
-AppInput2.propTypes = {
-  label: string.isRequired,
-  labelHidden: bool,
-  type: string.isRequired,
-  name: string.isRequired,
-  defaultValue: string,
-  placeholder: string.isRequired,
-  onChange: func,
-  onSearch: func,
-};
-
-function AppInput2({
-  label,
-  labelHidden = true,
-  type,
-  name,
-  defaultValue,
-  placeholder,
-  onChange,
-  onSearch,
-}) {
-  const [types, setTypes] = useState(type);
-  const [isVisible, setIsVisible] = useState(false);
-  const [inputValue, setInputValue] = useState(defaultValue || '');
-
+function AppInput2({ onSearch }) {
+  const [inputValue, setInputValue] = useState('');
   const id = useId();
 
-  let buttonAlive = true;
-
-  if (types === 'password' || (types === 'text' && isVisible)) {
-    buttonAlive = false;
-  }
-
-  const handleToggle = () => {
-    if (isVisible) {
-      setIsVisible(false);
-      setTypes('password');
-    } else {
-      setIsVisible(true);
-      setTypes('text');
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-    if (onChange) {
-      onChange(e);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && onSearch) {
-      onSearch(inputValue);
-    }
-  };
-
-  const handleSearchClick = () => {
+  const handleSearch = () => {
     if (onSearch) {
       onSearch(inputValue);
     }
   };
 
+  const deleteContent = () => {
+    setInputValue('');
+  };
+
   return (
     <div className={S.AppInput}>
-      <label htmlFor={id} hidden={labelHidden}>
-        {label}
-      </label>
       <div className={S.inputWrapper}>
-        <button onClick={handleSearchClick}>
+        <button onClick={handleSearch}>
           <SearchIcon />
         </button>
         <input
-          type={types}
+          type="text"
           id={id}
-          name={name}
-          placeholder={placeholder}
+          placeholder="여행지를 검색해보세요"
           value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
         />
-        <button hidden={buttonAlive} onClick={handleToggle}>
-          {isVisible ? (
-            <NonVisible className={S.eyes} />
-          ) : (
-            <Visible className={S.eyes} />
-          )}
-        </button>
+        {inputValue && (
+          <button onClick={deleteContent} className={S.clearButton}>
+            <XButton />
+          </button>
+        )}
       </div>
     </div>
   );
 }
+
+AppInput2.propTypes = {
+  placeholder: PropTypes.string,
+  onSearch: PropTypes.func.isRequired,
+};
 
 export default AppInput2;

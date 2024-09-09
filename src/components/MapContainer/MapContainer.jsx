@@ -52,13 +52,7 @@ const MapContainer = () => {
       {showMap ? (
         <>
           <div className={S.searchBox}>
-            <AppInput2
-              label="주소 검색창"
-              type="text"
-              name="주소 검색창"
-              placeholder="여행지를 검색해보세요"
-              onSearch={handleSearch}
-            />
+            <AppInput2 onSearch={handleSearch} />
           </div>
           <div className={S.toggleBox} onClick={toggleView}>
             <div className={S.circleBox}>
