@@ -22,8 +22,12 @@
   width: 100%;
   align-items: flex-start;
   align-content: flex-start;
-  gap: var(--space-8, 32px) var(--space-1, 4px);
+  gap: var(--space-8, 32px) var(--space-2, 8px);
   flex-wrap: wrap;
+}
+
+.card {
+  width: 100%;
 }
 
 .swiper-pagination-bullet-active {

@@ -52,6 +52,8 @@ function Home() {
       <section className={S.postList}>
         {data.data?.map((item, idx) => (
           <Card
+            type="post"
+            className={S.card}
             key={idx}
             thumbnailImg={item.thumbnailImg}
             title={item.title}

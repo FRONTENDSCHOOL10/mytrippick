@@ -1,11 +1,18 @@
 .component {
+  width: 100%;
+  figure {
+    aspect-ratio: 330/465;
+  }
+
   .rankCard {
     width: 330px;
     position: relative;
 
     .placePic {
       width: 100%;
-      border-radius: var(--rounded-md);
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--rounded-lg);
     }
 
     .cardHeader {
@@ -218,7 +225,9 @@
 
     .placePic {
       width: 100%;
-      border-radius: var(--rounded-md);
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--rounded-sm);
     }
 
     .cardHeader {
@@ -267,4 +276,8 @@
       }
     }
   }
+}
+
+.postComponent {
+  width: calc(50% - var(--space-2, 8px));
 }

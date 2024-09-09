@@ -30,16 +30,20 @@ function Card({
   const placeInfo =
     type === 'rank' ? (
       <article className={rankStyled}>
-        <figure>
-          <img className={S.placePic} src={thumbnailImg} alt={title} />
-        </figure>
-        <article className={S.cardHeader}>
+        <div className={S.cardHeader}>
           <div className={S.userInfos}>
-            <img src={userImg} alt="" />
+            <img
+              src={userImg}
+              alt={`${userName}프로필 이미지`}
+              aria-hidden="true"
+            />
             <p>{userName}</p>
           </div>
           <ToggleBtn bookmark />
-        </article>
+        </div>
+        <figure>
+          <img className={S.placePic} src={thumbnailImg} alt={title} />
+        </figure>
         <article className={S.places}>
           <div className={S.placeInfos}>
             <p>
@@ -59,23 +63,25 @@ function Card({
       </article>
     ) : (
       <article className={S.listCard}>
-        <figure>
-          <img className={S.placePic} src={thumbnailImg} alt={title} />
-        </figure>
         <div className={S.cardHeader}>
           <ToggleBtn bookmark />
         </div>
+        <figure>
+          <img className={S.placePic} src={thumbnailImg} alt={title} />
+        </figure>
         <div className={S.placeInfos}>
-          <p>아쿠아 플래넷</p>
+          <p>{title}</p>
           <div className={S.placePosition}>
             <MarkerFill className={S.marker} />
-            <span>서울, 도봉구</span>
+            <span>{location}</span>
           </div>
         </div>
       </article>
     );
   return (
-    <article className={S.component}>
+    <article
+      className={`${S.component} ${type === 'post' ? S.postComponent : ''}`}
+    >
       <Link to={''}>{placeInfo}</Link>
     </article>
   );
