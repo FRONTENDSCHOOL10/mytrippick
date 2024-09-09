@@ -97,6 +97,7 @@ function Home() {
           className={S.swiperButtonPrev}
           tabIndex={0}
           aria-label="이전"
+          title="이전"
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault(); // 스페이스바가 스크롤을 발생시키지 않게 함
@@ -108,6 +109,7 @@ function Home() {
           className={S.swiperButtonNext}
           tabIndex={0}
           aria-label="다음"
+          title="다음"
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
