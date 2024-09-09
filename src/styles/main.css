@@ -10,7 +10,7 @@
   background: #222;
 }
 
-.content {
+.container {
   min-height: calc(100vh - var(--footer-height));
   padding-block-start: var(--header-height);
 }

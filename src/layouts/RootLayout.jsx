@@ -8,7 +8,7 @@ function RootLayout() {
     <>
       <Header />
       <ScrollDirectionDetector />
-      <main className="content">
+      <main className="container">
         <Outlet />
       </main>
       <Footer />
