@@ -70,11 +70,11 @@
   line-height: 1.5;
 }
 
-.lank {
+.rank {
   font-family: var(--base-font-family);
   font-size: 18px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.4;
 }
 
 .input {
