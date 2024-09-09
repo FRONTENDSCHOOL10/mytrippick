@@ -11,8 +11,14 @@
     display: flex;
     flex-flow: column;
     gap: var(--space-6);
+
+    span {
+      color: var(--text-400);
+    }
+
     button {
       margin-top: var(--space-6);
+      margin-bottom: 100px;
     }
   }
 }

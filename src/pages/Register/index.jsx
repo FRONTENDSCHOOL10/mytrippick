@@ -1,8 +1,24 @@
+import { useState } from 'react';
 import AppInput from '@/components/AppInput/AppInput';
-import S from './Register.module.css';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import S from './Register.module.css';
+import { throttle } from '@/utils';
 
 function Register() {
+  const [formDatas, setFormDatas] = useState(() => {
+    return {
+      email: '',
+      password: '',
+      confirmPassWord: '',
+      nickName: '',
+    };
+  });
+
+  const handleFormDatasChange = throttle((e) => {
+    const targets = e.target.value;
+    console.log(targets);
+  });
+
   return (
     <section className={S.component}>
       <h1 className="headline1">회원가입</h1>
@@ -14,8 +30,10 @@ function Register() {
             type={'email'}
             name={'email'}
             placeholder={'ID@example.com'}
+            defaultValue={formDatas.email}
+            onChange={handleFormDatasChange}
           />
-          <span>sss</span>
+          <span className="caption"></span>
         </article>
 
         <article className="inputContainer">
@@ -25,8 +43,12 @@ function Register() {
             type={'password'}
             name={'password'}
             placeholder={'비밀번호를 입력해주세요.'}
+            defaultValue={formDatas.password}
+            onChange={handleFormDatasChange}
           />
-          <p>영문, 숫자, 특수문자 중 2가지 조합 8~15자</p>
+          <span className="caption">
+            영문, 숫자, 특수문자 중 2가지 조합 8~15자
+          </span>
         </article>
 
         <article className="inputContainer">
@@ -36,8 +58,10 @@ function Register() {
             type={'password'}
             name={'checkPassword'}
             placeholder={'비밀번호를 한번 더 입력해주세요.'}
+            defaultValue={formDatas.confirmPassWord}
+            onChange={handleFormDatasChange}
           />
-          <p></p>
+          <span className="caption"></span>
         </article>
 
         <article className="inputContainer">
@@ -47,6 +71,8 @@ function Register() {
             type={'text'}
             name={'nickName'}
             placeholder={'닉네임을 입력해주세요.'}
+            defaultValue={formDatas.nickName}
+            onChange={handleFormDatasChange}
           />
         </article>
 
