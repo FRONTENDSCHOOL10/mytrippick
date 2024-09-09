@@ -33,12 +33,24 @@ function Register() {
     isNickNameChecked: false,
   });
 
+  const [isTouched, setIsTouched] = useState({
+    password: false,
+    nickName: false,
+  });
+
   const handleFormDatasChange = throttle((e) => {
     const { name, value } = e.target;
+
+    setIsTouched((prev) => ({
+      ...prev,
+      [name]: true,
+    }));
+
     setFormDatas((prevDatas) => ({
       ...prevDatas,
       [name]: value,
     }));
+
     checkRegExp(name, value);
   });
 
@@ -126,8 +138,17 @@ function Register() {
             placeholder={'ID@example.com'}
             defaultValue={formDatas.email}
             onChange={handleFormDatasChange}
+            className={S.errors}
           />
-          <span className="caption">{errorMessage.emailMessage}</span>
+          <span
+            style={{
+              color:
+                isTouched.email && !isChecked.isEmailChecked ? '#ff4a4a' : '',
+            }}
+            className="caption"
+          >
+            {errorMessage.emailMessage}
+          </span>
         </article>
 
         <article className="inputContainer">
@@ -140,7 +161,17 @@ function Register() {
             defaultValue={formDatas.password}
             onChange={handleFormDatasChange}
           />
-          <span className="caption">{errorMessage.passwordMessage}</span>
+          <span
+            style={{
+              color:
+                isTouched.password && !isChecked.isPasswordChecked
+                  ? '#ff4a4a'
+                  : '',
+            }}
+            className="caption"
+          >
+            {errorMessage.passwordMessage}
+          </span>
         </article>
 
         <article className="inputContainer">
@@ -153,7 +184,14 @@ function Register() {
             defaultValue={formDatas.confirmPassWord}
             onChange={handleFormDatasChange}
           />
-          <span className="caption">{errorMessage.passwordCheckMessage}</span>
+          <span
+            style={{
+              color: !isChecked.isConfirmPasswordChecked ? '#ff4a4a' : '',
+            }}
+            className="caption"
+          >
+            {errorMessage.passwordCheckMessage}
+          </span>
         </article>
 
         <article className="inputContainer">
@@ -166,7 +204,9 @@ function Register() {
             defaultValue={formDatas.nickName}
             onChange={handleFormDatasChange}
           />
-          <span className="caption">{errorMessage.nickNameMessage}</span>
+          <span style={{ color: '#ff4a4a' }} className="caption">
+            {errorMessage.nickNameMessage}
+          </span>
         </article>
 
         <CommonBtn
