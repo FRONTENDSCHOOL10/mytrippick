@@ -20,6 +20,9 @@ importers:
       immer:
         specifier: 10.1.1
         version: 10.1.1
+      pocketbase:
+        specifier: 0.21.5
+        version: 0.21.5
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -1300,6 +1303,9 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  pocketbase@0.21.5:
+    resolution: {integrity: sha512-bnI/uinnQps+ElSlzxkc4yvwuSFfKcoszDtXH/4QT2FhGq2mJVUvDlxn+rjRXVntUjPfmMG5LEPZ1eGqV6ssog==}
 
   possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
@@ -2896,6 +2902,8 @@ snapshots:
   picocolors@1.0.1: {}
 
   picomatch@2.3.1: {}
+
+  pocketbase@0.21.5: {}
 
   possible-typed-array-names@1.0.0: {}
 
