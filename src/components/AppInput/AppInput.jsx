@@ -15,12 +15,12 @@ AppInput.propTypes = {
 };
 
 function AppInput({
-  label,
+  label = '',
   labelHidden = true,
-  type,
-  name,
-  defaultValue,
-  placeholder,
+  type = 'text',
+  name = '',
+  defaultValue = '',
+  placeholder = '',
   onChange,
 }) {
   const [types, setTypes] = useState(type);
@@ -48,13 +48,14 @@ function AppInput({
 
   return (
     <div className={S.AppInput}>
-      <label htmlFor={id} hidden={labelHidden}>
+      <label className="label" htmlFor={id} hidden={labelHidden}>
         {label}
       </label>
       <div className={S.inputWrapper}>
         <input
           type={types}
           id={id}
+          className="input"
           name={name}
           placeholder={placeholder}
           defaultValue={defaultValue}
