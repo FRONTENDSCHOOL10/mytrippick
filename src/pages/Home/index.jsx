@@ -1,13 +1,48 @@
+import S from './Home.module.css';
 import Card from '@/components/Card/Card';
 import { Helmet } from 'react-helmet-async';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import data from '@/data/dummyData.json';
-import S from './Home.module.css';
 import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
+import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import { useState } from 'react';
 
 function Home() {
-  console.log(data);
+  const [visibleCards, setVisibleCards] = useState(10);
+  const [selectedCategory, setSelectedCategory] = useState('전체'); // 선택된 카테고리 상태
+
+  // 카드 더미 데이터
+  const postCardList = data.data || [];
+
+  // 카테고리 리스트
+  const categories = [
+    '전체',
+    '여행',
+    '문화생활',
+    '카페',
+    '맛집',
+    '자연',
+    '액티비티',
+  ];
+
+  // 카테고리 변경 핸들러
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setVisibleCards(10); // 카테고리 변경 시 초기 노출 개수 10개로 리셋
+  };
+
+  // 선택된 카테고리에 따른 필터링된 리스트
+  const filteredCardList =
+    selectedCategory === '전체'
+      ? postCardList
+      : postCardList.filter((item) => item.category === selectedCategory);
+
+  // 더보기 버튼 클릭 시 모든 카드를 노출하도록 설정
+  const handleShowMore = () => {
+    setVisibleCards(filteredCardList.length);
+  };
+
   return (
     <>
       <Helmet>
@@ -24,7 +59,8 @@ function Home() {
         />
         <meta property="og:site:author" content="리액트에서-구해조" />
       </Helmet>
-      <h1 className={`headline4 ${S.sectionTitle}`}>인기 여행지 랭킹 TOP 3</h1>
+      {/* 인기 여행지 TOP 3 */}
+      <h1 className={`headline4 ${S.sectionTitle}`}>인기 여행지 TOP 3</h1>
       <Swiper
         className={S.rankList}
         slidesPerView="auto"
@@ -48,18 +84,38 @@ function Home() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <CategoryBtn />
-      <section className={S.postList}>
-        {data.data?.map((item, idx) => (
-          <Card
-            type="post"
-            className={S.card}
-            key={idx}
-            thumbnailImg={item.thumbnailImg}
-            title={item.title}
-            location={item.location}
+
+      {/* 카테고리 탭 */}
+      <div className={S.categoryContainer}>
+        {categories.map((category) => (
+          <CategoryBtn
+            key={category}
+            label={category}
+            checked={selectedCategory === category}
+            onChecked={() => handleCategoryChange(category)}
           />
         ))}
+      </div>
+
+      {/* 게시글 리스트 */}
+      <section className={S.post}>
+        <div className={S.postCardList}>
+          {filteredCardList.slice(0, visibleCards).map((item, idx) => (
+            <Card
+              type="post"
+              className={S.card}
+              key={idx}
+              thumbnailImg={item.thumbnailImg}
+              title={item.title}
+              location={item.location}
+            />
+          ))}
+        </div>
+        {visibleCards < filteredCardList.length && (
+          <CommonBtn small onClick={handleShowMore}>
+            더보기
+          </CommonBtn>
+        )}
       </section>
     </>
   );

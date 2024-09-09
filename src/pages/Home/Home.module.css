@@ -5,6 +5,7 @@
 
 .rankList {
   padding: 0 var(--container-m-sm);
+  margin-block-end: 60px;
 }
 
 .rankList :global(.swiper-slide) {
@@ -16,7 +17,11 @@
   margin-inline-end: var(--space-2, 0);
 }
 
-.postList {
+.post {
+  margin-block-end: 60px;
+}
+
+.postCardList {
   padding: 0 var(--container-m-sm);
   display: flex;
   width: 100%;
@@ -24,12 +29,25 @@
   align-content: flex-start;
   gap: var(--space-8, 32px) var(--space-2, 8px);
   flex-wrap: wrap;
+  margin-block-end: var(--space-10, 40px);
 }
 
 .card {
   width: 100%;
 }
 
+.moreBtn {
+  margin-block-start: 40px;
+}
+
 .swiper-pagination-bullet-active {
   background: var(--brand);
+}
+
+.categoryContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-1, 4px);
+  padding: 0 var(--container-m-sm);
+  margin-block-end: var(--space-6, 24px);
 }
