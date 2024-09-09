@@ -1,3 +1,6 @@
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import S from './Home.module.css';
 import Card from '@/components/Card/Card';
 import { Helmet } from 'react-helmet-async';
@@ -66,11 +69,15 @@ function Home() {
         slidesPerView="auto"
         pagination={{
           clickable: true,
+          el: `.${S.swiperPagination}`,
         }}
-        navigation={true}
+        navigation={{
+          nextEl: `.${S.swiperButtonNext}`,
+          prevEl: `.${S.swiperButtonPrev}`,
+        }}
         modules={[Pagination, Navigation]}
       >
-        {data.data?.map((item, idx) => (
+        {data.data?.slice(0, 3).map((item, idx) => (
           <SwiperSlide key={idx}>
             <Card
               type="rank"
@@ -83,6 +90,31 @@ function Home() {
             />
           </SwiperSlide>
         ))}
+        {/* 페이지네이션 */}
+        <div className={S.swiperPagination}></div>
+        {/* 내비게이션 */}
+        <button
+          className={S.swiperButtonPrev}
+          tabIndex={0}
+          aria-label="이전"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault(); // 스페이스바가 스크롤을 발생시키지 않게 함
+              document.querySelector(`.${S.swiperButtonPrev}`).click();
+            }
+          }}
+        ></button>
+        <button
+          className={S.swiperButtonNext}
+          tabIndex={0}
+          aria-label="다음"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              document.querySelector(`.${S.swiperButtonNext}`).click();
+            }
+          }}
+        ></button>
       </Swiper>
 
       {/* 카테고리 탭 */}
