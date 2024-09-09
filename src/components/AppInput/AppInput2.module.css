@@ -1,7 +1,6 @@
 .AppInput {
   display: flex;
   flex-flow: column;
-  gap: 10px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
@@ -14,7 +13,7 @@
   padding: 0 16px;
   flex-flow: row;
   align-items: center;
-  background-color: var(--gray-500);
+  background-color: 1E1E1B; 
   border-radius: 12px;
 }
 
