@@ -13,15 +13,29 @@
   padding: 0 16px;
   flex-flow: row;
   align-items: center;
-  background-color: 1E1E1B; 
   border-radius: 12px;
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.2) 100%
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
+    #1e1e1b;
+  backdrop-filter: blur(10px);
 }
 
 input {
   border: none;
   border-radius: 12px;
   width: 100%;
-  background-color: var(--gray-500);
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.2) 100%
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
+    #1e1e1b;
+  backdrop-filter: blur(10px);
   color: var(--white);
   font-family: 'Pretendard Variable';
   font-size: 17px;
@@ -45,5 +59,12 @@ button {
   display: flex;
   border: none;
   border-radius: 12px;
-  background-color: var(--gray-500);
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.2) 100%
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
+    #1e1e1b;
+  backdrop-filter: blur(10px);
 }

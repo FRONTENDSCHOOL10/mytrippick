@@ -5,6 +5,7 @@ import S from './MapContainer.module.css';
 import ToggleList from '@/assets/svg/toggle-list.svg?react';
 import ToggleMap from '@/assets/svg/toggle-map.svg?react';
 import Card from '../Card/Card';
+import SearchAddr from '../SearchAddr';
 
 const { kakao } = window;
 
@@ -74,7 +75,8 @@ const MapContainer = () => {
             </div>
           </div>
           <div className={S.emptyPage}>
-            <Card/  >
+            <Card />
+            <SearchAddr />
           </div>
         </>
       )}

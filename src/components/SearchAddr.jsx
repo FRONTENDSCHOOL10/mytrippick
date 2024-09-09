@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const SearchAddr = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -7,27 +7,17 @@ const SearchAddr = () => {
   const [savedPlace, setSavedPlace] = useState(null);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=09a47c8b3f46c132c2f44a8bed7965cb&libraries=services`;
-    script.async = true;
-    script.onload = () => {
-      if (window.kakao && window.kakao.maps) {
-        const ps = new window.kakao.maps.services.Places();
+    const ps = new window.kakao.maps.services.Places();
 
-        if (searchQuery) {
-          ps.keywordSearch(searchQuery, (data, status) => {
-            if (status === window.kakao.maps.services.Status.OK) {
-              setPlaces(data);
-            }
-          });
+    if (searchQuery) {
+      ps.keywordSearch(searchQuery, (data, status) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          setPlaces(data);
+        } else {
+          setPlaces([]);
         }
-      }
-    };
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
+      });
+    }
   }, [searchQuery]);
 
   const handleSearchChange = (e) => {
@@ -50,7 +40,7 @@ const SearchAddr = () => {
         type="text"
         value={searchQuery}
         onChange={handleSearchChange}
-        placeholder="?"
+        placeholder="검색어를 입력하세요"
       />
       <ul>
         {places.map((place) => (
