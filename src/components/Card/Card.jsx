@@ -37,23 +37,24 @@ function Card({
               alt={`${userName}프로필 이미지`}
               aria-hidden="true"
             />
-            <p>{userName}</p>
+            <p className="title3">{userName}</p>
           </div>
           <ToggleBtn bookmark />
         </div>
         <figure>
-          <img className={S.placePic} src={thumbnailImg} alt={title} />
+          <img className={S.placePhoto} src={thumbnailImg} alt={title} />
+          <span role="none" className={S.dimThumb}></span>
         </figure>
         <article className={S.places}>
           <div className={S.placeInfos}>
-            <p>
-              <span>1. </span>
+            <span className={`rank ${S.rankNum}`}>1</span>
+            <p className={`title1 ${S.placeTitle}`}>
               {title}
+              <div className={S.placePosition}>
+                <MarkerFill className={S.marker} />
+                <span className="caption">{location}</span>
+              </div>
             </p>
-            <div className={S.placePosition}>
-              <MarkerFill className={S.marker} />
-              <span>{location}</span>
-            </div>
           </div>
           <div className={S.heartWrapper}>
             <span>{likedNum}</span>
@@ -67,10 +68,11 @@ function Card({
           <ToggleBtn bookmark />
         </div>
         <figure>
-          <img className={S.placePic} src={thumbnailImg} alt={title} />
+          <img className={S.placePhoto} src={thumbnailImg} alt={title} />
+          <span role="none" className={S.dimThumb}></span>
         </figure>
         <div className={S.placeInfos}>
-          <p>{title}</p>
+          <p className="title3">{title}</p>
           <div className={S.placePosition}>
             <MarkerFill className={S.marker} />
             <span>{location}</span>
