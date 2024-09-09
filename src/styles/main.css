@@ -10,12 +10,6 @@
   background: #222;
 }
 
-.wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 .content {
   min-height: calc(100vh - var(--footer-height));
   padding-block-start: var(--header-height);
