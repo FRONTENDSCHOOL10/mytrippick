@@ -50,7 +50,14 @@ function Home() {
       </Swiper>
       <CategoryBtn />
       <section className={S.postList}>
-        <Card />
+        {data.data?.map((item, idx) => (
+          <Card
+            key={idx}
+            thumbnailImg={item.thumbnailImg}
+            title={item.title}
+            location={item.location}
+          />
+        ))}
       </section>
     </>
   );

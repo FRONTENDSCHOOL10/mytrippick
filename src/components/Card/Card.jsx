@@ -30,7 +30,9 @@ function Card({
   const placeInfo =
     type === 'rank' ? (
       <article className={rankStyled}>
-        <img className={S.placePic} src={thumbnailImg} alt="" />
+        <figure>
+          <img className={S.placePic} src={thumbnailImg} alt={title} />
+        </figure>
         <article className={S.cardHeader}>
           <div className={S.userInfos}>
             <img src={userImg} alt="" />
@@ -57,11 +59,9 @@ function Card({
       </article>
     ) : (
       <article className={S.listCard}>
-        <img
-          className={S.placePic}
-          src="/testingPic(delete-later).png"
-          alt=""
-        />
+        <figure>
+          <img className={S.placePic} src={thumbnailImg} alt={title} />
+        </figure>
         <div className={S.cardHeader}>
           <ToggleBtn bookmark />
         </div>

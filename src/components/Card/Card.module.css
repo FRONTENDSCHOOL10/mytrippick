@@ -213,7 +213,7 @@
   }
 
   .listCard {
-    width: 181px;
+    width: 100%;
     position: relative;
 
     .placePic {

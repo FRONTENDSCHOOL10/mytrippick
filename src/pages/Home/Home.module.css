@@ -18,4 +18,14 @@
 
 .postList {
   padding: 0 var(--container-m-sm);
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: var(--space-8, 32px) var(--space-1, 4px);
+  flex-wrap: wrap;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--brand);
 }
