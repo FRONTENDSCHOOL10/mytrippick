@@ -1,0 +1,60 @@
+.AppInput {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #1e1e1b;
+  backdrop-filter: blur(10px);
+}
+
+input {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #1e1e1b;
+  backdrop-filter: blur(10px);
+  color: var(--white);
+  font-family: 'Pretendard Variable';
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.34px;
+  outline: none;
+  box-shadow: none;
+  margin-left: 8px;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+input::placeholder {
+  color: var(--text-text-200, #888);
+  font-family: 'Pretendard Variable';
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.34px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  background: #1e1e1b;
+  backdrop-filter: blur(10px);
+  padding: 0;
+  cursor: pointer;
+}

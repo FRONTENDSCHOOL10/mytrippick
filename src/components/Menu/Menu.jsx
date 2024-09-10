@@ -98,7 +98,7 @@ function Menu() {
           </li>
           <li>
             <NavLink
-              to="/내주변"
+              to="/map-search"
               aria-label="내 주변 여행지 찾기 페이지로 이동"
               title="내 주변 여행지 찾기"
               className={`headline2 ${S.linkItem}`}
