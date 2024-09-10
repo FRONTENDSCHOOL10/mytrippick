@@ -1,64 +1,15 @@
-.profileContainer {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-6);
-  margin: var(--space-10) var(--container-m-md) var(--space-7-half);
-
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: var(--space-2);
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--rounded-full);
-    border: 1px solid var(--line-300, #6e6e6e);
-
-    &:hover {
-      border: 1px solid var(--line-200, #8a8a8a);
-      background-color: var(--gray-500, #202020);
-    }
-  }
-}
-
-.profile {
-  display: flex;
-  align-items: start;
-  gap: var(--space-3);
-
-  img {
-    width: 56px;
-    height: 56px;
-    border-radius: var(--rounded-full);
-  }
-}
-
-.profileText {
-  flex-wrap: wrap;
-
-  p {
-    margin-top: 2px;
-    color: #bbbbbb;
-    font-family: var(--base-font-family);
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.4;
-  }
-}
-
 .visitedPlace {
   margin: var(--space-2-half) var(--container-m-md);
 }
 
 .noPost {
   display: flex;
-  flex-flow: column;
+  gap: var(--space-8);
   align-items: center;
   justify-content: center;
-  gap: var(--space-8);
   min-height: 428px;
   color: var(--text-200);
+  flex-flow: column;
 
   p {
     text-align: center;
@@ -66,18 +17,22 @@
 }
 
 .postContainer {
-  margin: 0 var(--container-m-sm);
   display: flex;
-  flex-flow: row wrap;
   gap: 4px;
+  margin: 0 var(--container-m-sm);
+  flex-flow: row wrap;
 
-  a {
+  li {
     width: calc((100% - 8px) / 3);
     aspect-ratio: 22/31;
+    border-radius: var(--rounded-xs);
+    overflow: hidden;
   }
 
   img {
-    border-radius: var(--rounded-xs);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
