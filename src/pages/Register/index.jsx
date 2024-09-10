@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
-import S from './Register.module.css';
 import {
   testEmailRegExp,
   testNickNameRegExp,
   testPasswordExp,
   throttle,
 } from '@/utils';
+import { CreateDatas } from '@/api/CreateDatas';
+import S from './Register.module.css';
 
 function Register() {
   const [formDatas, setFormDatas] = useState({
@@ -118,6 +120,26 @@ function Register() {
     }
   };
 
+  const navigation = useNavigate();
+
+  const handlePostUserData = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email: formDatas.email,
+      password: formDatas.password,
+      passwordConfirm: formDatas.checkPassword,
+      nickName: formDatas.nickName,
+    };
+    try {
+      CreateDatas('users', userData);
+      alert('회원가입이 완료되었습니다');
+      navigation('/login');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const isFormValid =
     isChecked.isEmailChecked &&
     isChecked.isPasswordChecked &&
@@ -127,7 +149,7 @@ function Register() {
   return (
     <section className={S.component}>
       <h1 className="headline1">회원가입</h1>
-      <form action="">
+      <form>
         <article className="inputContainer">
           <AppInput
             label={'이메일 주소'}
@@ -213,6 +235,7 @@ function Register() {
           disabled={!isFormValid}
           small={false}
           fill={true}
+          onClick={handlePostUserData}
         >
           가입하기
         </CommonBtn>
