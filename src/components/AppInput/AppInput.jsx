@@ -47,7 +47,7 @@ function AppInput({
   const buttonText = isVisible ? '비밀번호 감추기' : '비밀번호 보기';
 
   return (
-    <div className={S.AppInput}>
+    <article className={S.AppInput}>
       <label className="label" htmlFor={id} hidden={labelHidden}>
         {label}
       </label>
@@ -78,7 +78,7 @@ function AppInput({
           )}
         </button>
       </div>
-    </div>
+    </article>
   );
 }
 

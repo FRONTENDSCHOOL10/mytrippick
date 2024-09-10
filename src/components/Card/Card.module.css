@@ -280,5 +280,5 @@
 }
 
 .postComponent {
-  width: calc(50% - var(--space-2, 8px));
+  width: calc(50% - var(--space-1, 4px));
 }
