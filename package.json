@@ -8,7 +8,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint \"./src/**\" --report-unused-disable-directives --ignore-pattern .gitignore"
+    "clean": "rm -rf dist",
+    "lint": "eslint \"./src/**\" --report-unused-disable-directives --ignore-pattern .gitignore",
+    "wpocketbase": ".\\pocketbase\\pocketbase serve",
+    "pocketbase": "pocketbase/pocketbase serve"
   },
   "devDependencies": {
     "@eslint/js": "9.8.0",
