@@ -37,7 +37,7 @@ function Card({
               alt={`${userName}프로필 이미지`}
               aria-hidden="true"
             />
-            <p className="title3">{userName}</p>
+            <span className="title3">{userName}</span>
           </div>
           <ToggleBtn bookmark />
         </div>
@@ -48,13 +48,13 @@ function Card({
         <article className={S.places}>
           <div className={S.placeInfos}>
             <span className={`rank ${S.rankNum}`}>1</span>
-            <p className={`title1 ${S.placeTitle}`}>
+            <div className={`title1 ${S.placeTitle}`}>
               {title}
               <div className={S.placePosition}>
                 <MarkerFill className={S.marker} />
                 <span className="caption">{location}</span>
               </div>
-            </p>
+            </div>
           </div>
           <div className={S.heartWrapper}>
             <span>{likedNum}</span>
@@ -72,7 +72,7 @@ function Card({
           <span role="none" className={S.dimThumb}></span>
         </figure>
         <div className={S.placeInfos}>
-          <p className="title3">{title}</p>
+          <span className="title3">{title}</span>
           <div className={S.placePosition}>
             <MarkerFill className={S.marker} />
             <span>{location}</span>
