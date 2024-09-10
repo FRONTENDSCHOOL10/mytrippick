@@ -11,7 +11,7 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import Chevron from '@/assets/svg/chevron.svg?react';
 import { useState, useEffect } from 'react';
 import { useLoadMore } from '@/hooks/useLoadMore';
-import { fetchPostsByLikes, fetchLatestPosts } from '@/api/postApi';
+import { fetchPostsByLikes, fetchLatestPosts } from '@/api/fetchPosts';
 
 function Home() {
   const [sortedTop3Posts, setSortedTop3Posts] = useState([]);

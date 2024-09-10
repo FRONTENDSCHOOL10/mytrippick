@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getUserInfo } from '@/api/userApi'; // userApi 파일에서 사용자 정보를 가져오는 함수
+import { getUserInfo } from '@/api/getUserInfo';
 
 const useGlobalStore = create((set) => ({
   // 상태 변수
