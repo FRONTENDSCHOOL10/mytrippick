@@ -1,11 +1,14 @@
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import AppTextArea from '@/components/AppTextArea/AppTextArea';
+import CategoryBtnList from './components/CategoryBtnList/CategotyBtnList';
+import UploadImage from './components/UploadImage/UploadImage';
 import S from './PostWrite.module.css';
 
 function PostWrite() {
   return (
     <section className={S.component}>
+      <UploadImage />
       <AppInput
         label={'여행지 명'}
         labelHidden={false}
@@ -27,6 +30,7 @@ function PostWrite() {
         name={'visitDate'}
         placeholder={'방문한 날짜를 선택해주세요'}
       />
+      <CategoryBtnList />
       <AppTextArea
         label={'후기'}
         name={'behindComments'}
