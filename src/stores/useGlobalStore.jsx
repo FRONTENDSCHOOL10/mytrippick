@@ -1,48 +1,76 @@
 import { create } from 'zustand';
-import {
-  fetchLikes,
-  addLike,
-  removeLike,
-  checkUserLike,
-} from '@/api/likeApi.js';
+import { getUserInfo } from '@/api/userApi'; // userApi 파일에서 사용자 정보를 가져오는 함수
 
-const useGlobalStore = create((set, get) => ({
+const useGlobalStore = create((set) => ({
+  // 상태 변수
   isMenuOpen: false,
-  setIsMenuOpen: (isMenuOpen) => set({ isMenuOpen }),
-
   scrollDirection: null,
-  setScrollDirection: (direction) => set({ scrollDirection: direction }),
-
   isLoggedIn: false,
+  userId: null,
   profileImage: '',
   nickname: '',
+  username: '',
+  bio: '',
 
+  // 메뉴 상태 토글 함수
+  setIsMenuOpen: (isMenuOpen) => set({ isMenuOpen }),
+
+  // 스크롤 방향 설정 함수
+  setScrollDirection: (direction) => set({ scrollDirection: direction }),
+
+  // 로그인 상태 설정 함수
   setIsLoggedIn: (isLoggedIn) => {
-    localStorage.setItem('isLoggedIn', isLoggedIn ? 'true' : '');
+    localStorage.setItem('isLoggedIn', isLoggedIn ? 'true' : ''); // 로컬스토리지에 로그인 상태 저장
     set({ isLoggedIn });
   },
-  setProfileImage: (profileImage) => set({ profileImage }),
-  setNickname: (nickname) => set({ nickname }),
 
-  initializeUser: () => {
-    const loggedIn = localStorage.getItem('isLoggedIn');
-    if (loggedIn) {
+  // 사용자 정보 업데이트 함수 (로그인 후 서버에서 사용자 정보 가져오기)
+  setUserInfo: async (userId) => {
+    try {
+      const user = await getUserInfo(userId); // 서버에서 사용자 정보 가져오기
       set({
+        userId: user.id,
+        username: user.username,
+        nickname: user.nickName,
+        profileImage: user.userProfile,
+        bio: user.bio,
         isLoggedIn: true,
-        profileImage: './../../favicon.svg', //임시
-        nickname: '닉네임',
       });
+    } catch (error) {
+      console.error('사용자 정보 가져오기 실패:', error);
     }
   },
 
+  // 프로필 이미지 설정 함수
+  setProfileImage: (profileImage) => set({ profileImage }),
+
+  // 닉네임 설정 함수
+  setNickname: (nickname) => set({ nickname }),
+
+  // 로그인 초기화 함수 (localStorage에서 로그인 상태 불러오기)
+  initializeUser: () => {
+    const loggedIn = localStorage.getItem('isLoggedIn');
+    if (loggedIn) {
+      set({ isLoggedIn: true });
+    } else {
+      set({ isLoggedIn: false });
+    }
+  },
+
+  // 로그아웃 함수 (localStorage에서 로그인 정보 삭제)
   logout: () => {
     localStorage.removeItem('isLoggedIn');
     set({
       isLoggedIn: false,
-      profileImage: '',
+      userId: null,
+      username: '',
       nickname: '',
+      profileImage: '',
+      bio: '',
     });
   },
+
+  // 좋아요 토글 관련 상태
   toggles: {},
   toggle: (id) =>
     set((state) => ({
@@ -51,73 +79,6 @@ const useGlobalStore = create((set, get) => ({
         [id]: !state.toggles[id],
       },
     })),
-
-  /* --------------- 좋아요 관련 --------------- */
-  likes: {},
-  userLikes: {}, // 사용자의 좋아요 상태를 저장
-
-  // 좋아요 수 불러오기 (게시글 ID 기준)
-  fetchLikes: async (postId) => {
-    try {
-      const likedNum = await fetchLikes(postId);
-      set((state) => ({
-        likes: {
-          ...state.likes,
-          [postId]: likedNum,
-        },
-      }));
-    } catch (error) {
-      console.error('좋아요 수 가져오기 실패:', error);
-    }
-  },
-
-  // 사용자의 좋아요 상태 불러오기 (userId와 postId 기준)
-  fetchUserLike: async (userId, postId) => {
-    try {
-      const userLiked = await checkUserLike(userId, postId);
-      set((state) => ({
-        userLikes: {
-          ...state.userLikes,
-          [postId]: userLiked,
-        },
-      }));
-    } catch (error) {
-      console.error('사용자 좋아요 상태 가져오기 실패:', error);
-    }
-  },
-
-  // 좋아요 토글 (좋아요 추가/취소)
-  toggleLike: async (userId, postId) => {
-    const userLiked = get().userLikes[postId] || false; // 사용자의 좋아요 여부 확인
-
-    if (userLiked) {
-      // 좋아요 취소
-      const newLikes = await removeLike(userId, postId);
-      set((state) => ({
-        likes: {
-          ...state.likes,
-          [postId]: newLikes,
-        },
-        userLikes: {
-          ...state.userLikes,
-          [postId]: false,
-        },
-      }));
-    } else {
-      // 좋아요 추가
-      const newLikes = await addLike(userId, postId);
-      set((state) => ({
-        likes: {
-          ...state.likes,
-          [postId]: newLikes,
-        },
-        userLikes: {
-          ...state.userLikes,
-          [postId]: true,
-        },
-      }));
-    }
-  },
 }));
 
 export default useGlobalStore;
