@@ -207,6 +207,7 @@
   line-height: 1;
   font-weight: 600;
   color: var(--text-brand-200);
+  background: transparent;
   padding: var(--space-1-half) 0;
   &:hover {
     color: var(--black, #000);
