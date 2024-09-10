@@ -1,20 +1,20 @@
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import FileUpload from '@/assets/svg/add-image.svg?react';
 import S from './UploadImage.module.css';
+import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
 
 function UploadImage() {
   const id = useId();
-  const [photo, setPhoto] = useState(null);
-  const [previewURL, setPreviewURL] = useState(null);
+  const { setImage, imageURL, setImageURL } = usePostPhotoFileStore();
 
   // 파일이 변경되었을 때 미리보기 이미지를 설정하는 함수
   const handleFileChange = (e) => {
-    setPhoto(e.target.files[0]);
+    setImage(e.target.files[0]);
     const fileURL = e.target.files[0];
     if (fileURL) {
       // 선택한 파일을 미리보기로 표시할 수 있는 URL로 변환
       const imageUrl = URL.createObjectURL(fileURL);
-      setPreviewURL(imageUrl);
+      setImageURL(imageUrl);
     }
   };
 
@@ -28,9 +28,9 @@ function UploadImage() {
   return (
     <article className={S.component}>
       <label tabIndex={0} htmlFor={id} onKeyDown={handleKeyDown}>
-        {previewURL ? (
+        {imageURL ? (
           <img
-            src={previewURL}
+            src={imageURL}
             alt="업로드된 이미지 미리보기"
             className={S.imagePreviewURL}
           />
