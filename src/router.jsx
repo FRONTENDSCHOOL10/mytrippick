@@ -6,6 +6,7 @@ import HomePage from '@/pages/Home';
 import PostDetailPage from '@/pages/PostDetail';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
+import PostWrite from './pages/PostWrite';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -29,6 +30,11 @@ const navigation = [
     text: '게시글 상세',
     path: '/post/:id',
     element: <PostDetailPage />,
+  },
+  {
+    text: '게시글 작성',
+    path: '/writepost',
+    element: <PostWrite />,
   },
 ];
 
