@@ -22,8 +22,7 @@ function Register() {
     passwordMessage:
       '숫자, 특수문자를 최소 1가지 이상 포함한 대소문자 구분 없는 영문 8~15자',
     passwordCheckMessage: '',
-    nickNameMessage:
-      '1~12자 이내의 한/영문 그리고 숫자와 특수기호 (_) 포함 가능',
+    nickNameMessage: '',
   });
 
   const [isChecked, setIsChecked] = useState({
@@ -35,7 +34,6 @@ function Register() {
 
   const [isTouched, setIsTouched] = useState({
     password: false,
-    nickName: false,
   });
 
   const handleFormDatasChange = throttle((e) => {
@@ -104,7 +102,8 @@ function Register() {
 
     if (name === 'nickName') {
       if (!testNickNameRegExp(value)) {
-        errorMessage = '사용할 수 없는 닉네임입니다';
+        errorMessage =
+          '1~12자 이내의 한/영문 그리고 숫자와 특수기호 (_)만 사용 가능합니다';
       } else {
         setIsChecked((prevDatas) => ({
           ...prevDatas,
