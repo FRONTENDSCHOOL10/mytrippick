@@ -79,6 +79,7 @@
 /* 내비게이션 버튼 - 비활성화 상태 */
 .swiperButtonPrev:disabled,
 .swiperButtonNext:disabled {
+  color: var(--white, #fff);
   opacity: 0.3;
   pointer-events: none;
 }
