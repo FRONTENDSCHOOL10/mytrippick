@@ -6,18 +6,18 @@ import Card from '@/components/Card/Card';
 import { Helmet } from 'react-helmet-async';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import data from '@/data/dummyData.json';
 import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
-import { useState } from 'react';
 import Chevron from '@/assets/svg/chevron.svg?react';
+import { useState, useEffect } from 'react';
+import { useLoadMore } from '@/hooks/useLoadMore';
+import { fetchPosts } from '@/api/postApi';
 
 function Home() {
+  const [postCardList, setPostCardList] = useState([]);
   const [visibleCards, setVisibleCards] = useState(10);
-  const [selectedCategory, setSelectedCategory] = useState('전체'); // 선택된 카테고리 상태
-
-  // 카드 더미 데이터
-  const postCardList = data.data || [];
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [sortedTop3Posts, setSortedTop3Posts] = useState([]);
 
   // 카테고리 리스트
   const categories = [
@@ -30,11 +30,27 @@ function Home() {
     '액티비티',
   ];
 
-  // 카테고리 변경 핸들러
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setVisibleCards(10); // 카테고리 변경 시 초기 노출 개수 10개로 리셋
-  };
+  // 게시글 목록 가져오기
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const posts = await fetchPosts();
+        setPostCardList(posts);
+      } catch (error) {
+        console.error('게시글 로드 실패:', error);
+      }
+    };
+
+    loadPosts();
+  }, []);
+
+  // 좋아요 수를 기준으로 게시글 정렬
+  useEffect(() => {
+    const sortedPosts = [...postCardList].sort(
+      (a, b) => b.likedNum - a.likedNum
+    );
+    setSortedTop3Posts(sortedPosts.slice(0, 3)); // 상위 3개의 게시글만 추출
+  }, [postCardList]);
 
   // 선택된 카테고리에 따른 필터링된 리스트
   const filteredCardList =
@@ -42,10 +58,14 @@ function Home() {
       ? postCardList
       : postCardList.filter((item) => item.category === selectedCategory);
 
-  // 더보기 버튼 클릭 시 모든 카드를 노출하도록 설정
-  const handleShowMore = () => {
-    setVisibleCards(filteredCardList.length);
+  // 카테고리 변경 핸들러
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setVisibleCards(10); // 카테고리 변경 시 초기 노출 개수 10개로 리셋
   };
+
+  // 더보기 버튼 클릭 시 카드 10개씩 추가
+  const { visibleCount, handleShowMore } = useLoadMore(10, 10);
 
   return (
     <>
@@ -78,16 +98,16 @@ function Home() {
         }}
         modules={[Pagination, Navigation]}
       >
-        {data.data?.slice(0, 3).map((item, idx) => (
+        {sortedTop3Posts.map((item, idx) => (
           <SwiperSlide key={idx}>
             <Card
               type="rank"
-              thumbnailImg={item.thumbnailImg}
-              userImg={item.userImg}
-              userName={item.userName}
+              postId={item.id}
+              thumbnailImg={item.photo} // 필드 이름 확인
+              userId={item.userId} // userId 추가
               likedNum={item.likedNum}
-              title={item.title}
-              location={item.location}
+              title={item.placeName} // 필드 이름 확인
+              location={item.placePosition} // 필드 이름 확인
             />
           </SwiperSlide>
         ))}
@@ -144,14 +164,20 @@ function Home() {
               type="post"
               className={S.card}
               key={idx}
-              thumbnailImg={item.thumbnailImg}
-              title={item.title}
-              location={item.location}
+              postId={item.id}
+              thumbnailImg={item.photo}
+              title={item.placeName}
+              location={item.placePosition}
+              likedNum={item.likedNum}
+              userId={item.userId}
             />
           ))}
         </div>
-        {visibleCards < filteredCardList.length && (
-          <CommonBtn small onClick={handleShowMore}>
+        {visibleCount < filteredCardList.length && (
+          <CommonBtn
+            small
+            onClick={() => handleShowMore(filteredCardList.length)}
+          >
             더보기
           </CommonBtn>
         )}
