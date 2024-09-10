@@ -16,7 +16,7 @@
   }
 
   .rankCard {
-    width: 330px;
+    width: 100%;
     position: relative;
 
     .placePhoto {

@@ -45,7 +45,7 @@ function Card({
           <img className={S.placePhoto} src={thumbnailImg} alt={title} />
           <span role="none" className={S.dimThumb}></span>
         </figure>
-        <article className={S.places}>
+        <div className={S.places}>
           <div className={S.placeInfos}>
             <span className={`rank ${S.rankNum}`}>1</span>
             <div className={`title1 ${S.placeTitle}`}>
@@ -60,7 +60,7 @@ function Card({
             <span>{likedNum}</span>
             <ToggleBtn />
           </div>
-        </article>
+        </div>
       </article>
     ) : (
       <article className={S.listCard}>
