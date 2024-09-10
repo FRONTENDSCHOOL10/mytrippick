@@ -51,7 +51,11 @@ const useGlobalStore = create((set) => ({
   initializeUser: () => {
     const loggedIn = localStorage.getItem('isLoggedIn');
     if (loggedIn) {
-      set({ isLoggedIn: true });
+      set({
+        isLoggedIn: true,
+        profileImage: './../../favicon.svg', //임시 (delete later)
+        nickname: '닉네임', //임시 (delete later)
+      });
     } else {
       set({ isLoggedIn: false });
     }
