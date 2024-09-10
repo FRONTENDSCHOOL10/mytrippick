@@ -10,6 +10,7 @@ import data from '@/data/dummyData.json';
 import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import { useState } from 'react';
+import Chevron from '@/assets/svg/chevron.svg?react';
 
 function Home() {
   const [visibleCards, setVisibleCards] = useState(10);
@@ -104,7 +105,9 @@ function Home() {
               document.querySelector(`.${S.swiperButtonPrev}`).click();
             }
           }}
-        ></button>
+        >
+          <Chevron />
+        </button>
         <button
           className={S.swiperButtonNext}
           tabIndex={0}
@@ -116,7 +119,9 @@ function Home() {
               document.querySelector(`.${S.swiperButtonNext}`).click();
             }
           }}
-        ></button>
+        >
+          <Chevron />
+        </button>
       </Swiper>
 
       {/* 카테고리 탭 */}

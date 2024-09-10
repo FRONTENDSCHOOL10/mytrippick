@@ -52,8 +52,9 @@
 .swiperButtonPrev,
 .swiperButtonNext {
   &:hover {
-    opacity: 1;
+    color: var(--brand, #8eff00);
   }
+  color: var(--white, #fff);
   position: absolute;
   top: 566px;
   width: 40px;
@@ -63,7 +64,6 @@
   background-position: 50% 50%;
   z-index: 11;
   transition: opacity 0.1s ease 0s;
-  background-image: url('@/assets/svg/chevron.svg');
 }
 
 .swiperButtonPrev {
