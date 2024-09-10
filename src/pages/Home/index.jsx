@@ -11,13 +11,12 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import Chevron from '@/assets/svg/chevron.svg?react';
 import { useState, useEffect } from 'react';
 import { useLoadMore } from '@/hooks/useLoadMore';
-import { fetchPosts } from '@/api/postApi';
+import { fetchPostsByLikes, fetchLatestPosts } from '@/api/postApi';
 
 function Home() {
-  const [postCardList, setPostCardList] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(10);
-  const [selectedCategory, setSelectedCategory] = useState('전체');
   const [sortedTop3Posts, setSortedTop3Posts] = useState([]);
+  const [postCardList, setPostCardList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('전체');
 
   // 카테고리 리스트
   const categories = [
@@ -30,29 +29,35 @@ function Home() {
     '액티비티',
   ];
 
-  // 게시글 목록 가져오기
+  // 상단 인기 여행지 TOP3 (좋아요 수 기준 상위 3개)
   useEffect(() => {
-    const loadPosts = async () => {
+    const loadTop3Posts = async () => {
       try {
-        const posts = await fetchPosts();
-        setPostCardList(posts);
+        const postsByLikes = await fetchPostsByLikes();
+        setSortedTop3Posts(postsByLikes.slice(0, 3)); // 상위 3개의 게시글만 추출
       } catch (error) {
-        console.error('게시글 로드 실패:', error);
+        console.error('인기 게시글 TOP3 로드 실패:', error);
       }
     };
 
-    loadPosts();
+    loadTop3Posts();
   }, []);
 
-  // 좋아요 수를 기준으로 게시글 정렬
+  // 하단 최신 등록된 게시글 리스트
   useEffect(() => {
-    const sortedPosts = [...postCardList].sort(
-      (a, b) => b.likedNum - a.likedNum
-    );
-    setSortedTop3Posts(sortedPosts.slice(0, 3)); // 상위 3개의 게시글만 추출
-  }, [postCardList]);
+    const loadLatestPosts = async () => {
+      try {
+        const latestPosts = await fetchLatestPosts();
+        setPostCardList(latestPosts);
+      } catch (error) {
+        console.error('최신 게시글 로드 실패:', error);
+      }
+    };
 
-  // 선택된 카테고리에 따른 필터링된 리스트
+    loadLatestPosts();
+  }, []);
+
+  // 필터링된 카드 리스트
   const filteredCardList =
     selectedCategory === '전체'
       ? postCardList
@@ -61,7 +66,7 @@ function Home() {
   // 카테고리 변경 핸들러
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    setVisibleCards(10); // 카테고리 변경 시 초기 노출 개수 10개로 리셋
+    handleShowMore(10); // 카테고리 변경 시 10개 카드만 다시 노출되도록 설정
   };
 
   // 더보기 버튼 클릭 시 카드 10개씩 추가
@@ -159,7 +164,7 @@ function Home() {
       {/* 게시글 리스트 */}
       <section className={S.post}>
         <div className={S.postCardList}>
-          {filteredCardList.slice(0, visibleCards).map((item, idx) => (
+          {filteredCardList.slice(0, visibleCount).map((item, idx) => (
             <Card
               type="post"
               className={S.card}
@@ -174,10 +179,7 @@ function Home() {
           ))}
         </div>
         {visibleCount < filteredCardList.length && (
-          <CommonBtn
-            small
-            onClick={() => handleShowMore(filteredCardList.length)}
-          >
+          <CommonBtn small onClick={() => handleShowMore(10)}>
             더보기
           </CommonBtn>
         )}
