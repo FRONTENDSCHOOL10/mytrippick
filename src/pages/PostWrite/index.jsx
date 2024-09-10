@@ -1,6 +1,7 @@
 import AppInput from '@/components/AppInput/AppInput';
-import S from './PostWrite.module.css';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import AppTextArea from '@/components/AppTextArea/AppTextArea';
+import S from './PostWrite.module.css';
 
 function PostWrite() {
   return (
@@ -26,8 +27,12 @@ function PostWrite() {
         name={'visitDate'}
         placeholder={'방문한 날짜를 선택해주세요'}
       />
-      <label htmlFor="behindComments"></label>
-      <textarea name="comments" id="behindComments"></textarea>
+      <AppTextArea
+        label={'후기'}
+        name={'behindComments'}
+        small={false}
+        placeholder={'후기 글을 작성해주세요'}
+      />
       <CommonBtn submit={true} disabled={true} fill={true}>
         등록
       </CommonBtn>

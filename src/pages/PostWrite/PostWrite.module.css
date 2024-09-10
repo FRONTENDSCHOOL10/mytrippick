@@ -1,0 +1,3 @@
+.component {
+  padding: var(--space-10, 40px) var(--space-4, 16px);
+}
