@@ -56,7 +56,7 @@ function Card({
               </div>
             </div>
           </div>
-          <div className={S.heartWrapper}>
+          <div className={S.likeWrapper}>
             <span>{likedNum}</span>
             <ToggleBtn />
           </div>

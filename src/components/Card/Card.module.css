@@ -38,6 +38,11 @@
       padding: 12px 12px 0 12px;
       z-index: 1;
 
+      button {
+        width: 36px;
+        height: 36px;
+      }
+
       .userInfos {
         display: flex;
         align-items: center;
@@ -104,10 +109,15 @@
         }
       }
 
-      .heartWrapper {
+      .likeWrapper {
         display: flex;
         flex-flow: row;
         align-items: center;
+
+        button {
+          width: 36px;
+          height: 36px;
+        }
 
         span {
           color: var(--white);
