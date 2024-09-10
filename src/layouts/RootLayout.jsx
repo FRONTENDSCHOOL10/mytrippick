@@ -5,14 +5,14 @@ import { Outlet } from 'react-router-dom';
 
 function RootLayout() {
   return (
-    <div className="wrapper">
+    <>
       <Header />
       <ScrollDirectionDetector />
-      <main className="content">
+      <main className="container">
         <Outlet />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 

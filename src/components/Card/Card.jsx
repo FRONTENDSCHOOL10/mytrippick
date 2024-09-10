@@ -1,63 +1,89 @@
-import { Link } from 'react-router-dom';
 import MarkerFill from '@/assets/svg/marker-fill.svg?react';
-import S from './Card.module.css';
+import { Link } from 'react-router-dom';
 import ToggleBtn from '../ToggleBtn/ToggleBtn';
+import S from './Card.module.css';
+import { string, bool, number } from 'prop-types';
 
-function Card({ type, fullSize = false }) {
+Card.propTypes = {
+  type: string,
+  fullSize: bool,
+  thumbnailImg: string,
+  likedNum: number,
+  title: string,
+  location: string,
+  userImg: string,
+  userName: string,
+};
+
+function Card({
+  type,
+  fullSize = false,
+  thumbnailImg,
+  likedNum,
+  title,
+  location,
+  userImg,
+  userName,
+}) {
   const rankStyled = type == 'rank' && fullSize ? S.rankCardFull : S.rankCard;
 
   const placeInfo =
     type === 'rank' ? (
       <article className={rankStyled}>
-        <img
-          className={S.placePic}
-          src="/testingPic(delete-later).png"
-          alt=""
-        />
-        <article className={S.cardHeader}>
+        <div className={S.cardHeader}>
           <div className={S.userInfos}>
-            <img src="/testUserPic(delete-later).png" alt="" />
-            <p>사용자</p>
+            <img
+              src={userImg}
+              alt={`${userName}프로필 이미지`}
+              aria-hidden="true"
+            />
+            <p className="title3">{userName}</p>
           </div>
-          <ToggleBtn Bookmark />
-        </article>
+          <ToggleBtn bookmark />
+        </div>
+        <figure>
+          <img className={S.placePhoto} src={thumbnailImg} alt={title} />
+          <span role="none" className={S.dimThumb}></span>
+        </figure>
         <article className={S.places}>
           <div className={S.placeInfos}>
-            <p>
-              <span>1. </span>아쿠아 플래넷
+            <span className={`rank ${S.rankNum}`}>1</span>
+            <p className={`title1 ${S.placeTitle}`}>
+              {title}
+              <div className={S.placePosition}>
+                <MarkerFill className={S.marker} />
+                <span className="caption">{location}</span>
+              </div>
             </p>
-            <div className={S.placePosition}>
-              <MarkerFill className={S.marker} />
-              <span>서울, 도봉구</span>
-            </div>
           </div>
           <div className={S.heartWrapper}>
-            <span>556</span>
+            <span>{likedNum}</span>
             <ToggleBtn />
           </div>
         </article>
       </article>
     ) : (
       <article className={S.listCard}>
-        <img
-          className={S.placePic}
-          src="/testingPic(delete-later).png"
-          alt=""
-        />
         <div className={S.cardHeader}>
-          <ToggleBtn Bookmark />
+          <ToggleBtn bookmark />
         </div>
+        <figure>
+          <img className={S.placePhoto} src={thumbnailImg} alt={title} />
+          <span role="none" className={S.dimThumb}></span>
+        </figure>
         <div className={S.placeInfos}>
-          <p>아쿠아 플래넷</p>
+          <p className="title3">{title}</p>
           <div className={S.placePosition}>
             <MarkerFill className={S.marker} />
-            <span>서울, 도봉구</span>
+            <span>{location}</span>
           </div>
         </div>
       </article>
     );
   return (
-    <article className={S.component}>
+    <article
+      className={`${S.component} ${type === 'post' ? S.postComponent : ''}`}
+    >
       <Link to={''}>{placeInfo}</Link>
     </article>
   );
