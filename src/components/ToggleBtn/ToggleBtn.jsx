@@ -2,41 +2,48 @@ import Bookmarked from '@/assets/svg/bookmarked.svg?react';
 import Liked from '@/assets/svg/liked.svg?react';
 import Unbookmarked from '@/assets/svg/unbookmarked.svg?react';
 import Unliked from '@/assets/svg/unliked.svg?react';
+import { useLikes } from '@/hooks/useLikes';
 import useGlobalStore from '@/stores/useGlobalStore';
-import { bool } from 'prop-types';
-import { useId } from 'react';
+import { bool, string } from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import S from './ToggleBtn.module.css';
 
 ToggleBtn.propTypes = {
   bookmark: bool,
+  postId: string.isRequired,
 };
 
-function ToggleBtn({ bookmark = false }) {
-  const ToggleBtnId = useId();
-
-  const { toggles, toggle } = useGlobalStore((state) => ({
-    toggles: state.toggles,
-    toggle: state.toggle,
+function ToggleBtn({ bookmark = false, postId }) {
+  const navigate = useNavigate();
+  const { isLoggedIn, userId } = useGlobalStore((state) => ({
+    isLoggedIn: state.isLoggedIn,
+    userId: state.userId,
   }));
 
-  const isToggled = toggles[ToggleBtnId] || false;
+  const { isLiked, handleToggleLike } = useLikes(postId, userId);
 
-  const handleClick = () => toggle(ToggleBtnId);
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      if (
+        confirm(
+          '로그인 이후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?'
+        )
+      ) {
+        navigate('/login');
+      }
+    } else {
+      handleToggleLike(); // 좋아요 상태 변경
+    }
+  };
 
-  let labelText;
-  if (isToggled) {
-    if (bookmark === false) {
-      labelText = '좋아요 해제';
-    } else {
-      labelText = '북마크 삭제';
-    }
-  } else {
-    if (bookmark === false) {
-      labelText = '좋아요';
-    } else {
-      labelText = '북마크 추가';
-    }
-  }
+  // 버튼 라벨 텍스트 설정
+  let labelText = isLiked
+    ? bookmark
+      ? '북마크 취소'
+      : '좋아요 취소'
+    : bookmark
+    ? '북마크 추가'
+    : '좋아요';
 
   return (
     <button
@@ -44,18 +51,17 @@ function ToggleBtn({ bookmark = false }) {
       onClick={handleClick}
       aria-label={labelText}
       title={labelText}
-      id={ToggleBtnId}
     >
-      {isToggled ? (
-        bookmark === false ? (
-          <Liked />
-        ) : (
+      {bookmark ? (
+        isLiked ? (
           <Bookmarked />
+        ) : (
+          <Unbookmarked />
         )
-      ) : bookmark === false ? (
-        <Unliked />
+      ) : isLiked ? (
+        <Liked />
       ) : (
-        <Unbookmarked />
+        <Unliked />
       )}
     </button>
   );
