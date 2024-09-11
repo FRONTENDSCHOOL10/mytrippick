@@ -109,7 +109,7 @@ function Menu() {
           </li>
           <li>
             <NavLink
-              to="/등록"
+              to="/writepost"
               aria-label="게시글 등록 페이지로 이동"
               title="게시글 등록하기"
               className={`headline2 ${S.linkItem} ${
