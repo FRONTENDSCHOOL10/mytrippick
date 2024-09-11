@@ -36,6 +36,7 @@
     "immer": "10.1.1",
     "pocketbase": "0.21.5",
     "react": "18.3.1",
+    "react-datepicker": "7.3.0",
     "react-dom": "18.3.1",
     "react-helmet-async": "2.0.5",
     "react-router-dom": "6.26.1",
