@@ -1,30 +1,20 @@
-/* DateInput.module.css */
-.react-datepicker__input-container {
-  position: relative;
-}
-
-.react-datepicker__input-container input {
-  padding-right: 2.5rem; /* 아이콘을 위한 공간 확보 */
-}
-
-.react-datepicker__input-container::after {
-  content: url('@/assets/svg/calander.svg?react'); /* 사용자 정의 아이콘 */
-  position: absolute;
-  right: 10px; /* 아이콘 위치 조정 */
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none; /* 아이콘 클릭 이벤트 무시 */
-}
-
-/* DateInput.module.css */
 .component {
-  position: relative;
-}
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
 
-.datePickerWrapper {
-  position: relative;
-}
+  input {
+    width: 100%;
+    padding: var(--space-2-half) var(--space-4);
+    margin: 0;
+  }
 
-.datePickerInput {
-  padding-right: 2.5rem; /* 아이콘을 위한 공간 확보 */
+  input:focus-visible {
+    border: 1px solid var(--line-200);
+    border-radius: var(--rounded-md);
+  }
+
+  .react-datepicker__tab-loop > .react-datepicker-popper {
+    width: 400px;
+  }
 }
