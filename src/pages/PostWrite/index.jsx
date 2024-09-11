@@ -4,6 +4,7 @@ import AppTextArea from '@/components/AppTextArea/AppTextArea';
 import CategoryBtnList from './components/CategoryBtnList/CategotyBtnList';
 import UploadImage from './components/UploadImage/UploadImage';
 import S from './PostWrite.module.css';
+import DateInput from './components/DataInput/DateInput';
 
 function PostWrite() {
   return (
@@ -23,13 +24,7 @@ function PostWrite() {
         name={'placeAddress'}
         placeholder={'여행지 주소를 선택해주세요'}
       />
-      <AppInput
-        label={'방문한 날짜'}
-        labelHidden={false}
-        type={'date'}
-        name={'visitDate'}
-        placeholder={'방문한 날짜를 선택해주세요'}
-      />
+      <DateInput />
       <CategoryBtnList />
       <AppTextArea
         label={'후기'}

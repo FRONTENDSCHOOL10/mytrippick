@@ -1,0 +1,20 @@
+.component {
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
+
+  input {
+    width: 100%;
+    padding: var(--space-2-half) var(--space-4);
+    margin: 0;
+  }
+
+  input:focus-visible {
+    border: 1px solid var(--line-200);
+    border-radius: var(--rounded-md);
+  }
+
+  .react-datepicker__tab-loop > .react-datepicker-popper {
+    width: 400px;
+  }
+}
