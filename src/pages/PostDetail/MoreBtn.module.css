@@ -1,0 +1,61 @@
+.btnContainer {
+  display: flex;
+  align-items: end;
+  flex-flow: column;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-radius: var(--rounded-full);
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.small {
+  width: 32px;
+  height: 32px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.hiddenBtn {
+  display: none;
+  margin: var(--space-2-half) 0;
+  /* 기능 추가하면서 다시 보이도록... */
+  /* display: inline-block; */
+  overflow: hidden;
+  border-radius: var(--rounded-sm);
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-5);
+    width: inherit;
+    background-color: var(--gray-500);
+    font-family: var(--base-font-family);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.2;
+    border-radius: 0;
+  }
+
+  button:first-child {
+    border-bottom: 1px solid var(--line-400);
+  }
+}
