@@ -18,7 +18,7 @@
 
 .postContainer {
   display: flex;
-  gap: 4px;
+  gap: var(--space-1);
   margin: 0 var(--container-m-sm);
   flex-flow: row wrap;
 
