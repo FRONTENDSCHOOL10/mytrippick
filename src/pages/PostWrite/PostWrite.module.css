@@ -1,3 +1,10 @@
 .component {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-6);
   padding: var(--space-10, 40px) var(--space-4, 16px);
+
+  button {
+    margin-top: var(--space-6);
+  }
 }

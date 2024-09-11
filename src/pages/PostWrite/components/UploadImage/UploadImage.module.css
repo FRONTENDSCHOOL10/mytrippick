@@ -7,6 +7,7 @@
     height: 255px;
     border: 1px dashed var(--line-400);
     border-radius: var(--rounded-sm);
+    background-color: var(--gray-600);
   }
 
   input {
