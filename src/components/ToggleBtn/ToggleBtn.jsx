@@ -1,7 +1,5 @@
-import Bookmarked from '@/assets/svg/bookmarked.svg?react';
-import Liked from '@/assets/svg/liked.svg?react';
-import Unbookmarked from '@/assets/svg/unbookmarked.svg?react';
-import Unliked from '@/assets/svg/unliked.svg?react';
+import Bookmark from '@/assets/svg/bookmark.svg?react';
+import Like from '@/assets/svg/like.svg?react';
 import { useLikes } from '@/hooks/useLikes';
 import useGlobalStore from '@/stores/useGlobalStore';
 import { bool, string } from 'prop-types';
@@ -52,16 +50,16 @@ function ToggleBtn({ bookmark = false, postId }) {
       aria-label={labelText}
       title={labelText}
     >
-      {bookmark ? (
-        isLiked ? (
-          <Bookmarked />
+      {isLiked ? (
+        bookmark === false ? (
+          <Like className={S.liked} />
         ) : (
-          <Unbookmarked />
+          <Bookmark className={S.bookmarked} />
         )
-      ) : isLiked ? (
-        <Liked />
+      ) : bookmark === false ? (
+        <Like className={S.like} />
       ) : (
-        <Unliked />
+        <Bookmark className={S.bookmark} />
       )}
     </button>
   );

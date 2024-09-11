@@ -7,6 +7,7 @@ import PostDetailPage from '@/pages/PostDetail';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import MapSearchPage from './pages/MapSearch';
+import MyPage from './pages/MyPage';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -35,6 +36,11 @@ const navigation = [
     text: '내 주변 여행지 찾기',
     path: '/map-search',
     element: <MapSearchPage />,
+  },
+  {
+    text: '마이페이지',
+    path: '/mypage',
+    element: <MyPage />,
   },
 ];
 

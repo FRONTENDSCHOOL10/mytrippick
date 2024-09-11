@@ -9,4 +9,39 @@
   height: 32px;
   background: none;
   cursor: pointer;
+
+  path {
+    stroke: var(--white);
+    fill: transparent;
+  }
+}
+
+.like {
+  width: 20px;
+  height: 20px;
+}
+
+.liked {
+  width: 20px;
+  height: 20px;
+
+  path {
+    stroke: var(--like);
+    fill: var(--like);
+  }
+}
+
+.bookmark {
+  width: 24px;
+  height: 24px;
+}
+
+.bookmarked {
+  width: 24px;
+  height: 24px;
+
+  path {
+    stroke: var(--brand);
+    fill: var(--brand);
+  }
 }
