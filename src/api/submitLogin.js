@@ -17,8 +17,6 @@ export async function submitLogin(collectionName, datas) {
       : './../../favicon.svg';
 
     setProfileImage(profileImageUrl);
-
-    console.log(authData.record.userProfile);
     setNickname(authData.record.nickName || '닉네임');
 
     return authData;
