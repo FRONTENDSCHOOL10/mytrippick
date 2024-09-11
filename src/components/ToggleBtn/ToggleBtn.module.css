@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   margin: 0;
-  padding: 0;
+  padding: var(--space-1-half, 6px);
   border: none;
   width: 32px;
   height: 32px;

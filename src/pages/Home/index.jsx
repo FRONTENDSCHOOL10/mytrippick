@@ -9,14 +9,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import Chevron from '@/assets/svg/chevron.svg?react';
-import { useState, useEffect } from 'react';
-import { useLoadMore } from '@/hooks/useLoadMore';
-import { getPostsByLikes, getLatestPosts } from '@/api/getPostList';
-import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
+import { useState, useEffect, Fragment } from 'react';
+import PocketBase from 'pocketbase';
 
 function Home() {
-  const [sortedTop3Posts, setSortedTop3Posts] = useState([]);
+  const [rankCardList, setRankCardList] = useState([]);
   const [postCardList, setPostCardList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('전체');
 
   // 카테고리 리스트
@@ -32,50 +32,45 @@ function Home() {
 
   // 상단 인기 여행지 TOP3 (좋아요 수 기준 상위 3개)
   useEffect(() => {
-    const loadTop3Posts = async () => {
-      try {
-        const postsByLikes = await getPostsByLikes();
-        setSortedTop3Posts(postsByLikes.slice(0, 3)); // 상위 3개의 게시글만 추출
-      } catch (error) {
-        console.error('인기 게시글 TOP3 로드 실패:', error);
-      }
+    const pb = new PocketBase('https://mytrippick.pockethost.io');
+    const getRankList = async () => {
+      const response = await pb.collection('posts').getList(1, 3, {
+        sort: '-likedNum', // likedNum을 기준으로 내림차순 정렬
+      });
+      // console.log(response);
+      setRankCardList(response.items);
     };
-
-    loadTop3Posts();
+    getRankList();
   }, []);
 
-  // 하단 최신 등록된 게시글 리스트
+  // 카테고리 변경 시
   useEffect(() => {
-    const loadLatestPosts = async () => {
-      try {
-        const latestPosts = await getLatestPosts();
-        setPostCardList(latestPosts);
-      } catch (error) {
-        console.error('최신 게시글 로드 실패:', error);
+    const pb = new PocketBase('https://mytrippick.pockethost.io');
+    // console.log(selectedCategory);
+
+    const getPostList = async () => {
+      const response = await pb.collection('posts').getList(page, 4, {
+        sort: '-likedNum', // likedNum을 기준으로 내림차순 정렬
+        filter:
+          selectedCategory === '전체' ? '' : `category="${selectedCategory}"`,
+      });
+      // console.log(response.items);
+      setTotalItems(response.totalItems);
+      if (page === 1) {
+        setPostCardList(response.items);
+      } else {
+        setPostCardList([...postCardList, ...response.items]);
       }
     };
-
-    loadLatestPosts();
-  }, []);
-
-  // 필터링된 카드 리스트
-  const filteredCardList =
-    selectedCategory === '전체'
-      ? postCardList
-      : postCardList.filter((item) => item.category === selectedCategory);
-
-  useEffect(() => {
-    console.log('Filtered card list:', filteredCardList); // userId가 있는지 확인
-  }, [filteredCardList]);
+    getPostList();
+  }, [selectedCategory, page]);
 
   // 카테고리 변경 핸들러
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    handleShowMore(10); // 카테고리 변경 시 10개 카드만 다시 노출되도록 설정
+    setPostCardList([]);
+    setPage(1);
   };
-
-  // 더보기 버튼 클릭 시 카드 10개씩 추가
-  const { visibleCount, handleShowMore } = useLoadMore(10, 10);
 
   return (
     <>
@@ -93,7 +88,7 @@ function Home() {
         />
         <meta property="og:site:author" content="리액트에서-구해조" />
       </Helmet>
-      <ToggleBtn />
+      {/* <ToggleBtn /> */}
       {/* 인기 여행지 TOP 3 */}
       <h1 className={`headline4 ${S.sectionTitle}`}>인기 여행지 TOP 3</h1>
       <Swiper
@@ -109,16 +104,18 @@ function Home() {
         }}
         modules={[Pagination, Navigation]}
       >
-        {sortedTop3Posts.map((item, idx) => (
+        {rankCardList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <Card
               type="rank"
+              id={item.id}
               postId={item.id}
-              thumbnailImg={item.photo} // 필드 이름 확인
-              userId={item.userId} // userId 추가
+              userId={item.userId}
+              photo={item.photo}
+              collectionId={item.collectionId}
               likedNum={item.likedNum || 0}
-              title={item.placeName} // 필드 이름 확인
-              location={item.placePosition} // 필드 이름 확인
+              placeName={item.placeName}
+              placePosition={item.placePosition}
             />
           </SwiperSlide>
         ))}
@@ -170,24 +167,30 @@ function Home() {
       {/* 게시글 리스트 */}
       <section className={S.post}>
         <div className={S.postCardList}>
-          {filteredCardList.slice(0, visibleCount).map((item, idx) => (
-            <Card
-              type="post"
-              className={S.card}
-              key={idx}
-              postId={item.id}
-              thumbnailImg={item.photo}
-              title={item.placeName}
-              location={item.placePosition}
-              likedNum={item.likedNum || 0}
-              userId={item.userId}
-            />
+          {postCardList?.map((item, idx) => (
+            <Fragment key={idx}>
+              <Card
+                type="post"
+                // className={S.card}
+                id={item.id}
+                photo={item.photo}
+                collectionId={item.collectionId}
+                likedNum={item.likedNum || 0}
+                placeName={item.placeName}
+                placePosition={item.placePosition}
+                userId={item.userId}
+              />
+            </Fragment>
           ))}
         </div>
-        {visibleCount < filteredCardList.length && (
-          <CommonBtn small onClick={() => handleShowMore(10)}>
-            더보기
-          </CommonBtn>
+        {postCardList.length !== 0 && (
+          <>
+            {postCardList.length !== totalItems ? (
+              <CommonBtn small onClick={() => setPage(page + 1)}>
+                더보기
+              </CommonBtn>
+            ) : null}
+          </>
         )}
       </section>
     </>
