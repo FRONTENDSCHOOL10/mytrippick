@@ -1,0 +1,32 @@
+.component {
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 181px;
+    height: 255px;
+    border: 1px dashed var(--line-400);
+    border-radius: var(--rounded-sm);
+    background-color: var(--gray-600);
+  }
+
+  input {
+    display: none;
+  }
+
+  img {
+    width: 181px;
+    height: 255px;
+    border-radius: var(--rounded-sm);
+  }
+
+  .imageRounded {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--rounded-full);
+    background-color: rgba(46, 46, 46, 1);
+  }
+}
