@@ -84,7 +84,7 @@ function MyPage() {
             {postList.map((item) => {
               return (
                 <li key={item.id}>
-                  <a href="/">
+                  <a href={`/post/${item.id}`}>
                     {/* 링크는 각 게시글 상세페이지로 연결되도록 추후 수정 */}
                     <img
                       src={getPbImageURL(item)}
