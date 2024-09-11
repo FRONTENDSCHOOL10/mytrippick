@@ -11,8 +11,15 @@ export async function submitLogin(collectionName, datas) {
       useGlobalStore.getState();
 
     setIsLoggedIn(true);
-    setProfileImage(authData.record.profileImage || './../../favicon.svg');
-    setNickname(authData.record.nickname || '닉네임');
+
+    const profileImageUrl = authData.record.userProfile
+      ? `${pb.baseUrl}/api/files/${authData.record.collectionId}/${authData.record.id}/${authData.record.userProfile}`
+      : './../../favicon.svg';
+
+    setProfileImage(profileImageUrl);
+
+    console.log(authData.record.userProfile);
+    setNickname(authData.record.nickName || '닉네임');
 
     return authData;
   } catch (error) {
