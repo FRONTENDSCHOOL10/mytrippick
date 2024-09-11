@@ -23,7 +23,7 @@ const useGlobalStore = create((set) => ({
   initializeUser: async () => {
     const loggedIn = localStorage.getItem('isLoggedIn');
     if (loggedIn && pb.authStore.isValid) {
-      const user = pb.authStore.model; // 현재 사용자 정보 가져오기
+      const user = pb.authStore.model;
 
       const profileImageUrl = user.profileImage
         ? `${pb.baseUrl}/api/files/${user.collectionId}/${user.id}/${user.profileImage}`
@@ -35,7 +35,6 @@ const useGlobalStore = create((set) => ({
         nickname: user.nickName || '닉네임',
       });
     } else {
-      // 로그아웃 상태일 경우 초기화
       set({
         isLoggedIn: false,
         profileImage: '',
@@ -46,7 +45,7 @@ const useGlobalStore = create((set) => ({
 
   logout: () => {
     localStorage.removeItem('isLoggedIn');
-    pb.authStore.clear(); // PocketBase에서 인증 정보 제거
+    pb.authStore.clear();
     set({
       isLoggedIn: false,
       profileImage: '',

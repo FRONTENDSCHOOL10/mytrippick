@@ -12,11 +12,9 @@ export async function submitLogin(collectionName, datas) {
 
     setIsLoggedIn(true);
 
-    const profileImageUrl = authData.record.userProfile
-      ? `${pb.baseUrl}/api/files/${authData.record.collectionId}/${authData.record.id}/${authData.record.userProfile}`
-      : './../../favicon.svg';
-
-    setProfileImage(profileImageUrl);
+    setProfileImage(
+      `${pb.baseUrl}/api/files/${authData.record.collectionId}/${authData.record.id}/${authData.record.userProfile}`
+    );
     setNickname(authData.record.nickName || '닉네임');
 
     return authData;

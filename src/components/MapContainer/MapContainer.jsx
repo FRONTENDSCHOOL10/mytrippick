@@ -7,16 +7,14 @@ import ToggleMap from '@/assets/svg/toggle-map.svg?react';
 import Card from '../Card/Card';
 import SearchAddr from '../SearchAddr';
 
-const { kakao } = window;
-
 const MapContainer = () => {
   const location = useGeolocation();
-  const [showMap, setShowMap] = useState(true); // 맵과 리스트 페이지 전환을 위한 상태
+  const [showMap, setShowMap] = useState(true);
 
   let map;
 
   useEffect(() => {
-    if (!location.loaded || !showMap) return;
+    if (!location.loaded || !showMap || !window.kakao) return;
 
     const mapContainer = document.getElementById('map');
     const mapOption = {
