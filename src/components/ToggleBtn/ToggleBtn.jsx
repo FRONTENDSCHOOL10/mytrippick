@@ -20,6 +20,9 @@ function ToggleBtn({ bookmark = false, postId }) {
 
   const { isLiked, handleToggleLike } = useLikes(postId, userId);
 
+  console.log('userId in ToggleBtn:', userId);
+  console.log('postId in ToggleBtn:', postId);
+
   const handleClick = () => {
     if (!isLoggedIn) {
       if (
@@ -43,24 +46,23 @@ function ToggleBtn({ bookmark = false, postId }) {
     ? '북마크 추가'
     : '좋아요';
 
+  // 좋아요/북마크 상태에 따른 클래스 설정
+  const buttonClass = isLiked
+    ? bookmark
+      ? S.bookmarked
+      : S.liked
+    : bookmark
+    ? S.bookmark
+    : S.like;
+
   return (
     <button
-      className={S.button}
+      className={`${S.toggleBtn} ${buttonClass}`}
       onClick={handleClick}
       aria-label={labelText}
       title={labelText}
     >
-      {isLiked ? (
-        bookmark === false ? (
-          <Like className={S.liked} />
-        ) : (
-          <Bookmark className={S.bookmarked} />
-        )
-      ) : bookmark === false ? (
-        <Like className={S.like} />
-      ) : (
-        <Bookmark className={S.bookmark} />
-      )}
+      {bookmark ? <Bookmark /> : <Like />}
     </button>
   );
 }

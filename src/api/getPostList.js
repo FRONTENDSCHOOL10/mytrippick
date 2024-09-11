@@ -1,7 +1,7 @@
 import pb from './pb';
 
 // 좋아요 순으로 정렬된 게시글 목록 가져오기
-export async function fetchPostsByLikes() {
+export async function getPostsByLikes() {
   try {
     const posts = await pb.collection('posts').getFullList({
       sort: '-likedNum', // 좋아요 수 기준 내림차순 정렬
@@ -15,7 +15,7 @@ export async function fetchPostsByLikes() {
 }
 
 // 최신 등록된 게시글 목록 가져오기
-export async function fetchLatestPosts() {
+export async function getLatestPosts() {
   try {
     const posts = await pb.collection('posts').getFullList({
       sort: '-created', // 최신순으로 정렬

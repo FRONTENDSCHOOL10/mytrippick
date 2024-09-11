@@ -17,28 +17,36 @@ Card.propTypes = {
 };
 
 function Card({ type, fullSize = false, postId, likedNum, userId }) {
+  console.log('userId in Card:', userId);
+
   const {
     userInfo,
     loading: userLoading,
     error: userError,
   } = useUserData(userId);
+
   const {
     postInfo,
     loading: postLoading,
     error: postError,
   } = usePostData(postId);
-  const { likeCount, isLiked, handleToggleLike } = useLikes(
-    postId,
-    userId,
-    likedNum
-  );
+
+  const { likeCount } = useLikes(postId, userId, likedNum);
+
+  console.log('userId:', userId);
 
   if (userLoading || postLoading) return <div>로딩 중...</div>;
   // 사용자 또는 게시글 데이터를 가져오는 동안 발생한 에러 처리
   if (userError || postError) {
-    console.error('에러 발생:', userError || postError); // 콘솔에 에러 기록
-    return <div>에러 발생: {userError || postError}</div>; // 사용자에게 에러 메시지 표시
+    console.error('User data fetch error:', userError);
+    console.error('Post data fetch error:', postError);
+    return <div>에러 발생: {userError || postError}</div>;
   }
+
+  // // userInfo와 postInfo가 없으면 placeInfo를 null로 반환하여 렌더링 중지
+  // if (!userInfo || !postInfo) {
+  //   return null;
+  // }
 
   // 카드 스타일을 결정하는 로직
   const rankStyled = type === 'rank' && fullSize ? S.rankCardFull : S.rankCard;
@@ -80,12 +88,8 @@ function Card({ type, fullSize = false, postId, likedNum, userId }) {
           <div className={S.likeWrapper}>
             {/* 좋아요 수 표시 */}
             <span>{likeCount}</span>
-            {/* 좋아요 토글 버튼 (onToggle으로 likeCount 업데이트) */}
-            <ToggleBtn
-              postId={postId}
-              isLiked={isLiked}
-              onToggle={handleToggleLike}
-            />
+            {/* 좋아요 토글 버튼 */}
+            <ToggleBtn postId={postId} />
           </div>
         </div>
       </article>

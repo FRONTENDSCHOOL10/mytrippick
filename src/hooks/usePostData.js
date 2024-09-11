@@ -12,6 +12,9 @@ export function usePostData(postId) {
         setLoading(true);
         const post = await pb.collection('posts').getOne(postId);
         setPostInfo(post);
+
+        console.log('postId:', postId);
+
         // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setError('게시글 정보 가져오기 실패');

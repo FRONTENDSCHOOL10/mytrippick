@@ -11,7 +11,8 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import Chevron from '@/assets/svg/chevron.svg?react';
 import { useState, useEffect } from 'react';
 import { useLoadMore } from '@/hooks/useLoadMore';
-import { fetchPostsByLikes, fetchLatestPosts } from '@/api/fetchPosts';
+import { getPostsByLikes, getLatestPosts } from '@/api/getPostList';
+import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
 
 function Home() {
   const [sortedTop3Posts, setSortedTop3Posts] = useState([]);
@@ -33,7 +34,7 @@ function Home() {
   useEffect(() => {
     const loadTop3Posts = async () => {
       try {
-        const postsByLikes = await fetchPostsByLikes();
+        const postsByLikes = await getPostsByLikes();
         setSortedTop3Posts(postsByLikes.slice(0, 3)); // 상위 3개의 게시글만 추출
       } catch (error) {
         console.error('인기 게시글 TOP3 로드 실패:', error);
@@ -47,7 +48,7 @@ function Home() {
   useEffect(() => {
     const loadLatestPosts = async () => {
       try {
-        const latestPosts = await fetchLatestPosts();
+        const latestPosts = await getLatestPosts();
         setPostCardList(latestPosts);
       } catch (error) {
         console.error('최신 게시글 로드 실패:', error);
@@ -62,6 +63,10 @@ function Home() {
     selectedCategory === '전체'
       ? postCardList
       : postCardList.filter((item) => item.category === selectedCategory);
+
+  useEffect(() => {
+    console.log('Filtered card list:', filteredCardList); // userId가 있는지 확인
+  }, [filteredCardList]);
 
   // 카테고리 변경 핸들러
   const handleCategoryChange = (category) => {
@@ -88,6 +93,7 @@ function Home() {
         />
         <meta property="og:site:author" content="리액트에서-구해조" />
       </Helmet>
+      <ToggleBtn />
       {/* 인기 여행지 TOP 3 */}
       <h1 className={`headline4 ${S.sectionTitle}`}>인기 여행지 TOP 3</h1>
       <Swiper
@@ -110,7 +116,7 @@ function Home() {
               postId={item.id}
               thumbnailImg={item.photo} // 필드 이름 확인
               userId={item.userId} // userId 추가
-              likedNum={item.likedNum}
+              likedNum={item.likedNum || 0}
               title={item.placeName} // 필드 이름 확인
               location={item.placePosition} // 필드 이름 확인
             />
@@ -173,7 +179,7 @@ function Home() {
               thumbnailImg={item.photo}
               title={item.placeName}
               location={item.placePosition}
-              likedNum={item.likedNum}
+              likedNum={item.likedNum || 0}
               userId={item.userId}
             />
           ))}
