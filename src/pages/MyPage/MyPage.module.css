@@ -1,0 +1,41 @@
+.visitedPlace {
+  margin: var(--space-2-half) var(--container-m-md);
+}
+
+.noPost {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  min-height: 428px;
+  color: var(--text-200);
+  flex-flow: column;
+
+  p {
+    text-align: center;
+  }
+}
+
+.postContainer {
+  display: flex;
+  gap: 4px;
+  margin: 0 var(--container-m-sm);
+  flex-flow: row wrap;
+
+  li {
+    width: calc((100% - 8px) / 3);
+    aspect-ratio: 22/31;
+    border-radius: var(--rounded-xs);
+    overflow: hidden;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.logout {
+  margin: 60px 0;
+}

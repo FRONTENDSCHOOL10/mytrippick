@@ -1,7 +1,5 @@
-import Bookmarked from '@/assets/svg/bookmarked.svg?react';
-import Liked from '@/assets/svg/liked.svg?react';
-import Unbookmarked from '@/assets/svg/unbookmarked.svg?react';
-import Unliked from '@/assets/svg/unliked.svg?react';
+import Bookmark from '@/assets/svg/bookmark.svg?react';
+import Like from '@/assets/svg/like.svg?react';
 import useGlobalStore from '@/stores/useGlobalStore';
 import { bool } from 'prop-types';
 import { useId } from 'react';
@@ -48,14 +46,14 @@ function ToggleBtn({ bookmark = false }) {
     >
       {isToggled ? (
         bookmark === false ? (
-          <Liked />
+          <Like className={S.liked} />
         ) : (
-          <Bookmarked />
+          <Bookmark className={S.bookmarked} />
         )
       ) : bookmark === false ? (
-        <Unliked />
+        <Like className={S.like} />
       ) : (
-        <Unbookmarked />
+        <Bookmark className={S.bookmark} />
       )}
     </button>
   );

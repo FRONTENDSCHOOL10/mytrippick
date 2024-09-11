@@ -1,0 +1,48 @@
+.profileContainer {
+  display: flex;
+  gap: var(--space-6);
+  justify-content: space-between;
+  margin: var(--space-10) var(--container-m-md) var(--space-7-half);
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: var(--space-2);
+    border: 1px solid var(--line-300, #6e6e6e);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--rounded-full);
+
+    &:hover {
+      border: 1px solid var(--line-200, #8a8a8a);
+      background-color: var(--gray-500, #202020);
+    }
+  }
+}
+
+.profile {
+  display: flex;
+  gap: var(--space-3);
+  align-items: start;
+
+  img {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--rounded-full);
+  }
+}
+
+.profileText {
+  flex-wrap: wrap;
+
+  p {
+    margin-top: 2px;
+    font-family: var(--base-font-family);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #bbbbbb;
+  }
+}
