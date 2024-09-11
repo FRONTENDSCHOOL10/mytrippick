@@ -5,7 +5,7 @@
   flex-shrink: 0;
   font-family: var(--base-font-family);
   font-weight: 500;
-  line-height: 100%;
+  line-height: 1;
   color: var(--white, #fff);
 }
 
