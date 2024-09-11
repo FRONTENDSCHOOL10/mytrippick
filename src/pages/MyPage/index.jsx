@@ -2,9 +2,10 @@ import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import LoginModal from './LoginModal';
 import S from './MyPage.module.css';
 import ProfileBox from './ProfileBox';
-import LoginModal from './LoginModal';
 
 function MyPage() {
   // 상태
@@ -43,10 +44,10 @@ function MyPage() {
 
   const noPost = postList.length === 0;
 
-  const handleClickNewPost = () => {
+  const handleNewPost = () => {
     location.href = '/게시글작성'; // 게시글 작성 페이지로 이동
   };
-  const handleClickLogout = () => {
+  const handleLogout = () => {
     location.replace('/'); // 메인 페이지로 이동
     isLoggedIn = false; // 임시 로그아웃 처리
   };
@@ -74,7 +75,7 @@ function MyPage() {
               아직 여행지 기록이 없네요. <br />
               멋진 여행을 다녀오셨다면, 첫 기록을 남겨보세요!
             </p>
-            <CommonBtn small onClick={handleClickNewPost}>
+            <CommonBtn small onClick={handleNewPost}>
               여행 기록 작성하러 가기
             </CommonBtn>
             {/* 클릭 시 게시글 작성 페이지로 이동 */}
@@ -84,14 +85,14 @@ function MyPage() {
             {postList.map((item) => {
               return (
                 <li key={item.id}>
-                  <a href={`/post/${item.id}`}>
+                  <Link to={`/post/${item.id}`}>
                     {/* 링크는 각 게시글 상세페이지로 연결되도록 추후 수정 */}
                     <img
                       src={getPbImageURL(item)}
                       alt={item.placeName}
                       title={item.placeName}
                     />
-                  </a>
+                  </Link>
                 </li>
               );
             })}
@@ -99,7 +100,7 @@ function MyPage() {
         )}
       </section>
       <section className={S.logout}>
-        <CommonBtn small onClick={handleClickLogout}>
+        <CommonBtn small onClick={handleLogout}>
           로그아웃
         </CommonBtn>
         {/* 로그아웃 후 메인페이지로 이동하도록? */}

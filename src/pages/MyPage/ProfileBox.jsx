@@ -1,8 +1,8 @@
 import getPbImageURL from '@/api/getPbImageURL';
 import Settings from '@/assets/svg/settings.svg?react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
+import { Link } from 'react-router-dom';
 import S from './ProfileBox.module.css';
-import { string } from 'prop-types';
 
 ProfileBox.propTypes = {
   userData: PropTypes.shape({
@@ -24,14 +24,14 @@ function ProfileBox({ userData }) {
             <p>{userData.bio}</p>
           </div>
         </div>
-        <a
-          href="/회원정보수정"
+        <Link
+          to="/회원정보수정"
           aria-label="회원 정보 수정"
           title="회원 정보 수정"
         >
           {/* 회원 정보 수정 페이지로 이동 */}
           <Settings />
-        </a>
+        </Link>
       </section>
     </>
   );
