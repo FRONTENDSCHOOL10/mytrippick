@@ -206,6 +206,7 @@
   font-size: 14px;
   line-height: 1;
   font-weight: 600;
+  background-color: inherit;
   color: var(--text-brand-200);
   background: transparent;
   padding: var(--space-1-half) 0;
