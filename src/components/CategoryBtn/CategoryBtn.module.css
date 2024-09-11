@@ -10,7 +10,7 @@
 
   label {
     display: inline-flex;
-    padding: 5px var(--space-1-half);
+    padding: 5px var(--space-2-half);
     justify-content: center;
     align-items: center;
     gap: 5px;
@@ -18,7 +18,7 @@
     border: 1px solid var(--line-300);
     background-color: var(--black);
     color: var(--white);
-    color: var(--white, var(--color-white, #fff));
+    white-space: nowrap;
     font-family: 'Pretendard Variable';
     font-size: 20px;
     font-style: normal;
