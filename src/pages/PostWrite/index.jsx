@@ -4,19 +4,20 @@ import AppTextArea from '@/components/AppTextArea/AppTextArea';
 import CategoryBtnList from './components/CategoryBtnList/CategotyBtnList';
 import UploadImage from './components/UploadImage/UploadImage';
 import DateInput from './components/DataInput/DateInput';
+import Search from '@/assets/svg/search.svg?react';
 import S from './PostWrite.module.css';
 
 function PostWrite() {
   return (
     <section className={S.component}>
       <UploadImage />
-      <AppInput
-        label={'여행지 명'}
-        labelHidden={false}
-        type={'text'}
-        name={'placeName'}
-        placeholder={'방문한 여행지를 입력해주세요'}
-      />
+      <article className={S.searchPlaceBtnWrapper}>
+        <h3 className="label">방문한 날짜</h3>
+        <button className={S.searchPlaceBtn} type="button">
+          여행지를 선택해주세요
+          <Search aria-label="돋보기 버튼 아이콘" />
+        </button>
+      </article>
       <AppInput
         label={'여행지 주소'}
         labelHidden={false}
