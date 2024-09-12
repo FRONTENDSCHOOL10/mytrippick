@@ -24,7 +24,6 @@
     gap: var(--space-2);
 
     border-radius: var(--rounded-md);
-    border: 1px solid red;
     background-color: var(--dimmed);
 
     padding: 0 var(--space-3);
@@ -32,6 +31,29 @@
 
     input {
       background-color: inherit;
+    }
+  }
+
+  .searchDateList {
+    display: flex;
+    flex-flow: column;
+    margin-top: var(--space-5);
+    gap: 10px;
+
+    .searchDateItem {
+      display: flex;
+      flex-flow: column;
+
+      .itemWrapper {
+        display: flex;
+        flex-flow: column;
+        gap: var(--space-1);
+        padding: var(--space-3) var(--space-3-half);
+
+        span {
+          color: var(--text-100);
+        }
+      }
     }
   }
 }

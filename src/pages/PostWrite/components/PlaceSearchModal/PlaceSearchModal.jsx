@@ -44,6 +44,16 @@ function PlaceSearchModal() {
           placeholder="여행지를 검색해보세요"
         />
       </div>
+      <ul className={S.searchDateList}>
+        {dummyData.map((item, index) => (
+          <li tabIndex={0} key={index} className={S.searchDateItem}>
+            <div className={S.itemWrapper}>
+              <p className="title2">{item.placeName}</p>
+              <span className="caption">{item.placePosition}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
     </article>
   );
 }
