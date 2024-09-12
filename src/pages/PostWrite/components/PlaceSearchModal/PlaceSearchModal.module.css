@@ -1,0 +1,37 @@
+.component {
+  background-color: var(--gray-600);
+  border-radius: 30px 30px 0 0;
+
+  .searchHeader {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3px;
+
+    padding: var(--space-2-half) 0 var(--space-2-half) var(--space-1);
+    margin-bottom: var(--space-4, 16px);
+
+    button {
+      margin: 0;
+    }
+  }
+  .inputWrapper {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    gap: var(--space-2);
+
+    border-radius: var(--rounded-md);
+    border: 1px solid red;
+    background-color: var(--dimmed);
+
+    padding: 0 var(--space-3);
+    height: 44px;
+
+    input {
+      background-color: inherit;
+    }
+  }
+}
