@@ -99,3 +99,8 @@
   background-color: var(--brand, #8eff00);
   opacity: 1;
 }
+
+.error {
+  padding: 0 var(--container-m-sm);
+  color: var(--text-300, #6e6e6e);
+}

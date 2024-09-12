@@ -61,8 +61,8 @@ function HomeContents() {
       setLoading(true);
       setError(null);
       try {
-        const response = await pb.collection('posts').getList(page, 4, {
-          sort: '-likedNum',
+        const response = await pb.collection('posts').getList(page, 8, {
+          sort: '-created',
           filter:
             selectedCategory === '전체' ? '' : `category="${selectedCategory}"`,
         });
@@ -166,7 +166,7 @@ function HomeContents() {
 
       {/* 게시글 리스트 */}
       <section className={S.post}>
-        {error && <p className={S.error}>{error}</p>}
+        {error && <p className={`body1 ${S.error}`}>{error}</p>}
         <div className={S.postCardList}>
           {postCardList?.map((item, idx) => (
             <Fragment key={idx}>
@@ -187,11 +187,7 @@ function HomeContents() {
         {postCardList.length !== 0 && (
           <>
             {postCardList.length !== totalItems ? (
-              <CommonBtn
-                small
-                onClick={() => setPage(page + 1)}
-                disabled={loading}
-              >
+              <CommonBtn small onClick={() => setPage(page + 1)}>
                 더보기
               </CommonBtn>
             ) : null}
