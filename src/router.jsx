@@ -3,12 +3,13 @@ import { configRoutes, getNavigationItems } from '@/utils';
 import { createBrowserRouter } from 'react-router-dom';
 
 import HomePage from '@/pages/Home';
-import PostDetailPage from '@/pages/PostDetail';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-import MapSearchPage from './pages/MapSearch';
 import MyPage from './pages/MyPage';
+import RankingPage from './pages/Ranking';
+import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
+import PostDetailPage from '@/pages/PostDetail';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -29,9 +30,14 @@ const navigation = [
     element: <RegisterPage />,
   },
   {
-    text: '게시글 상세',
-    path: '/post/:id',
-    element: <PostDetailPage />,
+    text: '마이페이지',
+    path: '/mypage',
+    element: <MyPage />,
+  },
+  {
+    text: '전체 랭킹 보기',
+    path: '/ranking',
+    element: <RankingPage />,
   },
   {
     text: '내 주변 여행지 찾기',
@@ -39,14 +45,14 @@ const navigation = [
     element: <MapSearchPage />,
   },
   {
-    text: '마이페이지',
-    path: '/mypage',
-    element: <MyPage />,
-  },
-  {
     text: '게시글 작성',
     path: '/writepost',
     element: <PostWrite />,
+  },
+  {
+    text: '게시글 상세',
+    path: '/post/:id',
+    element: <PostDetailPage />,
   },
 ];
 
