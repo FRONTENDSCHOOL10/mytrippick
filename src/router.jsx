@@ -2,7 +2,6 @@ import RootLayout from '@/layouts/RootLayout';
 import { configRoutes, getNavigationItems } from '@/utils';
 import { createBrowserRouter } from 'react-router-dom';
 
-import HomePage from '@/pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import MyPage from './pages/MyPage';
@@ -15,8 +14,7 @@ const navigation = [
   {
     text: '홈',
     path: '',
-    // display: false,
-    element: <HomePage />,
+    lazy: () => import('@/pages/Home'),
   },
   {
     text: '로그인',
@@ -34,7 +32,7 @@ const navigation = [
     element: <MyPage />,
   },
   {
-    text: '전체 랭킹 보기',
+    text: '인기 여행지 랭킹',
     path: '/ranking',
     lazy: () => import('@/pages/Ranking'),
   },

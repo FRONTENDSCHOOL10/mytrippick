@@ -1,0 +1,101 @@
+.rankList {
+  width: 100%;
+  height: 630px;
+  padding: 0 var(--container-m-sm);
+}
+
+.rankList :global(.swiper-slide) {
+  width: 95%;
+  max-width: 330px;
+  margin-inline-end: var(--space-2, 8px);
+}
+
+.rankList :global(.swiper-slide):last-child {
+  margin-inline-end: var(--space-2, 0);
+}
+
+.post {
+  margin-block-end: 60px;
+}
+
+.postCardList {
+  padding: 0 var(--container-m-sm);
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: var(--space-8, 32px) var(--space-2, 8px);
+  flex-wrap: wrap;
+  margin-block-end: var(--space-10, 40px);
+}
+
+.card {
+  width: 100%;
+}
+
+.moreBtn {
+  margin-block-start: 40px;
+}
+
+.categoryContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-1, 4px);
+  padding: 0 var(--container-m-sm);
+  margin-block-end: var(--space-6, 24px);
+}
+
+.swiperButtonPrev,
+.swiperButtonNext {
+  &:hover {
+    color: var(--brand, #8eff00);
+  }
+  color: var(--white, #fff);
+  position: absolute;
+  top: 566px;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 50% 50%;
+  z-index: 11;
+  transition: opacity 0.1s ease 0s;
+}
+
+.swiperButtonPrev {
+  left: var(--container-m-sm);
+  transform: translateY(-50%);
+}
+
+.swiperButtonNext {
+  right: var(--container-m-sm);
+  transform: scaleX(-1) translateY(-50%);
+}
+
+/* 내비게이션 버튼 - 비활성화 상태 */
+.swiperButtonPrev:disabled,
+.swiperButtonNext:disabled {
+  color: var(--white, #fff);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.swiperPagination {
+  position: absolute;
+  bottom: 60px !important;
+  display: flex;
+  justify-content: center;
+}
+
+:global(.swiper-pagination-bullet) {
+  width: 7px;
+  height: 7px;
+  opacity: 0.2;
+  background-color: var(--white, #fff);
+  border-radius: var(--rounded-full, 50%);
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+:global(.swiper-pagination-bullet-active) {
+  background-color: var(--brand, #8eff00);
+  opacity: 1;
+}
