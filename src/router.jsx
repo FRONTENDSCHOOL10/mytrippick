@@ -6,7 +6,6 @@ import HomePage from '@/pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import MyPage from './pages/MyPage';
-import RankingPage from './pages/Ranking';
 import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
 import PostDetailPage from '@/pages/PostDetail';
@@ -37,7 +36,7 @@ const navigation = [
   {
     text: '전체 랭킹 보기',
     path: '/ranking',
-    element: <RankingPage />,
+    lazy: () => import('@/pages/Ranking'),
   },
   {
     text: '내 주변 여행지 찾기',
