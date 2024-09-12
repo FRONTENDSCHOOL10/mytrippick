@@ -25,7 +25,7 @@ const ScrollDirectionDetector = () => {
     return () => {
       window.removeEventListener('scroll', isScrollDown);
     };
-  }, []);
+  }, [setScrollDirection]);
 
   return null;
 };
