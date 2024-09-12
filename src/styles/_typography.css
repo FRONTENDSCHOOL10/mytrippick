@@ -32,6 +32,10 @@
   font-size: 18px;
   font-weight: 600;
   line-height: 1.4;
+
+  @media (min-width: 400px) {
+    font-size: 20px;
+  }
 }
 
 .title2 {
@@ -40,6 +44,10 @@
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.02em;
+
+  @media (min-width: 400px) {
+    font-size: 18px;
+  }
 }
 
 .title3 {
@@ -47,6 +55,10 @@
   font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
+
+  @media (min-width: 400px) {
+    font-size: 17px;
+  }
 }
 
 .body1 {
