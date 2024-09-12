@@ -32,7 +32,7 @@ const useGlobalStore = create((set) => ({
       set({
         isLoggedIn: true,
         profileImage: profileImageUrl,
-        nickname: user.nickName || '닉네임',
+        nickname: user.nickName,
       });
     } else {
       set({
@@ -53,7 +53,7 @@ const useGlobalStore = create((set) => ({
     });
   },
 
-  toggles: {},
+  toggles: {},``
   toggle: (id) =>
     set((state) => ({
       toggles: {
