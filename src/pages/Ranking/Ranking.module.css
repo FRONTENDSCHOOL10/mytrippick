@@ -1,0 +1,13 @@
+.sectionTitle {
+  padding: var(--space-5, 20px) var(--container-m-md, 16px);
+}
+
+.container {
+  padding: 0 var(--container-m-sm, 12px);
+}
+
+.rankCardList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10, 40px);
+}
