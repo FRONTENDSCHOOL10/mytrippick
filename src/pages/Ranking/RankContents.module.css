@@ -9,3 +9,7 @@
   gap: var(--space-10, 40px);
   margin-block-end: var(--space-10, 40px);
 }
+
+.error {
+  color: var(--text-300, #6e6e6e);
+}
