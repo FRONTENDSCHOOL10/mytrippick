@@ -21,7 +21,7 @@ const RankContents = () => {
         const response = await pb.collection('posts').getList(page, 5, {
           sort: '-likedNum',
         });
-        console.log(response.items);
+        // console.log(response.items);
         setTotalItems(response.totalItems);
         if (page === 1) {
           setRankCardList(response.items);
