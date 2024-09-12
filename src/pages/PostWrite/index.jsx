@@ -3,8 +3,8 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import AppTextArea from '@/components/AppTextArea/AppTextArea';
 import CategoryBtnList from './components/CategoryBtnList/CategotyBtnList';
 import UploadImage from './components/UploadImage/UploadImage';
-import S from './PostWrite.module.css';
 import DateInput from './components/DataInput/DateInput';
+import S from './PostWrite.module.css';
 
 function PostWrite() {
   return (
