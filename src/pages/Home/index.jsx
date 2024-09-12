@@ -11,6 +11,7 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import Chevron from '@/assets/svg/chevron.svg?react';
 import { useState, useEffect, Fragment } from 'react';
 import PocketBase from 'pocketbase';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
 
 function Home() {
   const [rankCardList, setRankCardList] = useState([]);
@@ -88,7 +89,7 @@ function Home() {
         />
         <meta property="og:site:author" content="리액트에서-구해조" />
       </Helmet>
-      {/* <ToggleBtn /> */}
+
       {/* 인기 여행지 TOP 3 */}
       <h1 className={`headline4 ${S.sectionTitle}`}>인기 여행지 TOP 3</h1>
       <Swiper
