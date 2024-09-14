@@ -1,12 +1,16 @@
-import ComponentTemplate from '@/components/componentTemplate';
+import { lazy, Suspense } from 'react';
+import S from './Ranking.module.css';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
 
-const Ranking = () => {
+const RankContents = lazy(() => import('./RankContents'));
+
+export function Component() {
   return (
     <>
-      <ComponentTemplate />
-      <h1>전체 랭킹 보기</h1>
+      <h1 className={`headline2 ${S.sectionTitle}`}>인기 여행지 랭킹</h1>
+      <Suspense fallback={<AppSpinner />}>
+        <RankContents />
+      </Suspense>
     </>
   );
-};
-
-export default Ranking;
+}

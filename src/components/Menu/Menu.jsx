@@ -87,13 +87,13 @@ function Menu() {
         <ul>
           <li>
             <NavLink
-              to="/전체랭킹"
-              aria-label="전체 랭킹 보기 페이지로 이동"
-              title="전체 랭킹 보기"
+              to="/ranking"
+              aria-label="여행지 랭킹 보기 페이지로 이동"
+              title="여행지 랭킹 보기"
               className={`headline2 ${S.linkItem}`}
               onClick={() => useGlobalStore.setState({ isMenuOpen: false })}
             >
-              전체 랭킹 보기
+              여행지 랭킹 보기
             </NavLink>
           </li>
           <li>
