@@ -21,7 +21,7 @@ function AppInput2({ onSearch }) {
   return (
     <div className={S.AppInput}>
       <div className={S.inputWrapper}>
-        <button onClick={handleSearch}>
+        <button className={S.searchButton} onClick={handleSearch}>
           <SearchIcon />
         </button>
         <input

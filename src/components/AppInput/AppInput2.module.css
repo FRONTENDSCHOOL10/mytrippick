@@ -47,7 +47,7 @@ input::placeholder {
   letter-spacing: -0.34px;
 }
 
-button {
+.searchButton {
   display: flex;
   align-items: center;
   justify-content: center;

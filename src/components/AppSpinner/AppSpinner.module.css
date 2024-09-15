@@ -1,0 +1,10 @@
+.appSpinner {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4, 16px);
+  margin: 0 auto;
+  padding: 200px 0;
+}

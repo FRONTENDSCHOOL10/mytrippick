@@ -12,6 +12,6 @@
   height: 36px;
 }
 
-.backBtn svg path {
-  stroke: var(--brand);
+.backBtn {
+  color: var(--brand);
 }

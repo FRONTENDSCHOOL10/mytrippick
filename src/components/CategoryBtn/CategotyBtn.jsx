@@ -10,6 +10,11 @@ CategoryBtn.propTypes = {
 
 function CategoryBtn({ label, checked = false, onChecked }) {
   const id = useId();
+
+  const handleChange = () => {
+    onChecked?.(label);
+  };
+
   return (
     <div className={S.component}>
       <input
@@ -19,6 +24,7 @@ function CategoryBtn({ label, checked = false, onChecked }) {
         value={label}
         defaultChecked={checked}
         onClick={onChecked}
+        onChange={handleChange}
       />
       <label htmlFor={id}>{label}</label>
     </div>

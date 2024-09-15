@@ -12,6 +12,7 @@ AppInput.propTypes = {
   defaultValue: string,
   placeholder: string.isRequired,
   onChange: func,
+  isRequired: bool,
 };
 
 function AppInput({
@@ -22,6 +23,7 @@ function AppInput({
   defaultValue = '',
   placeholder = '',
   onChange,
+  isRequired = true,
 }) {
   const [types, setTypes] = useState(type);
   const [isVisible, setIsVisible] = useState(false);
@@ -48,6 +50,7 @@ function AppInput({
 
   return (
     <article className={S.AppInput}>
+      <h3 className="sr-only">{label} input 공간</h3>
       <label className="label" htmlFor={id} hidden={labelHidden}>
         {label}
       </label>
@@ -60,6 +63,7 @@ function AppInput({
           placeholder={placeholder}
           defaultValue={defaultValue}
           onChange={onChange}
+          required={isRequired}
         />
         <button
           type="button"

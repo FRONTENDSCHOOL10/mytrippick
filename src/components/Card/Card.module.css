@@ -16,7 +16,7 @@
   }
 
   .rankCard {
-    width: 330px;
+    width: 100%;
     position: relative;
 
     .placePhoto {
@@ -37,6 +37,11 @@
       left: 0;
       padding: 12px 12px 0 12px;
       z-index: 1;
+
+      button {
+        width: 36px;
+        height: 36px;
+      }
 
       .userInfos {
         display: flex;
@@ -104,10 +109,15 @@
         }
       }
 
-      .heartWrapper {
+      .likeWrapper {
         display: flex;
         flex-flow: row;
         align-items: center;
+
+        button {
+          width: 36px;
+          height: 36px;
+        }
 
         span {
           color: var(--white);
