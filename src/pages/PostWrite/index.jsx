@@ -65,6 +65,9 @@ function PostWrite() {
     }
   };
 
+  const isButtonDisable =
+    placeName && image && comments && category && date ? false : true;
+
   return (
     <section className={S.component}>
       <UploadImage />
@@ -75,6 +78,7 @@ function PostWrite() {
           <Search aria-label="돋보기 버튼 아이콘" />
         </button>
       </article>
+      {isModalOpen && <PlaceSearchModal closeModal={closeModal} />}
       <DateInput />
       <CategoryBtnList onChecked={handleCheckedCategory} />
       <AppTextArea
@@ -87,14 +91,12 @@ function PostWrite() {
       />
       <CommonBtn
         submit={true}
-        disabled={false}
+        disabled={isButtonDisable}
         fill={true}
         onClick={handleSendPostDates}
       >
         등록
       </CommonBtn>
-
-      {isModalOpen && <PlaceSearchModal closeModal={closeModal} />}
     </section>
   );
 }

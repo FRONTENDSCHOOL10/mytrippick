@@ -80,6 +80,7 @@ CustomInput.propTypes = {
   value: string,
   onClick: func,
   onChange: func,
+  onKeyDown: func,
 };
 
 export default DateInput;
