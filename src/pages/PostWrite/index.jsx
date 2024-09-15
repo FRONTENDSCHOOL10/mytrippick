@@ -81,14 +81,23 @@ function PostWrite() {
       {isModalOpen && <PlaceSearchModal closeModal={closeModal} />}
       <DateInput />
       <CategoryBtnList onChecked={handleCheckedCategory} />
-      <AppTextArea
-        label={'후기'}
-        name={'behindComments'}
-        small={false}
-        placeholder={'후기 글을 작성해주세요'}
-        defaultValue={comments}
-        onChange={handleCommentsChange}
-      />
+      <div>
+        <AppTextArea
+          label={'후기'}
+          name={'behindComments'}
+          small={false}
+          placeholder={'후기 글을 작성해주세요'}
+          defaultValue={comments}
+          onChange={handleCommentsChange}
+        />
+        {comments === '' ? (
+          <span className="caption" style={{ color: '#6e6e6e' }}>
+            후기는 한글자 이상 작성해주세요!!
+          </span>
+        ) : (
+          <></>
+        )}
+      </div>
       <CommonBtn
         submit={true}
         disabled={isButtonDisable}
