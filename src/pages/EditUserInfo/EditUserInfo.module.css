@@ -1,0 +1,28 @@
+.component {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-6);
+  padding: 0 var(--space-4);
+
+  .userOutBtnArea {
+    padding-top: 60px;
+  }
+
+  .btnContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+
+    gap: var(--space-2);
+
+    padding: 60px 0 var(--space-10) 0;
+  }
+
+  .btnContainer :nth-child(1) {
+    flex: 1;
+  }
+
+  .btnContainer :nth-child(2) {
+    flex: 3;
+  }
+}

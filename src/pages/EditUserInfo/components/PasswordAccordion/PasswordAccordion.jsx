@@ -6,7 +6,7 @@ function PasswordAccordion() {
   return (
     <article className={S.component}>
       <h3 className="sr-only">비밀번호 변경을 위한 아코디언</h3>
-      <details open>
+      <details>
         <summary>
           <ChevronIcon className={S.chevronIcon} />
           비밀번호 변경
