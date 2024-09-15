@@ -81,7 +81,6 @@ function PlaceSearchModal({ closeModal }) {
   };
 
   const renderPlaces = () => {
-    console.log(places);
     return places.map((place, index) => (
       <li
         tabIndex={0}

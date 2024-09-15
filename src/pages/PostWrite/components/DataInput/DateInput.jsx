@@ -1,4 +1,4 @@
-import { useId, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { string, func } from 'prop-types';
 import DatePicker from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
@@ -33,16 +33,11 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 function DateInput() {
   const { date, setDate } = usePostDateStore();
 
-  const id = useId();
-
   return (
     <article className={S.component}>
       <h3 className="sr-only">날짜 선택 input 공간</h3>
-      <label className="label" htmlFor={id}>
-        방문한 날짜
-      </label>
+      <label className="label">방문한 날짜</label>
       <DatePicker
-        id={id}
         selected={date}
         onChange={(date) => setDate(date)}
         dateFormat="yyyy.MM.dd"
