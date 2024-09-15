@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { throttle } from '@/utils';
+import { CreateDatas } from '@/api/CreateDatas';
 import usePlaceDateStore from '@/stores/usePlaceDataStore';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
 import usePostDateStore from '@/stores/usePostDateStore';
@@ -11,7 +13,6 @@ import DateInput from './components/DataInput/DateInput';
 import PlaceSearchModal from './components/PlaceSearchModal/PlaceSearchModal';
 import Search from '@/assets/svg/search.svg?react';
 import S from './PostWrite.module.css';
-import { CreateDatas } from '@/api/CreateDatas';
 
 function PostWrite() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,8 +38,31 @@ function PostWrite() {
     setIsModalOpen(false);
   };
 
+  const navitation = useNavigate();
+
   const handleSendPostDates = (e) => {
     e.preventDefault();
+    try {
+      const formData = new FormData();
+
+      formData.append('placeName', placeName);
+      formData.append('placePosition', placeAddress);
+      formData.append('placeLatLong', JSON.stringify(placeLatLong));
+      formData.append('category', category);
+      formData.append('visitedDate', date.toISOString());
+      formData.append('contens', comments);
+
+      if (image) {
+        formData.append('photo', image);
+      }
+
+      CreateDatas('posts', formData);
+      alert('게시글이 등록되었습니다!!🎉');
+      navitation('/');
+    } catch (error) {
+      console.log(error);
+      alert('게시물을 보내는 도중 에러가 발생했습니다!');
+    }
   };
 
   return (
