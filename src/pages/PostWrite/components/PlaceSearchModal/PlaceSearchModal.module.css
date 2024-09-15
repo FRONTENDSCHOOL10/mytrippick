@@ -39,6 +39,10 @@
     input {
       background-color: inherit;
     }
+
+    button {
+      margin: 0;
+    }
   }
 
   .searchDateList {

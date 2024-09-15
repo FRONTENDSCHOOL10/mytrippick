@@ -15,6 +15,7 @@ PlaceSearchModal.propTypes = {
 function PlaceSearchModal({ closeModal }) {
   const [places, setPlaces] = useState([]);
   const [pagination, setPagination] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const searchInputRef = useRef(null);
 
   const { setPlaceName, setPlaceAddress, setPlaceLatLang } = usePlaceDateStore(
@@ -54,6 +55,7 @@ function PlaceSearchModal({ closeModal }) {
 
     const handleInputChange = debounce(() => {
       const keyword = searchInputRef.current?.value;
+      setSearchTerm(keyword);
       searchPlaces(keyword);
     }, 300);
 
@@ -78,6 +80,13 @@ function PlaceSearchModal({ closeModal }) {
       e.preventDefault(); // Space 키의 기본 스크롤 동작을 방지
       handlePlaceClick(place);
     }
+  };
+
+  const clearSearch = () => {
+    setSearchTerm(''); // 검색어 초기화
+    searchInputRef.current.value = ''; // input 필드 초기화
+    setPlaces([]); // 검색 결과 초기화
+    setPagination(null);
   };
 
   const renderPlaces = () => {
@@ -138,7 +147,13 @@ function PlaceSearchModal({ closeModal }) {
           name="SearchAddress"
           type="text"
           placeholder="여행지를 검색해보세요"
+          defaultValue={searchTerm}
         />
+        {searchTerm && (
+          <button type="button" onClick={clearSearch} className={S.clearButton}>
+            <XButton aria-label="검색어 지우기 버튼" />
+          </button>
+        )}
       </div>
 
       <ul id="placesList" className={S.searchDateList}>
