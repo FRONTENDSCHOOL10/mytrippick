@@ -37,6 +37,7 @@ function DateInput() {
 
   return (
     <article className={S.component}>
+      <h3 className="sr-only">날짜 선택 input 공간</h3>
       <label className="label" htmlFor={id}>
         방문한 날짜
       </label>

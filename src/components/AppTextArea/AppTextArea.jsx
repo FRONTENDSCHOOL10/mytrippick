@@ -24,6 +24,7 @@ function AppTextArea({
   const textAreaSize = small ? S.smallTextArea : S.largeTextArea;
   return (
     <article className={S.component}>
+      <h3 className="sr-only">{label}작성 영역</h3>
       <label className="label" htmlFor={id}>
         {label}
       </label>

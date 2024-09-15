@@ -15,6 +15,7 @@ function CategoryBtnList({ onChecked }) {
 
   return (
     <article className={S.component}>
+      <h3 className="sr-only">카테고리 리스트 모음</h3>
       <span className="label">카테고리</span>
       <ul className={S.categoryList}>
         {categories.map((items, index) => {

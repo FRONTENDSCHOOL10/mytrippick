@@ -1,4 +1,9 @@
 .component {
+  position: absolute;
+  width: 100%;
+  min-height: 800px;
+  top: 0;
+  left: 0;
   background-color: var(--gray-600);
   border-radius: 30px 30px 0 0;
 
@@ -10,8 +15,8 @@
     align-items: center;
     gap: 3px;
 
-    padding: var(--space-2-half) 0 var(--space-2-half) var(--space-1);
-    margin-bottom: var(--space-4, 16px);
+    padding: var(--space-5, 20px) var(--space-4, 16px) var(--space-4, 16px)
+      var(--space-4, 16px);
 
     button {
       margin: 0;
@@ -27,6 +32,7 @@
     background-color: var(--dimmed);
 
     padding: 0 var(--space-3);
+    margin: 0 var(--space-4);
     height: 44px;
 
     input {
@@ -37,7 +43,7 @@
   .searchDateList {
     display: flex;
     flex-flow: column;
-    margin-top: var(--space-5);
+    margin: var(--space-5) var(--space-4) 0 var(--space-4);
     gap: 10px;
 
     .searchDateItem {
@@ -54,6 +60,32 @@
           color: var(--text-100);
         }
       }
+
+      .itemWrapper:hover {
+        background-color: #0a0a0a;
+        border-radius: var(--rounded-md);
+      }
+
+      .itemWrapper:focus {
+        outline: none;
+        background-color: #0a0a0a;
+        border-radius: var(--rounded-md);
+      }
+    }
+  }
+  .pagination {
+    display: flex;
+    flex-flow: row;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
+
+    a {
+      border: 1px solid var(--text-100);
+      border-radius: var(--rounded-xs);
+      padding: var(--space-3);
     }
   }
 }
