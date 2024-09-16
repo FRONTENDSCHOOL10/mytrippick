@@ -22,6 +22,12 @@
           height: 112px;
           border-radius: var(--rounded-full);
         }
+
+        .userImagePreviewURL {
+          width: 100%;
+          height: 112px;
+          border-radius: var(--rounded-full);
+        }
       }
 
       .cameraIcons {
