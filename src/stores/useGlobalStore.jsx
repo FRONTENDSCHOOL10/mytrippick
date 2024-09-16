@@ -10,6 +10,7 @@ const useGlobalStore = create((set) => ({
   isLoggedIn: false,
   profileImage: '',
   nickname: '',
+  currentUserId: '',
 
   setIsLoggedIn: (isLoggedIn) => {
     localStorage.setItem('isLoggedIn', isLoggedIn ? 'true' : '');
@@ -17,15 +18,22 @@ const useGlobalStore = create((set) => ({
   },
   setProfileImage: (profileImage) => set({ profileImage }),
   setNickname: (nickname) => set({ nickname }),
+  setCurrentUserId: (currentUserId) => set({ currentUserId }),
 
   initializeUser: () => {
     const loggedIn = localStorage.getItem('isLoggedIn');
+    const authData = JSON.parse(localStorage.getItem('pocketbase_auth'));
     if (loggedIn) {
       set({
         isLoggedIn: true,
         profileImage: './../../favicon.svg', //임시
         nickname: '닉네임',
+        currentUserId: authData.model.id,
       });
+    } else {
+      // 로그인 정보가 불완전하거나 없는 경우
+      localStorage.removeItem('pocketbase_auth');
+      set({ isLoggedIn: false, currentUserId: null });
     }
   },
 
@@ -46,5 +54,8 @@ const useGlobalStore = create((set) => ({
       },
     })),
 }));
+
+// 스토어 생성 직후 initializeUser 호출
+useGlobalStore.getState().initializeUser();
 
 export default useGlobalStore;
