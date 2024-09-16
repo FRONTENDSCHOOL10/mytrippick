@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useGeolocation from '@/hooks/useGeolocation';
 import AppInput2 from '../AppInput/AppInput2';
 import S from './MapContainer.module.css';
@@ -15,10 +15,11 @@ const { kakao } = window;
 const MapContainer = () => {
   const location = useGeolocation();
   const [showMap, setShowMap] = useState(true);
-  const [posts, setPosts] = useState([]);
+  const [, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [map, setMap] = useState(null);
+
+  const mapRef = useRef(null);
 
   useEffect(() => {
     if (!location.loaded || !showMap) return;
@@ -33,7 +34,7 @@ const MapContainer = () => {
     };
 
     const createdMap = new kakao.maps.Map(mapContainer, mapOption);
-    setMap(createdMap);
+    mapRef.current = createdMap;
 
     const fetchPosts = async () => {
       const records = await pb.collection('posts').getFullList();
@@ -67,10 +68,7 @@ const MapContainer = () => {
               });
             }
           } catch (error) {
-            console.error(
-              'placeLatLong 값의 JSON 형식이 올바르지 않습니다:',
-              post.placeLatLong
-            );
+            console.error(error);
           }
         }
       });
@@ -86,9 +84,7 @@ const MapContainer = () => {
       if (status === kakao.maps.services.Status.OK && data.length > 0) {
         const firstPlace = data[0];
         const newCenter = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
-        if (map) {
-          map.setCenter(newCenter);
-        }
+        mapRef.current.setCenter(newCenter);
       }
     });
   };
