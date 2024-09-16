@@ -1,4 +1,4 @@
-import React, { useState, useId } from 'react';
+import { useState, useId } from 'react';
 import PropTypes from 'prop-types';
 import SearchIcon from '@/assets/svg/search.svg?react';
 import XButton from '@/assets/svg/xbutton.svg?react';

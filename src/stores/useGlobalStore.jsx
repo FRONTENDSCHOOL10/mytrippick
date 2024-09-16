@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import pb from '@/api/pb';
 
 const useGlobalStore = create((set) => ({
   isMenuOpen: false,
@@ -16,44 +15,29 @@ const useGlobalStore = create((set) => ({
     localStorage.setItem('isLoggedIn', isLoggedIn ? 'true' : '');
     set({ isLoggedIn });
   },
-
   setProfileImage: (profileImage) => set({ profileImage }),
   setNickname: (nickname) => set({ nickname }),
 
-  initializeUser: async () => {
+  initializeUser: () => {
     const loggedIn = localStorage.getItem('isLoggedIn');
-    if (loggedIn && pb.authStore.isValid) {
-      const user = pb.authStore.model;
-
-      const profileImageUrl = user.profileImage
-        ? `${pb.baseUrl}/api/files/${user.collectionId}/${user.id}/${user.profileImage}`
-        : './../../favicon.svg';
-
+    if (loggedIn) {
       set({
         isLoggedIn: true,
-        profileImage: profileImageUrl,
-        nickname: user.nickName,
-      });
-    } else {
-      set({
-        isLoggedIn: false,
-        profileImage: '',
-        nickname: '',
+        profileImage: './../../favicon.svg', //임시
+        nickname: '닉네임',
       });
     }
   },
 
   logout: () => {
     localStorage.removeItem('isLoggedIn');
-    pb.authStore.clear();
     set({
       isLoggedIn: false,
       profileImage: '',
       nickname: '',
     });
   },
-
-  toggles: {},``
+  toggles: {},
   toggle: (id) =>
     set((state) => ({
       toggles: {
