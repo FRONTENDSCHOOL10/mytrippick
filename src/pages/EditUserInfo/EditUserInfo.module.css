@@ -5,7 +5,30 @@
   padding: 0 var(--space-4);
 
   .userOutBtnArea {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
     padding-top: 60px;
+
+    .moveToDeleteUserPage {
+      border-radius: var(--rounded-xs);
+      border: 1px solid var(--line-300);
+      padding: var(--space-2) var(--space-3);
+
+      color: var(--white, #fff);
+      font-family: 'Pretendard Variable';
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%;
+      letter-spacing: -0.14px;
+
+      &:hover {
+        border: 1px solid var(--line-200, #8a8a8a);
+        background-color: var(--gray-500, #202020);
+      }
+    }
   }
 
   .btnContainer {
