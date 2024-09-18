@@ -1,0 +1,16 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 모달을 가장 앞에 위치시킴 */
+}
+
+.modalContent {
+  /* Card 컴포넌트의 기본 스타일을 유지하며 중앙에 배치 */
+  z-index: 1001; /* 모달 내용이 배경 위에 위치하도록 */
+}

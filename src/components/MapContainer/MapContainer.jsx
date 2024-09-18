@@ -1,11 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import useGeolocation from '@/hooks/useGeolocation';
 import AppInput2 from '../AppInput/AppInput2';
 import S from './MapContainer.module.css';
 import ToggleList from '@/assets/svg/toggle-list.svg?react';
 import ToggleMap from '@/assets/svg/toggle-map.svg?react';
-import Card from '../Card/Card';
-import SearchAddr from '../SearchAddr';
 import pb from '@/api/pb';
 import Modal from './Modal';
 import markerImageSrc from '../../assets/svg/marker.svg';
@@ -15,8 +13,8 @@ const { kakao } = window;
 const MapContainer = () => {
   const location = useGeolocation();
   const [showMap, setShowMap] = useState(true);
-  const [, setPosts] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [selectedPostId, setSelectedPostId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const mapRef = useRef(null);
@@ -63,12 +61,16 @@ const MapContainer = () => {
               marker.setMap(createdMap);
 
               kakao.maps.event.addListener(marker, 'click', () => {
-                setSelectedPost(post);
+                console.log('Marker clicked:', post.id); // 마커 클릭 시 로그 출력
+                setSelectedPostId(post.id); // post의 id를 저장
                 setIsModalOpen(true);
               });
             }
           } catch (error) {
-            console.error(error);
+            console.error(
+              'Invalid JSON format for placeLatLong:',
+              post.placeLatLong
+            );
           }
         }
       });
@@ -95,8 +97,32 @@ const MapContainer = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedPost(null);
+    setSelectedPostId(null);
   };
+
+  // 모달 외부를 클릭했을 때 모달을 닫는 핸들러
+  const handleClickOutside = useCallback(
+    (event) => {
+      if (
+        isModalOpen &&
+        !document.querySelector(`.${S.modalContent}`).contains(event.target)
+      ) {
+        closeModal();
+      }
+    },
+    [isModalOpen, closeModal]
+  );
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isModalOpen, handleClickOutside]);
 
   return (
     <div className={S.container}>
@@ -120,16 +146,12 @@ const MapContainer = () => {
             </div>
           </div>
           <div className={S.emptyPage}>
-            <Card />
-            <SearchAddr />
+            {/* 필요에 따라 리스트 형태로 다른 콘텐츠 표시 가능 */}
           </div>
         </>
       )}
-      {isModalOpen && selectedPost && (
-        <Modal onClose={closeModal}>
-          <h2>{selectedPost.title}</h2>
-          <p>{selectedPost.content}</p>
-        </Modal>
+      {isModalOpen && selectedPostId && (
+        <Modal id={selectedPostId} onClose={closeModal} />
       )}
     </div>
   );
