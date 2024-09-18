@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import pb from '@/api/pb';
 import Card from '../Card/Card';
 import S from './Modal.module.css';
+import AppSpinner from '../AppSpinner/AppSpinner';
 
 Modal.propTypes = {
   id: PropTypes.string.isRequired,
@@ -24,7 +25,6 @@ function Modal({ id, onClose }) {
 
     fetchPostData();
 
-    // ESC 키를 눌렀을 때 모달을 닫는 이벤트 핸들러
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         onClose();
@@ -39,22 +39,20 @@ function Modal({ id, onClose }) {
 
   return (
     <div className={S.modalOverlay}>
-      <div className={S.modalContent}>
-        {postData ? (
-          <Card
-            type="post"
-            id={postData.id}
-            photo={postData.photo}
-            placePosition={postData.placePosition}
-            placeName={postData.placeName}
-            likedNum={postData.likedNum || 0}
-            collectionId={postData.collectionId}
-            userId={postData.userId}
-          />
-        ) : (
-          <p>데이터를 불러오는 중입니다...</p>
-        )}
-      </div>
+      {postData ? (
+        <Card
+          type="post"
+          id={postData.id}
+          photo={postData.photo}
+          placePosition={postData.placePosition}
+          placeName={postData.placeName}
+          likedNum={postData.likedNum || 0}
+          collectionId={postData.collectionId}
+          userId={postData.userId}
+        />
+      ) : (
+        <AppSpinner />
+      )}
     </div>
   );
 }

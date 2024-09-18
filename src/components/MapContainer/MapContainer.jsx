@@ -13,10 +13,9 @@ const { kakao } = window;
 const MapContainer = () => {
   const location = useGeolocation();
   const [showMap, setShowMap] = useState(true);
-  const [posts, setPosts] = useState([]);
+  const [, setPosts] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -35,45 +34,40 @@ const MapContainer = () => {
     mapRef.current = createdMap;
 
     const fetchPosts = async () => {
-      const records = await pb.collection('posts').getFullList();
-      setPosts(records);
+      try {
+        const records = await pb.collection('posts').getFullList();
+        setPosts(records);
 
-      const markerImage = new kakao.maps.MarkerImage(
-        markerImageSrc,
-        new kakao.maps.Size(16, 16)
-      );
+        const markerImage = new kakao.maps.MarkerImage(
+          markerImageSrc,
+          new kakao.maps.Size(16, 16)
+        );
 
-      records.forEach((post) => {
-        if (post.placeLatLong) {
-          try {
-            const parsedLocation = JSON.parse(post.placeLatLong);
-
-            if (parsedLocation.lat && parsedLocation.lng) {
-              const markerPosition = new kakao.maps.LatLng(
-                parsedLocation.lat,
-                parsedLocation.lng
-              );
-              const marker = new kakao.maps.Marker({
-                position: markerPosition,
-                image: markerImage,
-              });
-
-              marker.setMap(createdMap);
-
-              kakao.maps.event.addListener(marker, 'click', () => {
-                console.log('Marker clicked:', post.id); // 마커 클릭 시 로그 출력
-                setSelectedPostId(post.id); // post의 id를 저장
-                setIsModalOpen(true);
-              });
+        await Promise.all(
+          records.map((post) => {
+            if (post.placeLatLong) {
+              const parsedLocation = JSON.parse(post.placeLatLong);
+              if (parsedLocation.lat && parsedLocation.lng) {
+                const markerPosition = new kakao.maps.LatLng(
+                  parsedLocation.lat,
+                  parsedLocation.lng
+                );
+                const marker = new kakao.maps.Marker({
+                  position: markerPosition,
+                  image: markerImage,
+                });
+                marker.setMap(mapRef.current);
+                kakao.maps.event.addListener(marker, 'click', () => {
+                  setSelectedPostId(post.id);
+                  setIsModalOpen(true);
+                });
+              }
             }
-          } catch (error) {
-            console.error(
-              'Invalid JSON format for placeLatLong:',
-              post.placeLatLong
-            );
-          }
-        }
-      });
+          })
+        );
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     fetchPosts();
@@ -81,7 +75,6 @@ const MapContainer = () => {
 
   const handleSearch = (keyword) => {
     const ps = new kakao.maps.services.Places();
-
     ps.keywordSearch(keyword, (data, status) => {
       if (status === kakao.maps.services.Status.OK && data.length > 0) {
         const firstPlace = data[0];
@@ -95,34 +88,14 @@ const MapContainer = () => {
     setShowMap((prevShowMap) => !prevShowMap);
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedPostId(null);
-  };
+  }, []);
 
-  // 모달 외부를 클릭했을 때 모달을 닫는 핸들러
-  const handleClickOutside = useCallback(
-    (event) => {
-      if (
-        isModalOpen &&
-        !document.querySelector(`.${S.modalContent}`).contains(event.target)
-      ) {
-        closeModal();
-      }
-    },
-    [isModalOpen, closeModal]
-  );
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isModalOpen, handleClickOutside]);
+  if (!location.loaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={S.container}>
@@ -137,6 +110,9 @@ const MapContainer = () => {
             </div>
           </div>
           <div id="map" className={S.map}></div>
+          {isModalOpen && selectedPostId && (
+            <Modal id={selectedPostId} onClose={closeModal} />
+          )}
         </>
       ) : (
         <>
@@ -145,13 +121,8 @@ const MapContainer = () => {
               <ToggleMap />
             </div>
           </div>
-          <div className={S.emptyPage}>
-            {/* 필요에 따라 리스트 형태로 다른 콘텐츠 표시 가능 */}
-          </div>
+          <div className={S.emptyPage}></div>
         </>
-      )}
-      {isModalOpen && selectedPostId && (
-        <Modal id={selectedPostId} onClose={closeModal} />
       )}
     </div>
   );
