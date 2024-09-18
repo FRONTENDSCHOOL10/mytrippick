@@ -7,15 +7,18 @@ import ToggleMap from '@/assets/svg/toggle-map.svg?react';
 import pb from '@/api/pb';
 import Modal from './Modal';
 import markerImageSrc from '../../assets/svg/marker.svg';
+import { getSortedPostIdsByDistance } from '@/api/getDistance';
+import Card from '../Card/Card';
 
 const { kakao } = window;
 
 const MapContainer = () => {
   const location = useGeolocation();
   const [showMap, setShowMap] = useState(true);
-  const [, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortedPostIds, setSortedPostIds] = useState([]);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -36,7 +39,11 @@ const MapContainer = () => {
     const fetchPosts = async () => {
       try {
         const records = await pb.collection('posts').getFullList();
-        setPosts(records);
+        const filteredPosts = records.filter((post) => {
+          const parsedLocation = JSON.parse(post.placeLatLong || '{}');
+          return parsedLocation.lat && parsedLocation.lng;
+        });
+        setPosts(filteredPosts);
 
         const markerImage = new kakao.maps.MarkerImage(
           markerImageSrc,
@@ -44,27 +51,33 @@ const MapContainer = () => {
         );
 
         await Promise.all(
-          records.map((post) => {
-            if (post.placeLatLong) {
-              const parsedLocation = JSON.parse(post.placeLatLong);
-              if (parsedLocation.lat && parsedLocation.lng) {
-                const markerPosition = new kakao.maps.LatLng(
-                  parsedLocation.lat,
-                  parsedLocation.lng
-                );
-                const marker = new kakao.maps.Marker({
-                  position: markerPosition,
-                  image: markerImage,
-                });
-                marker.setMap(mapRef.current);
-                kakao.maps.event.addListener(marker, 'click', () => {
-                  setSelectedPostId(post.id);
-                  setIsModalOpen(true);
-                });
-              }
-            }
+          filteredPosts.map((post) => {
+            const parsedLocation = JSON.parse(post.placeLatLong);
+            const markerPosition = new kakao.maps.LatLng(
+              parsedLocation.lat,
+              parsedLocation.lng
+            );
+            const marker = new kakao.maps.Marker({
+              position: markerPosition,
+              image: markerImage,
+            });
+            marker.setMap(mapRef.current);
+            kakao.maps.event.addListener(marker, 'click', () => {
+              setSelectedPostId(post.id);
+              setIsModalOpen(true);
+            });
           })
         );
+
+        const searchLocation = {
+          lat: location.coordinates?.lat || 37.5665,
+          lng: location.coordinates?.lng || 126.978,
+        };
+        const sortedIds = getSortedPostIdsByDistance(
+          filteredPosts,
+          searchLocation
+        );
+        setSortedPostIds(sortedIds);
       } catch (error) {
         console.error(error);
       }
@@ -80,6 +93,13 @@ const MapContainer = () => {
         const firstPlace = data[0];
         const newCenter = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
         mapRef.current.setCenter(newCenter);
+
+        const searchLocation = {
+          lat: parseFloat(firstPlace.y),
+          lng: parseFloat(firstPlace.x),
+        };
+        const sortedIds = getSortedPostIdsByDistance(posts, searchLocation);
+        setSortedPostIds(sortedIds);
       }
     });
   };
@@ -121,7 +141,24 @@ const MapContainer = () => {
               <ToggleMap />
             </div>
           </div>
-          <div className={S.emptyPage}></div>
+          <div className={S.cardList}>
+            {sortedPostIds.map((postId) => {
+              const postData = posts.find((post) => post.id === postId);
+              if (!postData) return null;
+              return (
+                <Card
+                  key={postData.id}
+                  type="post"
+                  id={postData.id}
+                  photo={postData.photo}
+                  placeName={postData.placeName}
+                  likedNum={postData.likedNum || 0}
+                  collectionId={postData.collectionId}
+                  userId={postData.userId}
+                />
+              );
+            })}
+          </div>
         </>
       )}
     </div>
