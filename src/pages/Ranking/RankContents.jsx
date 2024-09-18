@@ -1,77 +1,103 @@
 import S from './RankContents.module.css';
 import Card from '@/components/Card/Card';
-import { useEffect, useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
-import AppSpinner from '@/components/AppSpinner/AppSpinner';
-import PocketBase from 'pocketbase';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import useGlobalStore from '@/stores/useGlobalStore';
 
 const RankContents = () => {
   const [rankCardList, setRankCardList] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalItems, setTotalItems] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [userIds, setUserIds] = useState([]);
+  const API_URL = import.meta.env.VITE_PB_URL;
+  const likedPostIds = useGlobalStore((state) => state.likedPostIds);
+  const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
+
+  const rankData = useQuery({
+    queryKey: ['posts', page],
+    queryFn: () =>
+      axios
+        .get(`${API_URL}/api/collections/posts/records`, {
+          params: { page, perPage: 5, sort: '-likedNum' },
+        })
+        .then((res) => {
+          const newItems = res.data.items || [];
+          setRankCardList((prevList) =>
+            page === 1 ? newItems : [...prevList, ...newItems]
+          );
+          const extractedUserIds = newItems.map((item) => item.userId);
+          setUserIds((prevIds) => [...prevIds, ...extractedUserIds]);
+          // console.log('추출된 userIds:', extractedUserIds);
+
+          return res.data;
+        }),
+    keepPreviousData: true,
+    refetchOnWindowFocus: false,
+  });
+
+  const userData = useQuery({
+    queryKey: ['userData', userIds],
+    queryFn: () =>
+      axios
+        .get(`${API_URL}/api/collections/users/records`, {
+          params: {
+            // 필터 문자열을 동적으로 구성
+            filter: userIds.map((id) => `id='${id}'`).join(' || '),
+          },
+        })
+        .then((res) => {
+          const items = res.data.items || [];
+
+          // userId 배열과 일치하는 순서로 사용자 데이터 정렬
+          const sortedItems = userIds.map(
+            (id) =>
+              items.find((item) => item.id === id) || {
+                id,
+                name: 'Unknown User',
+              }
+          );
+
+          //   console.log("정렬된 유저 데이터:", sortedItems);
+          return { ...res.data, items: sortedItems };
+        }),
+    enabled: userIds.length > 0,
+  });
 
   useEffect(() => {
-    const pb = new PocketBase('https://mytrippick.pockethost.io');
-    const getRankList = async () => {
-      setLoading(true); // 데이터 가져오는 중에 로딩 상태 활성화
-      setError(null); // 새로운 요청마다 에러 상태 초기화
-      try {
-        const response = await pb.collection('posts').getList(page, 5, {
-          sort: '-likedNum',
-        });
-        // console.log(response.items);
-        setTotalItems(response.totalItems);
-        if (page === 1) {
-          setRankCardList(response.items);
-        } else {
-          setRankCardList((prevList) => [...prevList, ...response.items]);
-        }
-      } catch (error) {
-        setError(`데이터를 불러오는 중 오류가 발생했습니다.`);
-        console.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getRankList();
-  }, [page]); // page가 변경될 때마다 데이터를 다시 가져오도록 설정
+    // console.log('rankCardList:', rankCardList);
+  }, [rankCardList]);
 
   return (
     <>
       <section className={S.container}>
-        {loading && <AppSpinner />}
-        {error && <p className={`body1 ${S.error}`}>{error}</p>}
         <div className={S.rankCardList}>
           {rankCardList?.map((item, idx) => (
             <Fragment key={idx}>
               <Card
                 type="rank"
                 id={item.id}
+                userId={item.userId}
                 photo={item.photo}
                 collectionId={item.collectionId}
                 likedNum={item.likedNum || 0}
                 placeName={item.placeName}
                 placePosition={item.placePosition}
-                userId={item.userId}
+                nickName={userData.data?.items[idx]?.nickName}
+                userProfile={userData.data?.items[idx]?.userProfile}
+                idx={idx}
+                isLiked={likedPostIds?.includes(item.id)}
+                isBookmarked={bookmarkedPostIds?.includes(item.id)}
               />
             </Fragment>
           ))}
         </div>
-        {rankCardList.length !== 0 && (
-          <>
-            {rankCardList.length !== totalItems ? (
-              <CommonBtn
-                small
-                onClick={() => setPage((prevPage) => prevPage + 1)}
-              >
-                더보기
-              </CommonBtn>
-            ) : null}
-          </>
-        )}
+        {rankCardList.length > 0 &&
+          rankCardList.length !== rankData.data?.totalItems && (
+            <CommonBtn small onClick={() => setPage(page + 1)}>
+              더보기
+            </CommonBtn>
+          )}
       </section>
     </>
   );
