@@ -8,6 +8,7 @@ import MyPage from './pages/MyPage';
 import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
 import PostDetailPage from '@/pages/PostDetail';
+import EditUserInfo from './pages/EditUserInfo';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -50,6 +51,11 @@ const navigation = [
     text: '게시글 상세',
     path: '/post/:id',
     element: <PostDetailPage />,
+  },
+  {
+    text: '회원정보수정',
+    path: '/mypage/edituserinfo',
+    element: <EditUserInfo />,
   },
 ];
 
