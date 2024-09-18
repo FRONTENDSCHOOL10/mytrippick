@@ -122,7 +122,7 @@ function Card({
           </figure>
         </Link>
         <div className={S.places}>
-          <Link to={`/posts/${id}`} className={S.link} tabindex="-1">
+          <Link to={`/posts/${id}`} className={S.link} tabIndex="-1">
             <div className={S.placeInfos}>
               <span className={`rank ${S.rankNum}`}>{idx + 1}</span>
               <div className={S.placeTitleWrapper}>
@@ -159,7 +159,7 @@ function Card({
             <span role="none" className={S.dimThumb}></span>
           </figure>
         </Link>
-        <Link to={`/posts/${id}`} className={S.link} tabindex="-1">
+        <Link to={`/posts/${id}`} className={S.link} tabIndex="-1">
           <div className={S.placeInfos}>
             <h2 className="title3">{placeName}</h2>
             <div className={S.placePosition}>
