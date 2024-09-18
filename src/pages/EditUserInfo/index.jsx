@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import {
   checkCommentsMySelfLength,
   testNickNameRegExp,
   throttle,
 } from '@/utils';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
-import AppTextArea from '@/components/AppTextArea/AppTextArea';
+import getPbImageURL from '@/api/getPbImageURL';
 import PasswordAccordion from './components/PasswordAccordion/PasswordAccordion';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
-import S from './EditUserInfo.module.css';
-import axios from 'axios';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
+import S from './EditUserInfo.module.css';
 
 function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
@@ -31,7 +31,7 @@ function EditUserInfo() {
     isNewCommentsChecked: false,
   });
 
-  const { userImage } = usePostPhotoFileStore();
+  const { userImage, setUserImageURL } = usePostPhotoFileStore();
 
   useEffect(() => {
     const handleGetUserOriginData = async () => {
@@ -42,12 +42,13 @@ function EditUserInfo() {
           }/collections/users/records/xum3wfl4o5mhtue`
         );
 
-        console.log(response);
         setEditUserData({
           newNickName: response.data.nickName,
           newCommentsMySelf: response.data.bio,
           email: response.data.email,
         });
+
+        setUserImageURL(getPbImageURL(response.data, 'userProfile'));
       } catch (error) {
         console.error('API 요청 실패:', error);
       }
@@ -56,7 +57,6 @@ function EditUserInfo() {
     handleGetUserOriginData();
   }, []);
 
-  console.log(editUserData.newNickName);
   const handleInputDatas = (e) => {
     const { name, value } = e.target;
     setEditUserData((prevDatas) => ({
@@ -107,7 +107,6 @@ function EditUserInfo() {
       }));
     }
   };
-
   return (
     <section className={S.component}>
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
@@ -119,7 +118,6 @@ function EditUserInfo() {
           type={'text'}
           name={'newNickName'}
           value={editUserData.newNickName}
-          isRequired={false}
           isPencilOff={false}
           onChange={handleInputDatas}
         />
@@ -128,11 +126,13 @@ function EditUserInfo() {
         </span>
       </div>
       <div>
-        <AppTextArea
+        <AppInputWithValue
           label={'소개글'}
+          labelHidden={false}
+          type={'text'}
           name={'newCommentsMySelf'}
-          placeholder={'소개글을 입력해주세요'}
-          defaultValue={editUserData.newCommentsMySelf}
+          value={editUserData.newCommentsMySelf}
+          isPencilOff={false}
           onChange={handleInputDatas}
         />
         <span className="caption" style={{ color: '#ff4a4a' }}>
@@ -145,7 +145,6 @@ function EditUserInfo() {
         type={'email'}
         name={'userEmail'}
         value={editUserData.email}
-        isRequired={false}
         isPencilOff={true}
         style={{ color: '#6E6E6E' }}
         readOnly

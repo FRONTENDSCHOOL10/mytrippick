@@ -11,7 +11,6 @@ AppInputWithValue.propTypes = {
   placeholder: string,
   value: string,
   onChange: func,
-  isRequired: bool,
   isPencilOff: bool,
 };
 
@@ -23,7 +22,6 @@ function AppInputWithValue({
   placeholder = '',
   value = '',
   onChange,
-  isRequired = true,
   isPencilOff = false,
   ...restProps
 }) {
@@ -44,7 +42,6 @@ function AppInputWithValue({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          required={isRequired}
           {...restProps}
         />
         <button type="button" hidden={isPencilOff}>
