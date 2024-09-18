@@ -24,6 +24,7 @@ function AppInput({
   placeholder = '',
   onChange,
   isRequired = true,
+  ...restProps
 }) {
   const [types, setTypes] = useState(type);
   const [isVisible, setIsVisible] = useState(false);
@@ -64,6 +65,7 @@ function AppInput({
           defaultValue={defaultValue}
           onChange={onChange}
           required={isRequired}
+          {...restProps}
         />
         <button
           type="button"

@@ -6,7 +6,6 @@ import {
   throttle,
 } from '@/utils';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
-import AppInput from '@/components/AppInput/AppInput';
 import AppTextArea from '@/components/AppTextArea/AppTextArea';
 import PasswordAccordion from './components/PasswordAccordion/PasswordAccordion';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
@@ -58,13 +57,17 @@ function EditUserInfo() {
   }, []);
 
   console.log(editUserData.newNickName);
-  const handleInputDatas = throttle((e) => {
+  const handleInputDatas = (e) => {
     const { name, value } = e.target;
     setEditUserData((prevDatas) => ({
       ...prevDatas,
       [name]: value,
     }));
 
+    throttleCheckRegExp(name, value);
+  };
+
+  const throttleCheckRegExp = throttle((name, value) => {
     checkRegExp(name, value);
   });
 
@@ -110,14 +113,14 @@ function EditUserInfo() {
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
       <ChangeUserProfilePic />
       <div>
-        <AppInput
+        <AppInputWithValue
           label={'닉네임'}
           labelHidden={false}
           type={'text'}
           name={'newNickName'}
-          placeholder={'변경할 닉네임을 입력해주세요'}
+          value={editUserData.newNickName}
           isRequired={false}
-          value={editUserData.newNickName || ''}
+          isPencilOff={false}
           onChange={handleInputDatas}
         />
         <span className="caption" style={{ color: '#ff4a4a' }}>
@@ -136,7 +139,17 @@ function EditUserInfo() {
           {errorMessage.newCommentsMySelfMessage}
         </span>
       </div>
-      <AppInputWithValue />
+      <AppInputWithValue
+        label={'이메일'}
+        labelHidden={false}
+        type={'email'}
+        name={'userEmail'}
+        value={editUserData.email}
+        isRequired={false}
+        isPencilOff={true}
+        style={{ color: '#6E6E6E' }}
+        readOnly
+      />
       <PasswordAccordion />
       <div className={S.userOutBtnArea}>
         <Link to="회원탈퇴페이지이동" className={S.moveToDeleteUserPage}>

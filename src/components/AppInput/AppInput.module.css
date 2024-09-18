@@ -4,15 +4,6 @@
   gap: 10px;
   margin-bottom: var(--space-1-half);
 
-  label {
-    color: var(--white);
-    font-family: 'Pretendard Variable';
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 140%; /* 19.6px */
-  }
-
   .inputWrapper {
     display: flex;
     height: 44px;
