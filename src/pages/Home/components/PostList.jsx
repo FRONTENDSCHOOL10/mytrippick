@@ -1,10 +1,10 @@
-import { Fragment, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import useHomeStore from "@/stores/useHomeStore";
-import Card from "@/components/Card/Card";
-import CommonBtn from "@/components/CommonBtn/CommonBtn";
+import { Fragment, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import useHomeStore from '@/stores/useHomeStore';
+import Card from '@/components/Card/Card';
+import CommonBtn from '@/components/CommonBtn/CommonBtn';
 
-import S from "../HomeContents.module.css";
+import S from '../HomeContents.module.css';
 
 export default function PostList() {
   const [postCardList, setPostCardList] = useState([]);
@@ -14,12 +14,12 @@ export default function PostList() {
   const API_URL = import.meta.env.VITE_PB_URL;
 
   const postData = useQuery({
-    queryKey: ["posts", page, selectedCategory],
+    queryKey: ['posts', page, selectedCategory],
     queryFn: () =>
       fetch(
         `${API_URL}/api/collections/posts/records?page=${page}&perPage=8&sort=-created${
-          selectedCategory === "전체"
-            ? ""
+          selectedCategory === '전체'
+            ? ''
             : `&filter=(category="${selectedCategory}")`
         }`
       )

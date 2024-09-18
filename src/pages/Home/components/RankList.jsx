@@ -31,7 +31,7 @@ export default function RankList() {
           return res.data; // 원본 데이터를 그대로 반환
         }),
   });
-  console.log('rankData:', rankData.data);
+  // console.log('rankData:', rankData.data);
 
   // top3 유저 데이터 가져오기
   const userData = useQuery({
