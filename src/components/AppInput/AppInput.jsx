@@ -10,7 +10,7 @@ AppInput.propTypes = {
   type: string.isRequired,
   name: string.isRequired,
   defaultValue: string,
-  placeholder: string.isRequired,
+  placeholder: string,
   onChange: func,
   isRequired: bool,
 };

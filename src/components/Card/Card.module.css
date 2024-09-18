@@ -84,26 +84,32 @@
           }
         }
 
-        .placeTitle {
+        .placeTitleWrapper {
           width: 100%;
-        }
-
-        .placePosition {
           display: flex;
-          flex-flow: row;
-          align-items: center;
-          gap: 2px;
-          margin-block-start: 5px;
+          flex-flow: column;
 
-          span {
-            color: var(--text-100);
+          .placeTitle {
+            width: 100%;
           }
 
-          .marker {
-            width: 12px;
-            height: 12px;
-            path {
-              fill: var(--text-100);
+          .placePosition {
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+            gap: 2px;
+            margin-block-start: 5px;
+
+            span {
+              color: var(--text-100);
+            }
+
+            .marker {
+              width: 12px;
+              height: 12px;
+              path {
+                fill: var(--text-100);
+              }
             }
           }
         }
@@ -287,6 +293,11 @@
       }
     }
   }
+}
+
+.link {
+  display: block;
+  width: 100%;
 }
 
 .postComponent {
