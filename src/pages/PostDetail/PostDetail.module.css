@@ -6,7 +6,7 @@
   aspect-ratio: 22/31;
   border-radius: 20px;
 
-  img {
+  > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -14,10 +14,16 @@
 }
 
 .onPhoto {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--dimmed-thumb);
+
   section {
     padding: var(--space-3) var(--space-3) 0;
     position: absolute;
     top: 0;
+    width: inherit;
   }
 
   > div {
@@ -25,6 +31,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    width: inherit;
   }
 }
 
@@ -51,6 +58,11 @@
 
 .toggleBox {
   display: flex;
+
+  > button {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 .postText {
@@ -119,6 +131,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  > p {
+    width: inherit;
+  }
+
+  > div {
+    width: inherit;
+  }
 }
 
 .commentDate {

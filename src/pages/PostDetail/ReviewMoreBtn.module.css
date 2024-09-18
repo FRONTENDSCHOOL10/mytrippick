@@ -1,4 +1,6 @@
 .btn {
+  display: flex;
+  align-items: center;
   background-color: transparent;
   font-size: 14px;
   font-weight: 400;

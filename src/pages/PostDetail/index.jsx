@@ -1,16 +1,62 @@
-import { useParams } from 'react-router-dom';
-import S from './PostDetail.module.css';
-import UserProfile from '@/components/UserProfile/UserProfile';
-import MoreBtn from './MoreBtn';
+import pb from '@/api/pb';
 import FilledMarker from '@/assets/svg/filledMarker.svg?react';
-import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
-import ReviewMoreBtn from './ReviewMoreBtn';
-import CommonBtn from './../../components/CommonBtn/CommonBtn';
 import AppInput from '@/components/AppInput/AppInput';
+import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
+import UserProfile from '@/components/UserProfile/UserProfile';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import CommonBtn from './../../components/CommonBtn/CommonBtn';
+import MoreBtn from './MoreBtn';
+import S from './PostDetail.module.css';
+import ReviewMoreBtn from './ReviewMoreBtn';
+import getPbImageURL from '@/api/getPbImageURL';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
+
+// 해야할 일
+// 1. 수정하기/삭제하기 동작 기능까지 설정할 것
+// 2. 게시글 내용이 길 때만 더보기가 나타나도록 조정/더보기 버튼 동작
+// 3. 댓글 작성/불러오기/수정/삭제
 
 const PostDetailPage = () => {
+  const [userData, setUserData] = useState({});
+  const [postData, setPostData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [, setError] = useState(null);
+
   const { id } = useParams();
-  console.log(id);
+  const postId = id;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 데이터 가져오기
+        const postData = await pb.collection('posts').getOne(postId);
+        const userId = postData.userId;
+        const userData = await pb.collection('users').getOne(userId);
+
+        setPostData(postData);
+        setUserData(userData);
+        setIsLoading(false);
+      } catch (error) {
+        // 에러 처리
+        setError('데이터를 불러오는 중 오류가 발생했습니다.');
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <AppSpinner />;
+  }
+
+  const profileImage = getPbImageURL(userData, 'userProfile');
+  const postImage = getPbImageURL(postData);
+  const contentsLength = postData.contents ? postData.contents.length : 0;
+
+  console.log(contentsLength);
 
   const noComment = false; // 임시 조건 처리
 
@@ -18,34 +64,25 @@ const PostDetailPage = () => {
     <>
       <h1 className="a11yHidden">게시글 상세 페이지</h1>
       <section className={S.photoBox}>
-        <img src="https://placehold.co/400x600" alt="" />
         <div role="group" className={S.onPhoto}>
-          <UserProfile
-            avatarUrl="https://placehold.co/100/000000/fff"
-            userName="유저닉네임"
-          />
+          <UserProfile avatarUrl={profileImage} userName={userData.nickName} />
           <MoreBtn />
           {/* 버튼 기능 추가 필요 - 해당 컴포넌트 파일에서 */}
         </div>
+        <img src={postImage} alt="" />
       </section>
       <section className={S.postInfo}>
         <div role="group" className={`caption ${S.placeInfo}`}>
-          <FilledMarker /> 장소 • 카테고리
+          <FilledMarker /> {postData.placePosition} • {postData.category}
         </div>
         <div role="group" className={S.toggleBox}>
-          {/* 토글 버튼 크기 조정 필요해보임 */}
           <ToggleBtn />
           <ToggleBtn bookmark />
         </div>
       </section>
       <section className={S.postText}>
-        <p className="body1">
-          후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.
-          후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.
-          후기 내용입니다. 후기 내용입니다. 후기 내용입니다. 후기 내용입니다.
-        </p>
-        <ReviewMoreBtn />
-        {/* 더보기 버튼 기능 필요 */}
+        <p className="body1">{postData.contents}</p>
+        {contentsLength >= 150 ? <ReviewMoreBtn /> : null}
       </section>
       <section className={S.commentContainer}>
         <span>댓글 0</span>
