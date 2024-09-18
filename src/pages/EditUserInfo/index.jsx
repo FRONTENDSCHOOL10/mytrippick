@@ -12,34 +12,51 @@ import PasswordAccordion from './components/PasswordAccordion/PasswordAccordion'
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
 import S from './EditUserInfo.module.css';
+import axios from 'axios';
 
 function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
     newNickName: '',
     newCommentsMySelf: '',
-    newPassword: '',
-    newPasswordConfirm: '',
+    email: '',
   });
 
   const [errorMessage, setErrorMessage] = useState({
     newNickNameMessage: '',
     newCommentsMySelfMessage: '',
-    newPasswordMessage:
-      '숫자, 특수문자를 최소 1가지 이상 포함한 대소문자 구분 없는 영문 8~15자',
-    newPasswordConfirmMessage: '',
   });
 
   const [, setIsChecked] = useState({
     isNewNickNameChecked: false,
     isNewCommentsChecked: false,
-    isPasswordChecked: false,
-    isConfirmPasswordChecked: false,
   });
 
   const { userImage } = usePostPhotoFileStore();
 
-  // useEffect(() => {},[]);
+  useEffect(() => {
+    const handleGetUserOriginData = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_PB_API
+          }/collections/users/records/xum3wfl4o5mhtue`
+        );
 
+        console.log(response);
+        setEditUserData({
+          newNickName: response.data.nickName,
+          newCommentsMySelf: response.data.bio,
+          email: response.data.email,
+        });
+      } catch (error) {
+        console.error('API 요청 실패:', error);
+      }
+    };
+
+    handleGetUserOriginData();
+  }, []);
+
+  console.log(editUserData.newNickName);
   const handleInputDatas = throttle((e) => {
     const { name, value } = e.target;
     setEditUserData((prevDatas) => ({
@@ -99,7 +116,7 @@ function EditUserInfo() {
           name={'newNickName'}
           placeholder={'변경할 닉네임을 입력해주세요'}
           isRequired={false}
-          defaultValue={editUserData.newNickName}
+          value={editUserData.newNickName || ''}
           onChange={handleInputDatas}
         />
         <span className="caption" style={{ color: '#ff4a4a' }}>
@@ -118,14 +135,7 @@ function EditUserInfo() {
           {errorMessage.newCommentsMySelfMessage}
         </span>
       </div>
-      <AppInput
-        label={'이메일 주소'}
-        labelHidden={false}
-        type={'email'}
-        name={'email'}
-        placeholder={'이메일을 입력해주세요'}
-        isRequired={false}
-      />
+      <input type="text" name="email" value={editUserData.email} readOnly />
       <PasswordAccordion />
       <div className={S.userOutBtnArea}>
         <Link to="회원탈퇴페이지이동" className={S.moveToDeleteUserPage}>
