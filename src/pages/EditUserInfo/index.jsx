@@ -13,6 +13,7 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
 import S from './EditUserInfo.module.css';
 import axios from 'axios';
+import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 
 function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
@@ -135,7 +136,7 @@ function EditUserInfo() {
           {errorMessage.newCommentsMySelfMessage}
         </span>
       </div>
-      <input type="text" name="email" value={editUserData.email} readOnly />
+      <AppInputWithValue />
       <PasswordAccordion />
       <div className={S.userOutBtnArea}>
         <Link to="회원탈퇴페이지이동" className={S.moveToDeleteUserPage}>
