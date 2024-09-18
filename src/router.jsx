@@ -49,7 +49,7 @@ const navigation = [
   },
   {
     text: '게시글 상세',
-    path: '/post/:id',
+    path: '/post/:postId',
     element: <PostDetailPage />,
   },
   {
