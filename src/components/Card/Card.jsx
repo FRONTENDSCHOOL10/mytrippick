@@ -109,7 +109,7 @@ function Card({
             onClick={handleBookmarks}
           />
         </div>
-        <Link to={`/posts/${id}`}>
+        <Link to={`/posts/${id}`} className={S.link}>
           <figure>
             <img
               className={S.placePhoto}
@@ -122,7 +122,7 @@ function Card({
           </figure>
         </Link>
         <div className={S.places}>
-          <Link to={`/posts/${id}`} tabindex="-1">
+          <Link to={`/posts/${id}`} className={S.link} tabindex="-1">
             <div className={S.placeInfos}>
               <span className={`rank ${S.rankNum}`}>{idx + 1}</span>
               <div className={S.placeTitleWrapper}>
@@ -147,7 +147,7 @@ function Card({
         <div className={S.cardHeader}>
           <ToggleBtn bookmark />
         </div>
-        <Link to={`/posts/${id}`}>
+        <Link to={`/posts/${id}`} className={S.link}>
           <figure>
             <img
               className={S.placePhoto}
@@ -159,7 +159,7 @@ function Card({
             <span role="none" className={S.dimThumb}></span>
           </figure>
         </Link>
-        <Link to={`/posts/${id}`} tabindex="-1">
+        <Link to={`/posts/${id}`} className={S.link} tabindex="-1">
           <div className={S.placeInfos}>
             <h2 className="title3">{placeName}</h2>
             <div className={S.placePosition}>
