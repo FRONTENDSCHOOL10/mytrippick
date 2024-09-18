@@ -10,7 +10,7 @@ AppInput.propTypes = {
   type: string.isRequired,
   name: string.isRequired,
   defaultValue: string,
-  placeholder: string.isRequired,
+  placeholder: string,
   onChange: func,
   isRequired: bool,
 };
@@ -50,6 +50,7 @@ function AppInput({
 
   return (
     <article className={S.AppInput}>
+      <h3 className="sr-only">{label} input 공간</h3>
       <label className="label" htmlFor={id} hidden={labelHidden}>
         {label}
       </label>

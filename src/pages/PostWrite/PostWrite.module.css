@@ -1,10 +1,46 @@
 .component {
+  position: relative;
   display: flex;
   flex-flow: column;
   gap: var(--space-6);
   padding: var(--space-10, 40px) var(--space-4, 16px);
 
+  .searchPlaceBtnWrapper {
+    display: flex;
+    flex-flow: column;
+    gap: var(--rounded-xs);
+
+    .searchPlaceBtn {
+      margin: 0;
+      display: flex;
+      flex-flow: row;
+      background-color: var(--gray-500);
+      padding: var(--space-2-half) var(--space-4, 16px);
+      border-radius: var(--rounded-md);
+      justify-content: space-between;
+      font-family: var(--base-font-family);
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+    }
+  }
+
   button {
     margin-top: var(--space-6);
   }
 }
+
+/* .modalBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); 
+  backdrop-filter: blur(5px); 
+  z-index: 999; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */

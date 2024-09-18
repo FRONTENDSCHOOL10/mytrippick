@@ -1,4 +1,4 @@
-import { useId, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { string, func } from 'prop-types';
 import DatePicker from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
@@ -7,7 +7,7 @@ import Calendar from '@/assets/svg/calander.svg?react';
 import S from './DateInput.module.css';
 import usePostDateStore from '@/stores/usePostDateStore';
 
-const CustomInput = forwardRef(({ value, onClick }, ref) => (
+const CustomInput = forwardRef(({ value, onClick, onKeyDown }, ref) => (
   <div style={{ position: 'relative' }}>
     <input
       type="text"
@@ -17,6 +17,7 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
       ref={ref}
       placeholder="날짜를 선택해주세요"
       readOnly
+      onKeyDown={onKeyDown}
     />
     <Calendar
       style={{
@@ -33,22 +34,41 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 function DateInput() {
   const { date, setDate } = usePostDateStore();
 
-  const id = useId();
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.stopPropagation();
+      e.target.click();
+    }
+    if (e.key === 'Tab') {
+      const nextElement = e.target.nextElementSibling;
+      if (nextElement) {
+        nextElement.focus();
+      }
+    }
+  };
 
   return (
     <article className={S.component}>
-      <label className="label" htmlFor={id}>
-        방문한 날짜
-      </label>
+      <h3 className="sr-only">날짜 선택 input 공간</h3>
+      <label className="label">방문한 날짜</label>
       <DatePicker
-        id={id}
         selected={date}
         onChange={(date) => setDate(date)}
         dateFormat="yyyy.MM.dd"
         locale={ko}
         customInput={
-          <CustomInput value={date ? date.toLocaleDateString('ko-KR') : ''} />
+          <CustomInput
+            value={date ? date.toLocaleDateString('ko-KR') : ''}
+            onKeyDown={handleKeyDown}
+          />
         }
+        onCalendarClose={() => {
+          const nextElement = document.activeElement.nextElementSibling;
+          if (nextElement) {
+            nextElement.focus();
+          }
+        }}
       />
     </article>
   );
@@ -60,6 +80,7 @@ CustomInput.propTypes = {
   value: string,
   onClick: func,
   onChange: func,
+  onKeyDown: func,
 };
 
 export default DateInput;

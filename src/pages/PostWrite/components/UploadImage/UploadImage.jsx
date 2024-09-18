@@ -27,6 +27,7 @@ function UploadImage() {
 
   return (
     <article className={S.component}>
+      <h3 className="sr-only">이미지 선택 영역</h3>
       <label tabIndex={0} htmlFor={id} onKeyDown={handleKeyDown}>
         {imageURL ? (
           <img

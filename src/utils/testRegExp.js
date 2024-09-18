@@ -14,6 +14,11 @@ export const testPasswordExp = (password) => {
 
 /* 닉네임 유효성 검사 정규식 */
 export const testNickNameRegExp = (nickName) => {
-  const nickNameRegExp = new RegExp('^[a-zA-Z가-힣0-9_]{1,12}$');
+  const nickNameRegExp = new RegExp('^[a-zA-Z가-힣0-9_]{1,10}$');
   return nickNameRegExp.test(nickName);
+};
+
+/* 한줄 소개 유효성 검사 */
+export const checkCommentsMySelfLength = (comments) => {
+  return comments.length <= 30;
 };

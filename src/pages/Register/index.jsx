@@ -105,7 +105,7 @@ function Register() {
     if (name === 'nickName') {
       if (!testNickNameRegExp(value)) {
         errorMessage =
-          '1~12자 이내의 한/영문 그리고 숫자와 특수기호 (_)만 사용 가능합니다';
+          '1~10자 이내의 한/영문 그리고 숫자와 특수기호 (_)만 사용 가능합니다';
       } else {
         setIsChecked((prevDatas) => ({
           ...prevDatas,
