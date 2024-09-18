@@ -33,7 +33,7 @@ function Card({
   placeName,
   likedNum,
   collectionId,
-  id, //id가 postId임.
+  id, //postId
   userId,
   nickName,
   userProfile,
@@ -91,7 +91,7 @@ function Card({
   // 카드에 표시될 정보 (타입에 따라 다른 스타일 적용)
   const placeInfo =
     type === 'rank' ? (
-      <article className={rankStyled}>
+      <article className={`${S.rankCard} ${rankStyled}`}>
         <div className={S.cardHeader}>
           <div className={S.userInfos}>
             <img
@@ -109,27 +109,31 @@ function Card({
             onClick={handleBookmarks}
           />
         </div>
-        <figure>
-          <img
-            className={S.placePhoto}
-            src={`${
-              import.meta.env.VITE_PB_API
-            }/files/${collectionId}/${id}/${photo}`}
-            // alt={postInfo.placeName}
-          />
-          <span role="none" className={S.dimThumb}></span>
-        </figure>
+        <Link to={`/posts/${id}`}>
+          <figure>
+            <img
+              className={S.placePhoto}
+              src={`${
+                import.meta.env.VITE_PB_API
+              }/files/${collectionId}/${id}/${photo}`}
+              alt={placeName}
+            />
+            <span role="none" className={S.dimThumb}></span>
+          </figure>
+        </Link>
         <div className={S.places}>
-          <div className={S.placeInfos}>
-            <span className={`rank ${S.rankNum}`}>{idx + 1}</span>
-            <div className={`title1 ${S.placeTitle}`}>
-              {placeName}
-              <div className={S.placePosition}>
-                <MarkerFill className={S.marker} />
-                <span className="caption">{placePosition}</span>
+          <Link to={`/posts/${id}`} tabindex="-1">
+            <div className={S.placeInfos}>
+              <span className={`rank ${S.rankNum}`}>{idx + 1}</span>
+              <div className={S.placeTitleWrapper}>
+                <h2 className={`title1 ${S.placeTitle}`}>{placeName}</h2>
+                <div className={S.placePosition}>
+                  <MarkerFill className={S.marker} />
+                  <span className="caption">{placePosition}</span>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
           <div className={S.likeWrapper}>
             {/* 좋아요 수 표시 */}
             <span>{num}</span>
@@ -143,31 +147,33 @@ function Card({
         <div className={S.cardHeader}>
           <ToggleBtn bookmark />
         </div>
-        <figure>
-          <img
-            className={S.placePhoto}
-            src={`${
-              import.meta.env.VITE_PB_API
-            }/files/${collectionId}/${id}/${photo}`}
-            // alt={postInfo.placeName}
-          />
-          <span role="none" className={S.dimThumb}></span>
-        </figure>
-        <div className={S.placeInfos}>
-          <span className="title3">{placeName}</span>
-          <div className={S.placePosition}>
-            <MarkerFill className={S.marker} />
-            <span>{placePosition}</span>
+        <Link to={`/posts/${id}`}>
+          <figure>
+            <img
+              className={S.placePhoto}
+              src={`${
+                import.meta.env.VITE_PB_API
+              }/files/${collectionId}/${id}/${photo}`}
+              alt={placeName}
+            />
+            <span role="none" className={S.dimThumb}></span>
+          </figure>
+        </Link>
+        <Link to={`/posts/${id}`} tabindex="-1">
+          <div className={S.placeInfos}>
+            <h2 className="title3">{placeName}</h2>
+            <div className={S.placePosition}>
+              <MarkerFill className={S.marker} />
+              <span>{placePosition}</span>
+            </div>
           </div>
-        </div>
+        </Link>
       </article>
     );
   return (
-    <article
-      className={`${S.component} ${type === 'post' ? S.postComponent : ''}`}
-    >
-      <Link to={''}>{placeInfo}</Link>
-    </article>
+    <div className={`${S.component} ${type === 'post' ? S.postComponent : ''}`}>
+      {placeInfo}
+    </div>
   );
 }
 export default Card;

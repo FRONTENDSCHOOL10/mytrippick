@@ -47,7 +47,6 @@ export default function PostList() {
             <Fragment key={idx}>
               <Card
                 type="post"
-                // className={S.card}
                 id={item.id}
                 postId={item.id}
                 photo={item.photo}

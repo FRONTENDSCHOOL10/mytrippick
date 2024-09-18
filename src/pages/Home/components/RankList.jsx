@@ -68,7 +68,7 @@ export default function RankList() {
       className={S.rankList}
       slidesPerView="auto"
       pagination={{
-        clickable: true,
+        clickable: false,
         el: `.${S.swiperPagination}`,
       }}
       navigation={{
