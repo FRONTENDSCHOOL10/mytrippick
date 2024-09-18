@@ -7,6 +7,7 @@ import LoginModal from './LoginModal';
 import S from './MyPage.module.css';
 import ProfileBox from './ProfileBox';
 import useGlobalStore from '@/stores/useGlobalStore';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
 
 function MyPage() {
   // 상태
@@ -60,7 +61,7 @@ function MyPage() {
   };
 
   if (isLoading) {
-    return <p>로딩 중입니다...</p>;
+    return <AppSpinner />;
   }
 
   if (!isLoggedIn) {
