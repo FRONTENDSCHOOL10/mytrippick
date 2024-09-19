@@ -5,6 +5,7 @@ import Card from '@/components/Card/Card';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import pb from '@/api/pb';
 import S from './Curation.module.css';
+import useGlobalStore from '@/stores/useGlobalStore';
 
 export default function Curation() {
   const [curationCardList, setCurationCardList] = useState([]);
@@ -22,15 +23,24 @@ export default function Curation() {
             : `&filter=(category="${selectedCategory}")`
         }`
       )
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
         .then((data) => {
           console.log('Fetched Data:', data); // 데이터를 여기서 출력
           const newItems = data.items || [];
           setCurationCardList((prevList) =>
             page === 1 ? newItems : [...prevList, ...newItems]
           );
-          return data; // 원본 데이터를 그대로 반환
+          return data;
+        })
+        .catch((error) => {
+          console.error('Fetching data failed:', error); // 에러 로그 추가
         }),
+
     keepPreviousData: true,
     refetchOnWindowFocus: false,
   });
