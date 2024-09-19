@@ -48,7 +48,9 @@ function EditUserInfo() {
           email: response.data.email,
         });
 
-        setUserImageURL(getPbImageURL(response.data, 'userProfile'));
+        if (response.data.userProfile !== '') {
+          setUserImageURL(getPbImageURL(response.data, 'userProfile'));
+        }
       } catch (error) {
         console.error('API 요청 실패:', error);
       }
