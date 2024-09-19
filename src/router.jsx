@@ -7,7 +7,6 @@ import RegisterPage from './pages/Register';
 import MyPage from './pages/MyPage';
 import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
-import PostDetailPage from '@/pages/PostDetail';
 import EditUserInfo from './pages/EditUserInfo';
 
 /**@type {import('react-router-dom').RouteObject[]} */
@@ -50,7 +49,8 @@ const navigation = [
   {
     text: '게시글 상세',
     path: '/post/:postId',
-    element: <PostDetailPage />,
+    lazy: () => import('@/pages/PostDetail'),
+    // element: <PostDetailPage />,
   },
   {
     text: '회원정보수정',

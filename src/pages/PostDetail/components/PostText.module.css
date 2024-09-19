@@ -1,3 +1,13 @@
+.postText {
+  margin: 0 var(--container-m-md);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--line-400);
+
+  p {
+    padding-bottom: var(--space-2);
+  }
+}
+
 .btn {
   display: flex;
   align-items: center;

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 const PostDetail = lazy(() => import('./PostDetail'));
 
-function PostDetailPage() {
+export function Component() {
   return (
     <>
       <Helmet>
@@ -28,5 +28,3 @@ function PostDetailPage() {
     </>
   );
 }
-
-export default PostDetailPage;

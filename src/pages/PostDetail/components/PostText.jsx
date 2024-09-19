@@ -16,8 +16,8 @@ function PostText({ children }) {
 
   if (children) {
     return (
-      <>
-        <p>
+      <section className={S.postText}>
+        <p className="body1">
           {isExpanded
             ? children
             : children.slice(0, 150) + (children.length > 150 ? '...' : '')}
@@ -26,7 +26,7 @@ function PostText({ children }) {
           {isExpanded ? '접기' : '더보기'}
           {isExpanded ? '' : <Plus />}
         </button>
-      </>
+      </section>
     );
   }
 }
