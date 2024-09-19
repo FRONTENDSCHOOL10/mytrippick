@@ -6,7 +6,7 @@ import S from './Login.module.css';
 import { testEmailRegExp, testPasswordExp, throttle } from '@/utils';
 import { submitLogin } from '@/api/submitLogin';
 import useGlobalStore from '@/stores/useGlobalStore';
-import Modal from './Modal';
+import Modal from '@/components/BasicTextModal/Modal';
 
 function Login() {
   const [formDatas, setFormDatas] = useState({
@@ -33,12 +33,8 @@ function Login() {
   useEffect(() => {
     if (isLoggedIn) {
       setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-        navigation('/');
-      }, 1500);
     }
-  }, [isLoggedIn, navigation]);
+  }, [isLoggedIn]);
 
   const handleFormDatasChange = throttle((e) => {
     const { name, value } = e.target;
@@ -107,6 +103,11 @@ function Login() {
     }
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigation('/');
+  };
+
   return (
     <section className={S.component}>
       <h1 className="headline1">로그인</h1>
@@ -165,7 +166,7 @@ function Login() {
         </CommonBtn>
       </form>
 
-      {showModal && <Modal />}
+      {showModal && <Modal text="환영합니다" onClose={handleCloseModal} />}
     </section>
   );
 }

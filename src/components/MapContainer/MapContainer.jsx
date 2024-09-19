@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import useGeolocation from '@/hooks/useGeolocation';
+import useGeolocation from '@/components/BasicTextModal/useGeolocation';
 import AppInput2 from '../AppInput/AppInput2';
 import S from './MapContainer.module.css';
 import ToggleList from '@/assets/svg/toggle-list.svg?react';
