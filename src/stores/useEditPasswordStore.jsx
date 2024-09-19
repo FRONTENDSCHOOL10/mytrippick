@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 const useEditPasswordStore = create((set) => ({
+  beforePassword: null,
   changePassword: null,
   changePasswordConfirm: null,
   changePasswordMessage:
@@ -8,6 +9,7 @@ const useEditPasswordStore = create((set) => ({
   changePasswordConfirmMessage: null,
   isChangePassword: false,
   isChangePasswordConfirm: false,
+  setBeforePassword: (oldPassword) => set({ beforePassword: oldPassword }),
   setChangePassword: (newPassword) => set({ changePassword: newPassword }),
   setChangePasswordConfirm: (newPassword) =>
     set({
