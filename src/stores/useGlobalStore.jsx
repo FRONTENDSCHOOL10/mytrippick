@@ -8,9 +8,6 @@ const useGlobalStore = create((set) => ({
   setScrollDirection: (direction) => set({ scrollDirection: direction }),
 
   isLoggedIn: false,
-  profileImage: '',
-  nickname: '',
-
   likedPostIds: [],
   setLikedPostIds: (likedPostIds) => set({ likedPostIds }),
 
@@ -21,16 +18,12 @@ const useGlobalStore = create((set) => ({
     localStorage.setItem('isLoggedIn', isLoggedIn ? 'true' : '');
     set({ isLoggedIn });
   },
-  setProfileImage: (profileImage) => set({ profileImage }),
-  setNickname: (nickname) => set({ nickname }),
 
   initializeUser: () => {
     const loggedIn = localStorage.getItem('isLoggedIn');
     if (loggedIn) {
       set({
         isLoggedIn: true,
-        profileImage: './../../favicon.svg', //임시
-        nickname: '닉네임',
       });
     }
   },
@@ -39,10 +32,9 @@ const useGlobalStore = create((set) => ({
     localStorage.removeItem('isLoggedIn');
     set({
       isLoggedIn: false,
-      profileImage: '',
-      nickname: '',
     });
   },
+
   toggles: {},
   toggle: (id) =>
     set((state) => ({

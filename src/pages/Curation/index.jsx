@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useHomeStore from '@/stores/useHomeStore';
 import Card from '@/components/Card/Card';
@@ -12,6 +12,39 @@ export default function Curation() {
   const page = useHomeStore((state) => state.page);
   const selectedCategory = useHomeStore((state) => state.selectedCategory);
   const setPage = useHomeStore((state) => state.setPage);
+
+  // useGlobalStore의 상태를 불러오기
+  const {
+    isMenuOpen,
+    scrollDirection,
+    isLoggedIn,
+    profileImage,
+    nickname,
+    likedPostIds,
+    bookmarkedPostIds,
+    toggles,
+  } = useGlobalStore();
+
+  // useEffect로 상태를 콘솔에 출력
+  useEffect(() => {
+    console.log('isMenuOpen:', isMenuOpen);
+    console.log('scrollDirection:', scrollDirection);
+    console.log('isLoggedIn:', isLoggedIn);
+    console.log('profileImage:', profileImage);
+    console.log('nickname:', nickname);
+    console.log('likedPostIds:', likedPostIds);
+    console.log('bookmarkedPostIds:', bookmarkedPostIds);
+    console.log('toggles:', toggles);
+  }, [
+    isMenuOpen,
+    scrollDirection,
+    isLoggedIn,
+    profileImage,
+    nickname,
+    likedPostIds,
+    bookmarkedPostIds,
+    toggles,
+  ]);
 
   const curationData = useQuery({
     queryKey: ['curations', page, selectedCategory],
