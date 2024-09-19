@@ -1,7 +1,7 @@
-import S from './Modal.module.css';
+import S from './BasicTextModal.module.css';
 import { string, func } from 'prop-types';
 
-const Modal = ({ text, onClose }) => {
+const BasicTextModal = ({ text, onClose }) => {
   return (
     <div className={S.modal}>
       <p className={S.text}>{text}</p>
@@ -12,9 +12,9 @@ const Modal = ({ text, onClose }) => {
   );
 };
 
-Modal.propTypes = {
+BasicTextModal.propTypes = {
   text: string.isRequired,
   onClose: func.isRequired,
 };
 
-export default Modal;
+export default BasicTextModal;

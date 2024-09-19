@@ -6,7 +6,7 @@ import S from './Login.module.css';
 import { testEmailRegExp, testPasswordExp, throttle } from '@/utils';
 import { submitLogin } from '@/api/submitLogin';
 import useGlobalStore from '@/stores/useGlobalStore';
-import Modal from '@/components/BasicTextModal/Modal';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 
 function Login() {
   const [formDatas, setFormDatas] = useState({
@@ -166,7 +166,9 @@ function Login() {
         </CommonBtn>
       </form>
 
-      {showModal && <Modal text="환영합니다" onClose={handleCloseModal} />}
+      {showModal && (
+        <BasicTextModal text="환영합니다" onClose={handleCloseModal} />
+      )}
     </section>
   );
 }
