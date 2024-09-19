@@ -1,16 +1,16 @@
-.rankList {
+.rankCardList {
   width: 100%;
   height: 630px;
-  padding: 0 var(--container-m-sm);
+  padding: var(--space-1, 4px) var(--container-m-sm) 0;
 }
 
-.rankList :global(.swiper-slide) {
+.rankCardList :global(.swiper-slide) {
   width: 95%;
   max-width: 330px;
   margin-inline-end: var(--space-2, 8px);
 }
 
-.rankList :global(.swiper-slide):last-child {
+.rankCardList :global(.swiper-slide):last-child {
   margin-inline-end: var(--space-2, 0);
 }
 
@@ -34,14 +34,6 @@
 
 .moreBtn {
   margin-block-start: 40px;
-}
-
-.categoryContainer {
-  display: flex;
-  flex-direction: row;
-  gap: var(--space-1, 4px);
-  padding: 0 var(--container-m-sm);
-  margin-block-end: var(--space-6, 24px);
 }
 
 .swiperButtonPrev,
@@ -98,9 +90,4 @@
 :global(.swiper-pagination-bullet-active) {
   background-color: var(--brand, #8eff00);
   opacity: 1;
-}
-
-.error {
-  padding: 0 var(--container-m-sm);
-  color: var(--text-300, #6e6e6e);
 }

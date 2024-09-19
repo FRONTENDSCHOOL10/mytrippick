@@ -4,7 +4,7 @@ import useHomeStore from '@/stores/useHomeStore';
 import Card from '@/components/Card/Card';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 
-import S from '../HomeContents.module.css';
+import S from './CardList.module.css';
 
 export default function PostList() {
   const [postCardList, setPostCardList] = useState([]);
@@ -60,10 +60,13 @@ export default function PostList() {
           );
         })}
       </div>
-      {/* 로딩중 더보기 클릭 비활성화 로직 필요 */}
       {postCardList.length > 0 &&
         postCardList.length !== postData.data?.totalItems && (
-          <CommonBtn small onClick={() => setPage(page + 1)}>
+          <CommonBtn
+            small
+            onClick={() => setPage(page + 1)}
+            disabled={postData.isFetching}
+          >
             더보기
           </CommonBtn>
         )}
