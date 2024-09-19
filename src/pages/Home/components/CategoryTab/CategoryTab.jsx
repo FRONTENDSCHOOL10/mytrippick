@@ -1,18 +1,14 @@
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import S from './HomeContents.module.css';
-
+import { Swiper, SwiperSlide } from 'swiper/react';
 import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
-import RankList from './components/RankList';
-import PostList from './components/PostList';
 import useHomeStore from '@/stores/useHomeStore';
+import S from './CategoryTab.module.css';
 
-function HomeContents() {
+function CategoryTab() {
   const selectedCategory = useHomeStore((state) => state.selectedCategory);
   const setSelectedCategory = useHomeStore(
     (state) => state.setSelectedCategory
   );
+
   const setPage = useHomeStore((state) => state.setPage);
   const setPostCardList = useHomeStore((state) => state.setPostCardList);
 
@@ -37,27 +33,21 @@ function HomeContents() {
   };
 
   return (
-    <>
-      {/* 로딩스피너 수정 예정 */}
-      {/* {loading && <AppSpinner />} */}
-      <RankList />
-
-      {/* 카테고리 탭 */}
-      {/* 스와이퍼로 수정 예정 (작은 화면에서 탭이 안넘어감) */}
-      <div className={S.categoryContainer}>
+    <div className={S.categoryContainer}>
+      <Swiper slidesPerView="auto" className={S.categoryWrapper}>
         {categories.map((category) => (
-          <CategoryBtn
-            key={category}
-            label={category}
-            checked={selectedCategory === category}
-            onChecked={() => handleCategoryChange(category)}
-          />
+          <SwiperSlide key={category} className={S.categorySlide}>
+            <CategoryBtn
+              key={category}
+              label={category}
+              checked={selectedCategory === category}
+              onChecked={() => handleCategoryChange(category)}
+            />
+          </SwiperSlide>
         ))}
-      </div>
-
-      {/* 게시글 리스트 */}
-      <PostList />
-    </>
+      </Swiper>
+    </div>
   );
 }
-export default HomeContents;
+
+export default CategoryTab;

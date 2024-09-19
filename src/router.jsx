@@ -8,6 +8,7 @@ import MyPage from './pages/MyPage';
 import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
 import EditUserInfo from './pages/EditUserInfo';
+import Curation from './pages/Curation';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -56,6 +57,11 @@ const navigation = [
     text: '회원정보수정',
     path: '/mypage/edituserinfo',
     element: <EditUserInfo />,
+  },
+  {
+    text: '나만의 큐레이션',
+    path: '/curation',
+    element: <Curation />,
   },
 ];
 

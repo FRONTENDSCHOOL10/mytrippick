@@ -7,12 +7,15 @@ export async function submitLogin(collectionName, datas) {
       .collection(collectionName)
       .authWithPassword(datas.email, datas.password);
 
-    const { setIsLoggedIn, setProfileImage, setNickname } =
-      useGlobalStore.getState();
+    const { setIsLoggedIn } = useGlobalStore.getState();
 
     setIsLoggedIn(true);
-    setProfileImage(authData.record.profileImage || './../../favicon.svg');
-    setNickname(authData.record.nickname || '닉네임');
+
+    const profileImageUrl = `${pb.baseUrl}/api/files/${authData.record.collectionId}/${authData.record.id}/${authData.record.userProfile}`;
+    const nickname = authData.record.nickName || '닉네임';
+
+    localStorage.setItem('profileImage', profileImageUrl);
+    localStorage.setItem('nickname', nickname);
 
     return authData;
   } catch (error) {

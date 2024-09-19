@@ -1,0 +1,21 @@
+.curation {
+  margin-block-end: 60px;
+}
+
+.curationCardList {
+  padding: 0 var(--container-m-sm);
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: var(--space-8, 32px) var(--space-2, 8px);
+  flex-wrap: wrap;
+  margin-block-end: var(--space-10, 40px);
+}
+
+.card {
+  width: 100%;
+}
+
+.moreBtn {
+  margin-block-start: 40px;
+}

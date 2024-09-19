@@ -4,18 +4,31 @@ import { NavLink } from 'react-router-dom';
 import S from './Menu.module.css';
 
 function Menu() {
-  const { isLoggedIn, profileImage, nickname, initializeUser, logout } =
-    useGlobalStore();
+  const { isLoggedIn, initializeUser, logout } = useGlobalStore();
   const [showModal, setShowModal] = useState(false);
+  const [profileImage, setProfileImage] = useState('');
+  const [nickname, setNickname] = useState('');
 
   useEffect(() => {
+    const storedProfileImage = localStorage.getItem('profileImage');
+    const storedNickname = localStorage.getItem('nickname');
+
+    if (storedProfileImage) {
+      setProfileImage(storedProfileImage);
+    }
+    if (storedNickname) {
+      setNickname(storedNickname);
+    }
+
     initializeUser();
-  }, [initializeUser]);
+  }, []);
 
   const handleProtectedLinkClick = (e) => {
     if (!isLoggedIn) {
       e.preventDefault();
       setShowModal(true);
+    } else {
+      useGlobalStore.setState({ isMenuOpen: false });
     }
   };
 
@@ -115,20 +128,20 @@ function Menu() {
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={handleProtectedLinkClick}
+              onClick={(e) => handleProtectedLinkClick(e)}
             >
               게시글 등록하기
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/나만의큐레이션"
+              to="/curation"
               aria-label="나만의 큐레이션 페이지로 이동"
               title="나만의 큐레이션"
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={handleProtectedLinkClick}
+              onClick={(e) => handleProtectedLinkClick(e)}
             >
               나만의 큐레이션
             </NavLink>
@@ -147,7 +160,10 @@ function Menu() {
                   title="로그인 페이지로 이동"
                   to="/login"
                   className={S.authLink}
-                  onClick={() => useGlobalStore.setState({ isMenuOpen: false })}
+                  onClick={() => {
+                    useGlobalStore.setState({ isMenuOpen: false });
+                    setShowModal(false);
+                  }}
                 >
                   로그인 하러 가기
                 </NavLink>
