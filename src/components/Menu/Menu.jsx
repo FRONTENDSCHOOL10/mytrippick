@@ -16,6 +16,8 @@ function Menu() {
     if (!isLoggedIn) {
       e.preventDefault();
       setShowModal(true);
+    } else {
+      useGlobalStore.setState({ isMenuOpen: false });
     }
   };
 
@@ -115,9 +117,7 @@ function Menu() {
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={(e) => {
-                handleProtectedLinkClick(e);
-              }}
+              onClick={(e) => handleProtectedLinkClick(e)}
             >
               게시글 등록하기
             </NavLink>
@@ -130,9 +130,7 @@ function Menu() {
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={(e) => {
-                handleProtectedLinkClick(e);
-              }}
+              onClick={(e) => handleProtectedLinkClick(e)}
             >
               나만의 큐레이션
             </NavLink>
