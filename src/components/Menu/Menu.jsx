@@ -115,9 +115,8 @@ function Menu() {
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={() => {
-                useGlobalStore.setState({ isMenuOpen: false });
-                handleProtectedLinkClick();
+              onClick={(e) => {
+                handleProtectedLinkClick(e);
               }}
             >
               게시글 등록하기
@@ -131,9 +130,8 @@ function Menu() {
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={() => {
-                useGlobalStore.setState({ isMenuOpen: false });
-                handleProtectedLinkClick();
+              onClick={(e) => {
+                handleProtectedLinkClick(e);
               }}
             >
               나만의 큐레이션
@@ -153,7 +151,10 @@ function Menu() {
                   title="로그인 페이지로 이동"
                   to="/login"
                   className={S.authLink}
-                  onClick={() => useGlobalStore.setState({ isMenuOpen: false })}
+                  onClick={() => {
+                    useGlobalStore.setState({ isMenuOpen: false });
+                    setShowModal(false);
+                  }}
                 >
                   로그인 하러 가기
                 </NavLink>
