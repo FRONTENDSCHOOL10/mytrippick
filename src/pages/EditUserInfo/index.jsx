@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -10,6 +11,7 @@ import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
 import useEditPasswordStore from '@/stores/useEditPasswordStore';
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
+import useGlobalStore from '@/stores/useGlobalStore';
 import PasswordAccordion from './components/PasswordAccordion/PasswordAccordion';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
@@ -35,7 +37,10 @@ function EditUserInfo() {
 
   const { userImage, setUserImageURL } = usePostPhotoFileStore();
 
-  const { changePassword, changePasswordConfirm } = useEditPasswordStore();
+  const { beforePassword, changePassword, changePasswordConfirm } =
+    useEditPasswordStore();
+
+  const { logout } = useGlobalStore();
 
   useEffect(() => {
     const handleGetUserOriginData = async () => {
@@ -114,28 +119,43 @@ function EditUserInfo() {
     }
   };
 
+  const navigation = useNavigate();
+
   const handleSendEditUserInfo = async (e) => {
     e.preventDefault();
 
     const userEditData = {
-      password: changePassword,
-      passwordConfirm: changePasswordConfirm,
-      oldPassword: oldpassword,
       nickName: editUserData.newNickName,
       bio: editUserData.newCommentsMySelf,
-      userProfile: userImage,
     };
+
+    if (userImage) {
+      userEditData.userProfile = userImage;
+    }
 
     if (changePassword) {
       userEditData.password = changePassword;
       userEditData.passwordConfirm = changePasswordConfirm;
-      userEditData.oldPassword = oldPassword;
+      userEditData.oldPassword = beforePassword;
+
+      try {
+        const editing = await pb
+          .collection('users')
+          .update('xum3wfl4o5mhtue', userEditData);
+        alert('비밀번호 변경에 성공하셨습니다');
+        logout();
+        navigation('/login');
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     try {
       const editing = await pb
         .collection('users')
-        .update('xum3wfl4o5mhtue', data);
+        .update('xum3wfl4o5mhtue', userEditData);
+      alert('회원정보가 수정되었습니다');
+      navigation('/mypage');
     } catch (error) {
       console.log(error);
     }
