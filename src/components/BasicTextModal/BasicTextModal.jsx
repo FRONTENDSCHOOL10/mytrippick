@@ -10,33 +10,47 @@ const BasicTextModal = ({
   onFillBtnClick,
   onBtnClick,
 }) => {
+  // 모달 바깥 영역 클릭 시 닫힘
+  const handleOverlayClick = () => {
+    if (onBtnClick) {
+      onBtnClick(); // onBtnClick이 전달된 경우 호출
+    }
+  };
+
+  // 모달 내부 클릭 핸들러 - 이벤트 버블링 방지
+  const handleModalClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className={S.modal}>
-      <p
-        className={`title2 ${S.message}`}
-        dangerouslySetInnerHTML={{ __html: message }}
-      ></p>
-      <div className={S.btnContainer}>
-        {type === 'fill' && (
-          <CommonBtn small fill onClick={onFillBtnClick}>
-            {fillBtnText}
-          </CommonBtn>
-        )}
-        {type === 'default' && (
-          <CommonBtn small onClick={onBtnClick}>
-            {btnText}
-          </CommonBtn>
-        )}
-        {type === 'both' && (
-          <>
+    <div className={S.overlay} onClick={handleOverlayClick}>
+      <div className={S.modal} onClick={handleModalClick}>
+        <p
+          className={`title2 ${S.message}`}
+          dangerouslySetInnerHTML={{ __html: message }}
+        ></p>
+        <div className={S.btnContainer}>
+          {type === 'fill' && (
             <CommonBtn small fill onClick={onFillBtnClick}>
               {fillBtnText}
             </CommonBtn>
+          )}
+          {type === 'default' && (
             <CommonBtn small onClick={onBtnClick}>
               {btnText}
             </CommonBtn>
-          </>
-        )}
+          )}
+          {type === 'both' && (
+            <>
+              <CommonBtn small fill onClick={onFillBtnClick}>
+                {fillBtnText}
+              </CommonBtn>
+              <CommonBtn small onClick={onBtnClick}>
+                {btnText}
+              </CommonBtn>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
