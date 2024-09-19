@@ -1,20 +1,54 @@
+import CommonBtn from '../CommonBtn/CommonBtn';
+import { string, func, oneOf } from 'prop-types';
 import S from './BasicTextModal.module.css';
-import { string, func } from 'prop-types';
 
-const BasicTextModal = ({ text, onClose }) => {
+const BasicTextModal = ({
+  message,
+  fillBtnText,
+  btnText,
+  type,
+  onFillBtnClick,
+  onBtnClick,
+}) => {
   return (
     <div className={S.modal}>
-      <p className={S.text}>{text}</p>
-      <button className={S.closeButton} onClick={onClose}>
-        확인
-      </button>
+      <p
+        className={`title2 ${S.message}`}
+        dangerouslySetInnerHTML={{ __html: message }}
+      ></p>
+      <div className={S.btnContainer}>
+        {type === 'fill' && (
+          <CommonBtn small fill onClick={onFillBtnClick}>
+            {fillBtnText}
+          </CommonBtn>
+        )}
+        {type === 'default' && (
+          <CommonBtn small onClick={onBtnClick}>
+            {btnText}
+          </CommonBtn>
+        )}
+        {type === 'both' && (
+          <>
+            <CommonBtn small fill onClick={onFillBtnClick}>
+              {fillBtnText}
+            </CommonBtn>
+            <CommonBtn small onClick={onBtnClick}>
+              {btnText}
+            </CommonBtn>
+          </>
+        )}
+      </div>
     </div>
   );
 };
 
 BasicTextModal.propTypes = {
-  text: string.isRequired,
-  onClose: func.isRequired,
+  message: string.isRequired,
+  fillBtnText: string,
+  btnText: string,
+  type: oneOf(['fill', 'default', 'both']).isRequired,
+  onBtnClick: func,
+  onFillBtnClick: func,
 };
 
 export default BasicTextModal;
