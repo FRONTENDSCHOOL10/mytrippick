@@ -17,7 +17,7 @@ function Login() {
     password: '',
   });
 
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [, setIsPasswordValid] = useState(true);
   const [isFormValid, setIsFormValid] = useState(false);
 
   const handleFormDatasChange = throttle((e) => {
