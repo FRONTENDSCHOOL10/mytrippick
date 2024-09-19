@@ -18,6 +18,7 @@ function AppTextArea({
   defaultValue = '',
   placeholder = '',
   onChange,
+  ...restProps
 }) {
   const id = useId();
 
@@ -35,6 +36,7 @@ function AppTextArea({
         defaultValue={defaultValue}
         placeholder={placeholder}
         onChange={onChange}
+        {...restProps}
       />
     </article>
   );

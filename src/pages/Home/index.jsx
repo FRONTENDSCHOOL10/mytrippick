@@ -1,9 +1,13 @@
-import { lazy, Suspense } from 'react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import CategoryTab from './components/CategoryTab/CategoryTab';
+import RankList from './components/CardList/RankList';
+import PostList from './components/CardList/PostList';
+
 import { Helmet } from 'react-helmet-async';
 import S from './Home.module.css';
-import AppSpinner from '@/components/AppSpinner/AppSpinner';
-
-const HomeContents = lazy(() => import('./HomeContents'));
 
 export function Component() {
   return (
@@ -23,9 +27,12 @@ export function Component() {
         <meta property="og:site:author" content="리액트에서-구해조" />
       </Helmet>
       <h1 className={`headline4 ${S.sectionTitle}`}>인기 여행지 TOP 3</h1>
-      <Suspense fallback={<AppSpinner />}>
-        <HomeContents />
-      </Suspense>
+      {/* 인기 여행지 TOP 3 */}
+      <RankList />
+      {/* 카테고리 탭 */}
+      <CategoryTab />
+      {/* 게시글 리스트 */}
+      <PostList />
     </>
   );
 }

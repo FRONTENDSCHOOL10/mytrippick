@@ -1,8 +1,65 @@
+import { useState } from 'react';
+import useEditPasswordStore from '@/stores/useEditPasswordStore';
+import { testPasswordExp, throttle } from '@/utils';
 import AppInput from '@/components/AppInput/AppInput';
 import ChevronIcon from '@/assets/svg/chevron.svg?react';
 import S from './PasswordAccordion.module.css';
 
 function PasswordAccordion() {
+  const [isTouchedPassword, setIsTouchedPassword] = useState(false);
+
+  const {
+    changePassword,
+    changePasswordConfirm,
+    changePasswordMessage,
+    changePasswordConfirmMessage,
+    isChangePassword,
+    setChangePassword,
+    setChangePasswordConfirm,
+    setChangePasswordMessage,
+    setChangePasswordConfirmMessage,
+    setIsChangePassword,
+    setIsChangePasswordConfirm,
+  } = useEditPasswordStore();
+
+  const handleInputChange = throttle((e) => {
+    const { name, value } = e.target;
+
+    if (name === 'newPassword') {
+      setChangePassword(value);
+      setIsTouchedPassword(true);
+    } else {
+      setIsTouchedPassword(false);
+    }
+    if (name === 'newPasswordConfirm') {
+      setChangePasswordConfirm(value);
+    }
+
+    checkPasswordRegExp(name, value);
+  });
+
+  const checkPasswordRegExp = (name, value) => {
+    if (name === 'newPassword') {
+      if (!testPasswordExp(value)) {
+        setChangePasswordMessage('비밀번호 형식과 일치하지 않습니다');
+        setIsChangePassword(false);
+      } else {
+        setChangePasswordMessage('');
+        setIsChangePassword(true);
+      }
+    }
+
+    if (name === 'newPasswordConfirm') {
+      if (value !== changePassword) {
+        setChangePasswordConfirmMessage('작성한 비밀번호와 일치하지 않습니다');
+        setIsChangePasswordConfirm(false);
+      } else {
+        setChangePasswordConfirmMessage('');
+        setIsChangePasswordConfirm(true);
+      }
+    }
+  };
+
   return (
     <article className={S.component}>
       <h3 className="sr-only">비밀번호 변경을 위한 아코디언</h3>
@@ -20,10 +77,17 @@ function PasswordAccordion() {
               type="password"
               name={'newPassword'}
               placeholder={'새로운 비밀번호를 입력해주세요'}
+              defaultValue={changePassword}
+              onChange={handleInputChange}
+              isRequired={false}
             />
-            <span className="caption">
-              숫자, 특수문자를 최소 1가지 이상 포함한 대소문자 구분 없는 영문
-              8~15자
+            <span
+              className="caption"
+              style={{
+                color: isTouchedPassword && !isChangePassword ? '#ff4a4a' : '',
+              }}
+            >
+              {changePasswordMessage}
             </span>
           </div>
           <div>
@@ -33,8 +97,13 @@ function PasswordAccordion() {
               type="password"
               name={'newPasswordConfirm'}
               placeholder={'새로운 비밀번호를 다시 한번 입력해주세요'}
+              defaultValue={changePasswordConfirm}
+              onChange={handleInputChange}
+              isRequired={false}
             />
-            <span></span>
+            <span className="caption" style={{ color: '#ff4a4a' }}>
+              {changePasswordConfirmMessage}
+            </span>
           </div>
         </div>
       </details>
