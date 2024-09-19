@@ -17,6 +17,7 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 import S from './EditUserInfo.module.css';
+import LinkBtn from '@/components/LinkBtn/LinkBtn';
 
 function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
@@ -205,12 +206,12 @@ function EditUserInfo() {
       />
       <PasswordAccordion />
       <div className={S.userOutBtnArea}>
-        <Link to="회원탈퇴페이지이동" className={S.moveToDeleteUserPage}>
+        <LinkBtn link={'회원탈퇴페이지'} small={true}>
           회원탈퇴
-        </Link>
+        </LinkBtn>
       </div>
       <div className={S.btnContainer}>
-        <CommonBtn className={S.cancle}>취소</CommonBtn>
+        <LinkBtn link={'/mypage'}>취소</LinkBtn>
         <CommonBtn
           submit={true}
           className={S.confirm}
