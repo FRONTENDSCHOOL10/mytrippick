@@ -2,8 +2,8 @@ import Bookmark from '@/assets/svg/bookmark.svg?react';
 import Like from '@/assets/svg/like.svg?react';
 import { bool, any } from 'prop-types';
 import S from './ToggleBtn.module.css';
-import { useNavigate } from 'react-router-dom';
 import useGlobalStore from '@/stores/useGlobalStore';
+import useModalStore from '@/stores/useModalStore';
 
 ToggleBtn.propTypes = {
   bookmark: bool,
@@ -12,19 +12,13 @@ ToggleBtn.propTypes = {
 };
 
 function ToggleBtn({ bookmark = false, isToggle = false, onClick }) {
-  const navigate = useNavigate();
   const isLoggedIn = useGlobalStore((state) => state.isLoggedIn);
+  const openModal = useModalStore((state) => state.openModal);
 
   // 좋아요 토글 핸들러
   const handleToggleLike = () => {
     if (!isLoggedIn) {
-      if (
-        confirm(
-          '로그인 이후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?'
-        )
-      ) {
-        navigate('/login');
-      }
+      openModal(); // 로그인되어 있지 않으면 모달 열기
     } else {
       onClick && onClick(); // 좋아요 상태 변경
       console.log('좋아요 상태 변경');
