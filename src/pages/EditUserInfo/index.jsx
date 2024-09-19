@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   checkCommentsMySelfLength,
+  getStorageData,
   testNickNameRegExp,
   throttle,
 } from '@/utils';
@@ -45,11 +46,11 @@ function EditUserInfo() {
 
   useEffect(() => {
     const handleGetUserOriginData = async () => {
+      const authData = getStorageData('pocketbase_auth');
+      const userId = authData.model.id;
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_PB_API
-          }/collections/users/records/xum3wfl4o5mhtue`
+          `${import.meta.env.VITE_PB_API}/collections/users/records/${userId}`
         );
 
         setEditUserData({
@@ -125,6 +126,9 @@ function EditUserInfo() {
   const handleSendEditUserInfo = async (e) => {
     e.preventDefault();
 
+    const authData = await getStorageData('pocketbase_auth');
+    const userID = authData.model.id;
+
     const userEditData = {
       nickName: editUserData.newNickName,
       bio: editUserData.newCommentsMySelf,
@@ -142,7 +146,7 @@ function EditUserInfo() {
       try {
         const editing = await pb
           .collection('users')
-          .update('xum3wfl4o5mhtue', userEditData);
+          .update(userID, userEditData);
         alert('비밀번호 변경에 성공하셨습니다');
         logout();
         navigation('/login');
