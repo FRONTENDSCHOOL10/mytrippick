@@ -1,153 +1,71 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AppInput from '@/components/AppInput/AppInput';
+import { Fragment, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import useHomeStore from '@/stores/useHomeStore';
+import Card from '@/components/Card/Card';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
-import S from './Login.module.css';
-import { testEmailRegExp, testPasswordExp, throttle } from '@/utils';
-import { submitLogin } from '@/api/submitLogin';
+import pb from '@/api/pb';
+import S from './Curation.module.css';
 
-function Login() {
-  const [formDatas, setFormDatas] = useState({
-    email: '',
-    password: '',
+export default function Curation() {
+  const [curationCardList, setCurationCardList] = useState([]);
+  const page = useHomeStore((state) => state.page);
+  const selectedCategory = useHomeStore((state) => state.selectedCategory);
+  const setPage = useHomeStore((state) => state.setPage);
+
+  const curationData = useQuery({
+    queryKey: ['curations', page, selectedCategory],
+    queryFn: () =>
+      fetch(
+        `${pb}/api/collections/curations/records?page=${page}&perPage=8&sort=-created${
+          selectedCategory === '전체'
+            ? ''
+            : `&filter=(category="${selectedCategory}")`
+        }`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('Fetched Data:', data); // 데이터를 여기서 출력
+          const newItems = data.items || [];
+          setCurationCardList((prevList) =>
+            page === 1 ? newItems : [...prevList, ...newItems]
+          );
+          return data; // 원본 데이터를 그대로 반환
+        }),
+    keepPreviousData: true,
+    refetchOnWindowFocus: false,
   });
-
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
-
-  const [, setIsPasswordValid] = useState(true);
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  const handleFormDatasChange = throttle((e) => {
-    const { name, value } = e.target;
-
-    setFormDatas((prevDatas) => {
-      const newDatas = {
-        ...prevDatas,
-        [name]: value,
-      };
-
-      validateField(name, value, newDatas);
-      return newDatas;
-    });
-  }, 300);
-
-  const validateField = (name, value, newDatas) => {
-    let error = '';
-
-    if (name === 'email') {
-      if (!testEmailRegExp(value)) {
-        error = '이메일 주소가 맞나요?';
-      }
-    } else if (name === 'password') {
-      if (!testPasswordExp(value)) {
-        error = '영문, 숫자, 특수문자 중 2가지 조합 8~15자';
-        setIsPasswordValid(false);
-      } else {
-        setIsPasswordValid(true);
-      }
-    }
-
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: error,
-    }));
-
-    setIsFormValid(
-      testEmailRegExp(newDatas.email) && testPasswordExp(newDatas.password)
-    );
-  };
-
-  const navigation = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const userData = {
-      email: formDatas.email,
-      password: formDatas.password,
-    };
-
-    try {
-      await submitLogin('users', userData);
-      navigation('/');
-    } catch (error) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        password: '비밀번호가 틀렸습니다.',
-      }));
-      setIsPasswordValid(false);
-      console.log(error);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSubmit(e);
-    }
-  };
 
   return (
-    <section className={S.component}>
-      <h1 className="headline1">로그인</h1>
-      <form onSubmit={handleSubmit}>
-        <article className="inputContainer">
-          <AppInput
-            label={'이메일 주소'}
-            labelHidden={false}
-            type={'email'}
-            name={'email'}
-            placeholder={'ID@example.com'}
-            defaultValue={formDatas.email}
-            onChange={handleFormDatasChange}
-            className={errors.email ? S.inputError : ''}
-          />
-          <span
-            style={{
-              color: errors.email ? '#ff4a4a' : '',
-            }}
-            className="caption"
+    <section className={S.curation}>
+      <div className={S.curationCardList}>
+        {curationCardList?.map((item, idx) => {
+          return (
+            <Fragment key={idx}>
+              <Card
+                type="curation"
+                id={item.id}
+                curationId={item.id}
+                photo={item.photo}
+                collectionId={item.collectionId}
+                likedNum={item.likedNum || 0}
+                placeName={item.placeName}
+                placePosition={item.placePosition}
+                userId={item.userId}
+              />
+            </Fragment>
+          );
+        })}
+      </div>
+      {curationCardList.length > 0 &&
+        curationCardList.length !== curationData.data?.totalItems && (
+          <CommonBtn
+            small
+            onClick={() => setPage(page + 1)}
+            disabled={curationData.isFetching}
           >
-            {errors.email}
-          </span>
-        </article>
-
-        <article className="inputContainer">
-          <AppInput
-            label={'비밀번호'}
-            labelHidden={false}
-            type={'password'}
-            name={'password'}
-            placeholder={'비밀번호를 입력해주세요.'}
-            defaultValue={formDatas.password}
-            onChange={handleFormDatasChange}
-            onKeyDown={handleKeyDown}
-            className={errors.password ? S.inputError : ''}
-          />
-          <span
-            style={{
-              color: errors.password ? '#ff4a4a' : '',
-            }}
-            className="caption"
-          >
-            {errors.password}
-          </span>
-        </article>
-
-        <CommonBtn
-          submit={true}
-          disabled={!isFormValid}
-          small={false}
-          fill={true}
-          onClick={handleSubmit}
-        >
-          로그인
-        </CommonBtn>
-      </form>
+            더보기
+          </CommonBtn>
+        )}
     </section>
   );
 }
-
-export default Login;

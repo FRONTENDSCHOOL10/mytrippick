@@ -60,7 +60,7 @@ const navigation = [
   },
   {
     text: '나만의 큐레이션',
-    path: '/mypage/curation',
+    path: '/curation',
     element: <Curation />,
   },
 ];
