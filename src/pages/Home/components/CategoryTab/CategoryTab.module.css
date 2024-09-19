@@ -1,0 +1,19 @@
+.categoryContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: visible;
+  padding: 0 var(--container-m-sm);
+  margin-block-end: var(--space-6, 24px);
+}
+
+.categoryWrapper {
+  overflow: visible;
+  width: 100%;
+}
+
+.categorySlide {
+  width: auto;
+  height: auto;
+  margin-inline-end: var(--space-1, 4px);
+}
