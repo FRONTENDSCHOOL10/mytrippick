@@ -4,6 +4,10 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import useGlobalStore from '@/stores/useGlobalStore';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
+import useModalStore from '@/stores/useModalStore';
+import { useNavigate } from 'react-router-dom';
+import { formatTextWithBreaks } from '@/utils';
 import AppSpinner from '@/components/AppSpinner/AppSpinner';
 import S from './Ranking.module.css';
 
@@ -14,6 +18,9 @@ export function Component() {
   const API_URL = import.meta.env.VITE_PB_URL;
   const likedPostIds = useGlobalStore((state) => state.likedPostIds);
   const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
+  const showModal = useModalStore((state) => state.showModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+  const navigate = useNavigate();
 
   const rankData = useQuery({
     queryKey: ['posts', page],
@@ -69,6 +76,17 @@ export function Component() {
     // console.log('rankCardList:', rankCardList);
   }, [rankCardList]);
 
+  // 모달 onFillBtn 버튼 클릭 시 로그인 페이지로 이동
+  const handleLoginRedirect = () => {
+    closeModal(); // 모달 닫기
+    navigate('/login'); // 로그인 페이지로 이동
+  };
+
+  // 모달 메시지
+  const message = formatTextWithBreaks(
+    '로그인 이후 이용 가능합니다.\n로그인 페이지로 이동하시겠습니까?'
+  );
+
   if (rankData.isLoading || userData.isLoading) {
     return <AppSpinner />;
   }
@@ -105,6 +123,18 @@ export function Component() {
             </CommonBtn>
           )}
       </section>
+
+      {/* 모달 렌더링 */}
+      {showModal && (
+        <BasicTextModal
+          type="both"
+          message={message}
+          fillBtnText="로그인"
+          btnText="닫기"
+          onFillBtnClick={handleLoginRedirect} // 로그인 페이지로 이동
+          onBtnClick={closeModal} // 모달 닫기
+        />
+      )}
     </>
   );
 }
