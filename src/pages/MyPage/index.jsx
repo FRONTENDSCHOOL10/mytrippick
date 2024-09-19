@@ -1,13 +1,13 @@
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import S from './MyPage.module.css';
 import ProfileBox from './ProfileBox';
-import useGlobalStore from '@/stores/useGlobalStore';
-import AppSpinner from '@/components/AppSpinner/AppSpinner';
 
 function MyPage() {
   // 상태
@@ -18,6 +18,8 @@ function MyPage() {
 
   const { isLoggedIn, initializeUser, currentUserId, logout } =
     useGlobalStore();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     initializeUser();
@@ -50,14 +52,14 @@ function MyPage() {
   const noPost = postList.length === 0;
 
   const handleNewPost = () => {
-    location.href = '/writepost'; // 게시글 작성 페이지로 이동
+    navigate('/writepost'); // 게시글 작성 페이지로 이동
   };
   const handleLogout = () => {
-    location.replace('/'); // 메인 페이지로 이동
-    logout(); // 임시 로그아웃 처리
+    navigate('/'); // 메인 페이지로 이동
+    logout(); // 로그아웃 처리
   };
   const handleLogin = () => {
-    location.href = '/login';
+    navigate('/login');
   };
 
   if (isLoading) {
