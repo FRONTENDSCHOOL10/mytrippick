@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import S from './Login.module.css';
 import { testEmailRegExp, testPasswordExp, throttle } from '@/utils';
 import { submitLogin } from '@/api/submitLogin';
+import useGlobalStore from '@/stores/useGlobalStore';
+import Modal from './Modal';
 
 function Login() {
   const [formDatas, setFormDatas] = useState({
@@ -19,6 +21,24 @@ function Login() {
 
   const [, setIsPasswordValid] = useState(true);
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const { isLoggedIn, setIsLoggedIn } = useGlobalStore((state) => ({
+    isLoggedIn: state.isLoggedIn,
+    setIsLoggedIn: state.setIsLoggedIn,
+  }));
+
+  const [showModal, setShowModal] = useState(false);
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigation('/');
+      }, 1500);
+    }
+  }, [isLoggedIn, navigation]);
 
   const handleFormDatasChange = throttle((e) => {
     const { name, value } = e.target;
@@ -60,8 +80,6 @@ function Login() {
     );
   };
 
-  const navigation = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -72,7 +90,7 @@ function Login() {
 
     try {
       await submitLogin('users', userData);
-      navigation('/');
+      setIsLoggedIn(true);
     } catch (error) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -146,6 +164,8 @@ function Login() {
           로그인
         </CommonBtn>
       </form>
+
+      {showModal && <Modal />}
     </section>
   );
 }
