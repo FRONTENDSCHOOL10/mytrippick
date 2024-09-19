@@ -121,6 +121,27 @@ function EditUserInfo() {
     }
   };
 
+  const handleDeleteBeforeData = (e) => {
+    const button = e.target.closest('button');
+
+    if (button) {
+      const inputElement = button.previousElementSibling;
+      if (inputElement.name === 'newNickName') {
+        setEditUserData((prevState) => ({
+          ...prevState,
+          newNickName: '',
+        }));
+      } else if (inputElement.name === 'newCommentsMySelf') {
+        setEditUserData((prevState) => ({
+          ...prevState,
+          newCommentsMySelf: '',
+        }));
+      }
+    } else {
+      console.log('버튼을 찾을 수 없습니다.');
+    }
+  };
+
   const navigation = useNavigate();
 
   const handleSendEditUserInfo = async (e) => {
@@ -179,6 +200,7 @@ function EditUserInfo() {
           value={editUserData.newNickName}
           isPencilOff={false}
           onChange={handleInputDatas}
+          onClick={handleDeleteBeforeData}
         />
         <span className="caption" style={{ color: '#ff4a4a' }}>
           {errorMessage.newNickNameMessage}
@@ -193,6 +215,7 @@ function EditUserInfo() {
           value={editUserData.newCommentsMySelf}
           isPencilOff={false}
           onChange={handleInputDatas}
+          onClick={handleDeleteBeforeData}
         />
         <span className="caption" style={{ color: '#ff4a4a' }}>
           {errorMessage.newCommentsMySelfMessage}
