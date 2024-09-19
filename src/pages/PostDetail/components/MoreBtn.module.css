@@ -1,4 +1,5 @@
 .btnContainer {
+  position: relative;
   display: flex;
   align-items: end;
   flex-flow: column;
@@ -36,8 +37,6 @@
 .hiddenBtn {
   display: none;
   margin: var(--space-2-half) 0;
-  /* 기능 추가하면서 다시 보이도록... */
-  /* display: inline-block; */
   overflow: hidden;
   border-radius: var(--rounded-sm);
 
@@ -58,4 +57,16 @@
   button:first-child {
     border-bottom: 1px solid var(--line-400);
   }
+}
+
+.click {
+  display: inline-block;
+  position: absolute;
+  top: 48px;
+}
+
+.clickSmall {
+  display: inline-block;
+  position: absolute;
+  bottom: 30px;
 }
