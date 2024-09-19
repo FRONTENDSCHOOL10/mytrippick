@@ -50,7 +50,7 @@ function PostWrite() {
       formData.append('placeLatLong', JSON.stringify(placeLatLong));
       formData.append('category', category);
       formData.append('visitedDate', date.toISOString());
-      formData.append('contens', comments);
+      formData.append('contents', comments);
 
       if (image) {
         formData.append('photo', image);
