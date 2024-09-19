@@ -8,7 +8,7 @@ import axios from 'axios';
 import useGlobalStore from '@/stores/useGlobalStore';
 import AppSpinner from '@/components/AppSpinner/AppSpinner';
 
-import S from '../HomeContents.module.css';
+import S from './CardList.module.css';
 
 export default function RankList() {
   const [userIds, setUserIds] = useState([]);
@@ -61,11 +61,13 @@ export default function RankList() {
         }),
     enabled: userIds.length > 0,
   });
-  if (rankData.isPending) return <AppSpinner />;
+  if (rankData.isLoading || userData.isLoading) {
+    return <AppSpinner />;
+  }
 
   return (
     <Swiper
-      className={S.rankList}
+      className={S.rankCardList}
       slidesPerView="auto"
       pagination={{
         clickable: false,
