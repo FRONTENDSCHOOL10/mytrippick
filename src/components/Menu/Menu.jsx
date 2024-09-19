@@ -4,13 +4,24 @@ import { NavLink } from 'react-router-dom';
 import S from './Menu.module.css';
 
 function Menu() {
-  const { isLoggedIn, profileImage, nickname, initializeUser, logout } =
-    useGlobalStore();
+  const { isLoggedIn, initializeUser, logout } = useGlobalStore();
   const [showModal, setShowModal] = useState(false);
+  const [profileImage, setProfileImage] = useState('');
+  const [nickname, setNickname] = useState('');
 
   useEffect(() => {
+    const storedProfileImage = localStorage.getItem('profileImage');
+    const storedNickname = localStorage.getItem('nickname');
+
+    if (storedProfileImage) {
+      setProfileImage(storedProfileImage);
+    }
+    if (storedNickname) {
+      setNickname(storedNickname);
+    }
+
     initializeUser();
-  }, [initializeUser]);
+  }, []);
 
   const handleProtectedLinkClick = (e) => {
     if (!isLoggedIn) {
