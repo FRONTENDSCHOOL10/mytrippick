@@ -9,11 +9,13 @@ function PasswordAccordion() {
   const [isTouchedPassword, setIsTouchedPassword] = useState(false);
 
   const {
+    beforePassword,
     changePassword,
     changePasswordConfirm,
     changePasswordMessage,
     changePasswordConfirmMessage,
     isChangePassword,
+    setBeforePassword,
     setChangePassword,
     setChangePasswordConfirm,
     setChangePasswordMessage,
@@ -25,12 +27,17 @@ function PasswordAccordion() {
   const handleInputChange = throttle((e) => {
     const { name, value } = e.target;
 
+    if (name === 'oldPassword') {
+      setBeforePassword(value);
+    }
+
     if (name === 'newPassword') {
       setChangePassword(value);
       setIsTouchedPassword(true);
     } else {
       setIsTouchedPassword(false);
     }
+
     if (name === 'newPasswordConfirm') {
       setChangePasswordConfirm(value);
     }
@@ -72,6 +79,18 @@ function PasswordAccordion() {
         <div className={S.passwordInputWrapper}>
           <div>
             <AppInput
+              label={'기존 비밀번호'}
+              labelHidden={false}
+              type="password"
+              name={'oldPassword'}
+              placeholder={'기존의 비밀번호를 입력해주세요'}
+              defaultValue={beforePassword}
+              onChange={handleInputChange}
+              isRequired={false}
+            />
+          </div>
+          <div>
+            <AppInput
               label={'새로운 비밀번호'}
               labelHidden={false}
               type="password"
@@ -84,7 +103,10 @@ function PasswordAccordion() {
             <span
               className="caption"
               style={{
-                color: isTouchedPassword && !isChangePassword ? '#ff4a4a' : '',
+                color:
+                  isTouchedPassword && !isChangePassword
+                    ? '#ff4a4a'
+                    : '#666666',
               }}
             >
               {changePasswordMessage}
