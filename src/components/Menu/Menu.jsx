@@ -115,20 +115,26 @@ function Menu() {
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={handleProtectedLinkClick}
+              onClick={() => {
+                useGlobalStore.setState({ isMenuOpen: false });
+                handleProtectedLinkClick();
+              }}
             >
               게시글 등록하기
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/나만의큐레이션"
+              to="/curation"
               aria-label="나만의 큐레이션 페이지로 이동"
               title="나만의 큐레이션"
               className={`headline2 ${S.linkItem} ${
                 !isLoggedIn ? S.disabled : ''
               }`}
-              onClick={handleProtectedLinkClick}
+              onClick={() => {
+                useGlobalStore.setState({ isMenuOpen: false });
+                handleProtectedLinkClick();
+              }}
             >
               나만의 큐레이션
             </NavLink>
