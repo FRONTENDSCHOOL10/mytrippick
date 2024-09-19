@@ -7,7 +7,9 @@ import {
   throttle,
 } from '@/utils';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
+import useEditPasswordStore from '@/stores/useEditPasswordStore';
 import getPbImageURL from '@/api/getPbImageURL';
+import pb from '@/api/pb';
 import PasswordAccordion from './components/PasswordAccordion/PasswordAccordion';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
@@ -32,6 +34,8 @@ function EditUserInfo() {
   });
 
   const { userImage, setUserImageURL } = usePostPhotoFileStore();
+
+  const { changePassword, changePasswordConfirm } = useEditPasswordStore();
 
   useEffect(() => {
     const handleGetUserOriginData = async () => {
@@ -109,6 +113,34 @@ function EditUserInfo() {
       }));
     }
   };
+
+  const handleSendEditUserInfo = async (e) => {
+    e.preventDefault();
+
+    const userEditData = {
+      password: changePassword,
+      passwordConfirm: changePasswordConfirm,
+      oldPassword: oldpassword,
+      nickName: editUserData.newNickName,
+      bio: editUserData.newCommentsMySelf,
+      userProfile: userImage,
+    };
+
+    if (changePassword) {
+      userEditData.password = changePassword;
+      userEditData.passwordConfirm = changePasswordConfirm;
+      userEditData.oldPassword = oldPassword;
+    }
+
+    try {
+      const editing = await pb
+        .collection('users')
+        .update('xum3wfl4o5mhtue', data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className={S.component}>
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
@@ -159,7 +191,12 @@ function EditUserInfo() {
       </div>
       <div className={S.btnContainer}>
         <CommonBtn className={S.cancle}>취소</CommonBtn>
-        <CommonBtn className={S.confirm} fill={true}>
+        <CommonBtn
+          submit={true}
+          className={S.confirm}
+          fill={true}
+          onClick={handleSendEditUserInfo}
+        >
           확인
         </CommonBtn>
       </div>
