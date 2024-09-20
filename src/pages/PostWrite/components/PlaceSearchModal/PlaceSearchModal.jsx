@@ -53,16 +53,18 @@ function PlaceSearchModal({ closeModal }) {
       });
     };
 
+    const inputElement = searchInputRef.current;
+
     const handleInputChange = debounce(() => {
-      const keyword = searchInputRef.current?.value;
+      const keyword = inputElement?.value;
       setSearchTerm(keyword);
       searchPlaces(keyword);
     }, 300);
 
-    searchInputRef.current?.addEventListener('input', handleInputChange);
+    inputElement?.addEventListener('input', handleInputChange);
 
     return () => {
-      searchInputRef.current?.removeEventListener('input', handleInputChange);
+      inputElement?.removeEventListener('input', handleInputChange);
     };
   }, [setPlaceName, setPlaceAddress, setPlaceLatLang]);
 
