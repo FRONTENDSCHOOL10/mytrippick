@@ -38,21 +38,25 @@ function Modal({ id, onClose }) {
   }, [id, onClose]);
 
   return (
-    <div className={S.modalOverlay}>
-      {postData ? (
-        <Card
-          type="post"
-          id={postData.id}
-          photo={postData.photo}
-          placePosition={postData.placePosition}
-          placeName={postData.placeName}
-          likedNum={postData.likedNum || 0}
-          collectionId={postData.collectionId}
-          userId={postData.userId}
-        />
-      ) : (
-        <AppSpinner />
-      )}
+    <div className={S.modalOverlay} onClick={onClose}>
+      <div className={S.modalContent} onClick={(e) => e.stopPropagation()}>
+        {postData ? (
+          <Card
+            type="post"
+            id={postData.id}
+            postId={postData.id}
+            photo={postData.photo}
+            collectionId={postData.collectionId}
+            likedNum={postData.likedNum || 0}
+            placeName={postData.placeName}
+            placePosition={postData.placePosition}
+            userId={postData.userId}
+            className={S.postComponentInModal}
+          />
+        ) : (
+          <AppSpinner />
+        )}
+      </div>
     </div>
   );
 }

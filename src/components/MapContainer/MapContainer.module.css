@@ -1,46 +1,80 @@
 .container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    margin-bottom: var(--space-6);
-  }
-  
-  .searchBox {
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    width: calc(100% - 32px);
-  }
-  
-  .map {
-    width: 100%;
-    height: 100%;
-  }
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: var(--space-6);
+}
 
-  .toggleBox {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding-right: var(--space-4);
-    padding-bottom: var(--space-4);
-    z-index: 1000;
-  }
+.searchBox {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  width: calc(100% - 32px);
+}
 
-  .circleBox {
-    background-color: gray;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  }
-  
-  .circleBox:hover svg path {
-    stroke: yellow;
-  }
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.toggleBox {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: var(--space-4);
+  padding-bottom: var(--space-4);
+  z-index: 1000;
+}
+
+.circleBox {
+  background-color: gray;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circleBox:hover svg path {
+  stroke: yellow;
+}
+
+/* 리스트 뷰 관련 스타일 */
+.listView {
+  height: auto;
+  max-height: 100vh; /* 리스트 뷰 최대 높이는 뷰포트 전체 */
+  overflow-y: auto; /* 세로 스크롤 허용 */
+  margin-bottom: 60px;
+  padding-top: 20px;
+
+  /* 스크롤바 숨기기 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+}
+
+.listView::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.cardList {
+  padding: 0 var(--container-m-sm);
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: var(--space-8, 32px) var(--space-2, 8px);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-10, 40px);
+}
+
+.card {
+  width: 100%;
+}
+
+.moreBtn {
+  margin-top: 40px;
+}
