@@ -2,6 +2,7 @@
   width: 100%;
 
   .categoryList {
+    margin-top: var(--space-2);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
