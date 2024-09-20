@@ -50,7 +50,7 @@ const navigation = [
   },
   {
     text: '게시글 상세',
-    path: '/post/:postId',
+    path: '/posts/:postId',
     lazy: () => import('@/pages/PostDetail'),
   },
   {

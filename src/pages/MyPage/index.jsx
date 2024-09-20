@@ -122,7 +122,7 @@ export function Component() {
             {postList.map((item) => {
               return (
                 <li key={item.id}>
-                  <Link to={`/post/${item.id}`}>
+                  <Link to={`/posts/${item.id}`}>
                     {/* 링크는 각 게시글 상세페이지로 연결되도록 추후 수정 */}
                     <img
                       src={getPbImageURL(item)}
