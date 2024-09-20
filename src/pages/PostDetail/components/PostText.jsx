@@ -1,7 +1,7 @@
+import Plus from '@/assets/svg/plus.svg?react';
 import { string } from 'prop-types';
 import { useState } from 'react';
 import S from './PostText.module.css';
-import Plus from '@/assets/svg/plus.svg?react';
 
 PostText.propTypes = {
   children: string,

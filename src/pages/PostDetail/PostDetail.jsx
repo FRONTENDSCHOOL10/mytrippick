@@ -1,17 +1,15 @@
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
 import FilledMarker from '@/assets/svg/filledMarker.svg?react';
-import AppInput from '@/components/AppInput/AppInput';
 import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CommonBtn from '../../components/CommonBtn/CommonBtn';
+import Comment from './components/Comment';
 import MoreBtn from './components/MoreBtn';
 import PostText from './components/PostText';
 import S from './PostDetail.module.css';
-import Comment from './components/Comment';
 
 // 해야할 일
 // 1. 수정하기/삭제하기 동작 기능까지 설정할 것
