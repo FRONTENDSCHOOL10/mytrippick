@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
@@ -11,6 +11,8 @@ import {
 } from '@/utils';
 import { CreateDatas } from '@/api/CreateDatas';
 import S from './Register.module.css';
+import useModalStore from '@/stores/useModalStore';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 
 function Register() {
   const [formDatas, setFormDatas] = useState({
@@ -38,6 +40,16 @@ function Register() {
   const [isTouched, setIsTouched] = useState({
     password: false,
   });
+
+  const [isRegistered, setIsRegisterd] = useState(false);
+  const { showModal, setShowModal, closeModal } = useModalStore();
+
+  useEffect(() => {
+    if (isRegistered) {
+      setShowModal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRegistered]);
 
   const handleFormDatasChange = throttle((e) => {
     const { name, value } = e.target;
@@ -134,11 +146,16 @@ function Register() {
     };
     try {
       CreateDatas('users', userData);
-      alert('회원가입이 완료되었습니다');
-      navigation('/login');
+      setIsRegisterd(true);
     } catch (error) {
-      console.log(error);
+      alert(`${error}과 같은 문제로 에러가 발생했습니다`);
+      setIsRegisterd(false);
     }
+  };
+
+  const handleClosedModal = () => {
+    closeModal();
+    navigation('/login');
   };
 
   const isFormValid =
@@ -246,6 +263,15 @@ function Register() {
           가입하기
         </CommonBtn>
       </form>
+
+      {showModal && (
+        <BasicTextModal
+          message={'회원가입을 완료하였습니다🎉'}
+          fillBtnText={'확인'}
+          type={'fill'}
+          onFillBtnClick={handleClosedModal}
+        />
+      )}
     </section>
   );
 }

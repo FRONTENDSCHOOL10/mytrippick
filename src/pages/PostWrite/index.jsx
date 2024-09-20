@@ -5,6 +5,7 @@ import { CreateDatas } from '@/api/CreateDatas';
 import usePlaceDateStore from '@/stores/usePlaceDataStore';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
 import usePostDateStore from '@/stores/usePostDateStore';
+import useModalStore from '@/stores/useModalStore';
 import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import AppTextArea from '@/components/AppTextArea/AppTextArea';
@@ -14,6 +15,8 @@ import DateInput from './components/DataInput/DateInput';
 import PlaceSearchModal from './components/PlaceSearchModal/PlaceSearchModal';
 import Search from '@/assets/svg/search.svg?react';
 import S from './PostWrite.module.css';
+import { useEffect } from 'react';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 
 function PostWrite() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +25,23 @@ function PostWrite() {
   const { placeName, placeAddress, placeLatLong } = usePlaceDateStore();
   const { image } = usePostPhotoFileStore();
   const { date } = usePostDateStore();
+
+  const [isPostOkay, setIsPostOkay] = useState(false);
+  const {
+    showModal,
+    setShowModal,
+    closeModal: closeStateModal,
+  } = useModalStore();
+
+  useEffect(
+    () => {
+      if (isPostOkay) {
+        setShowModal(true);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isPostOkay]
+  );
 
   const handleCommentsChange = throttle((e) => {
     setComments(e.target.value);
@@ -67,12 +87,16 @@ function PostWrite() {
       }
 
       CreateDatas('posts', formData);
-      alert('게시글이 등록되었습니다!!🎉');
-      navitation('/');
+      setIsPostOkay(true);
     } catch (error) {
       console.log(error);
       alert('게시물을 보내는 도중 에러가 발생했습니다!');
     }
+  };
+
+  const handleModalOff = () => {
+    closeStateModal();
+    navitation('/');
   };
 
   const isButtonDisable =
@@ -118,6 +142,15 @@ function PostWrite() {
       >
         등록
       </CommonBtn>
+
+      {showModal && (
+        <BasicTextModal
+          message={'게시글 등록에 성공하셨습니다✨'}
+          fillBtnText={'확인'}
+          type={'fill'}
+          onFillBtnClick={handleModalOff}
+        />
+      )}
     </section>
   );
 }

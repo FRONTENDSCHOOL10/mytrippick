@@ -176,7 +176,7 @@ function EditUserInfo() {
     }
 
     try {
-      await pb.collection('users').update('xum3wfl4o5mhtue', userEditData);
+      await pb.collection('users').update(userID, userEditData);
       alert('회원정보가 수정되었습니다');
       navigation('/mypage');
     } catch (error) {
