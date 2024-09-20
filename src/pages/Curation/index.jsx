@@ -3,11 +3,12 @@ import Card from '@/components/Card/Card';
 import pb from '@/api/pb';
 import S from './Curation.module.css';
 
-export default function BookmarkPostList() {
+function Curation() {
   const [bookmarkCardList, setBookmarkCardList] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [bookmarkedPostIds, setBookmarkedPostIds] = useState([]);
+
   const loggedInUserId = pb.authStore.model?.id;
 
   if (!loggedInUserId) {
@@ -22,18 +23,18 @@ export default function BookmarkPostList() {
         filter: `userId="${loggedInUserId}"`,
       });
 
-      const bookmarkedPostIds = bookmarkResponse.flatMap(
+      const bookmarkedPostIds = bookmarkResponse.map(
         (bookmark) => bookmark.postId
       );
       setBookmarkedPostIds(bookmarkedPostIds);
 
       console.log(bookmarkedPostIds);
       if (bookmarkedPostIds.length > 0) {
-        const postResponse = await pb.collection('posts').getFullList({
+        const postResponse = await pb.collection('posts').getList(1, 10, {
           filter: `id in (${bookmarkedPostIds.slice(0, 10).join(',')})`,
         });
 
-        setBookmarkCardList(postResponse);
+        setBookmarkCardList(postResponse.items);
       }
     } catch (error) {
       console.error('데이터를 가져오는 중 오류 발생:', error);
@@ -46,17 +47,21 @@ export default function BookmarkPostList() {
   }, [loggedInUserId]);
 
   const handleLoadMore = async () => {
-    const nextPostIds =
-      bookmarkedPostIds?.slice(visibleCount, visibleCount + 10) || [];
+    const nextPostIds = bookmarkedPostIds.slice(
+      visibleCount,
+      visibleCount + 10
+    );
 
     if (nextPostIds.length > 0) {
       setIsFetchingMore(true);
       try {
-        const postResponse = await pb.collection('posts').getFullList({
-          filter: `id in (${nextPostIds.join(',')})`,
-        });
+        const postResponse = await pb
+          .collection('posts')
+          .getList(1, nextPostIds.length, {
+            filter: `id in (${nextPostIds.map((id) => `"${id}"`).join(',')})`,
+          });
 
-        setBookmarkCardList((prev) => [...prev, ...postResponse]);
+        setBookmarkCardList((prev) => [...prev, ...postResponse.items]);
         setVisibleCount((prevCount) => prevCount + 10);
       } catch (error) {
         console.error('추가 데이터를 가져오는 중 오류 발생:', error);
@@ -68,7 +73,7 @@ export default function BookmarkPostList() {
   return (
     <section className={S.curation}>
       <div className={S.curationCardList}>
-        {bookmarkCardList?.map((item, idx) => (
+        {bookmarkCardList.map((item, idx) => (
           <Fragment key={idx}>
             <Card
               type="post"
@@ -92,3 +97,5 @@ export default function BookmarkPostList() {
     </section>
   );
 }
+
+export default Curation;
