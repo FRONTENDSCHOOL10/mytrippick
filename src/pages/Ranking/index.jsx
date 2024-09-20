@@ -1,80 +1,77 @@
-import Card from '@/components/Card/Card';
-import { useState, Fragment, useEffect } from 'react';
-import CommonBtn from '@/components/CommonBtn/CommonBtn';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import pb from '@/api/pb';
 import useGlobalStore from '@/stores/useGlobalStore';
-import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 import useModalStore from '@/stores/useModalStore';
+import Card from '@/components/Card/Card';
+import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
+import { useState, Fragment, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { formatTextWithBreaks } from '@/utils';
-import AppSpinner from '@/components/AppSpinner/AppSpinner';
+import { throttle } from '@/utils';
 import S from './Ranking.module.css';
 
 export function Component() {
   const [rankCardList, setRankCardList] = useState([]);
   const [page, setPage] = useState(1);
   const [userIds, setUserIds] = useState([]);
-  const API_URL = import.meta.env.VITE_PB_URL;
+  // const API_URL = import.meta.env.VITE_PB_URL;
   const likedPostIds = useGlobalStore((state) => state.likedPostIds);
   const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
   const showModal = useModalStore((state) => state.showModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const navigate = useNavigate();
 
+  // 쓰로틀된 페이지 증가 함수
+  const throttledIncreasePage = throttle(() => {
+    setPage((prevPage) => prevPage + 1);
+  }, 1000);
+
+  const fetchRankData = useCallback((page, signal) => {
+    return pb
+      .collection('posts')
+      .getList(page, 5, { sort: '-likedNum' }, { signal })
+      .then((res) => {
+        const newItems = res.items || [];
+        setRankCardList((prevList) =>
+          page === 1 ? newItems : [...prevList, ...newItems]
+        );
+        const extractedUserIds = newItems.map((item) => item.userId);
+        setUserIds((prevIds) => [...prevIds, ...extractedUserIds]);
+        return res;
+      });
+  }, []);
+
+  const fetchUserData = useCallback((userIds, signal) => {
+    return pb
+      .collection('users')
+      .getFullList(200, {
+        filter: userIds.map((id) => `id='${id}'`).join(' || '),
+        signal,
+      })
+      .then((res) => {
+        const items = res || [];
+        const sortedItems = userIds.map(
+          (id) =>
+            items.find((item) => item.id === id) || { id, name: 'Unknown User' }
+        );
+        return { items: sortedItems };
+      });
+  }, []);
+
   const rankData = useQuery({
     queryKey: ['posts', page],
-    queryFn: () =>
-      axios
-        .get(`${API_URL}/api/collections/posts/records`, {
-          params: { page, perPage: 5, sort: '-likedNum' },
-        })
-        .then((res) => {
-          const newItems = res.data.items || [];
-          setRankCardList((prevList) =>
-            page === 1 ? newItems : [...prevList, ...newItems]
-          );
-          const extractedUserIds = newItems.map((item) => item.userId);
-          setUserIds((prevIds) => [...prevIds, ...extractedUserIds]);
-          // console.log('추출된 userIds:', extractedUserIds);
-
-          return res.data;
-        }),
+    queryFn: ({ signal }) => fetchRankData(page, signal),
     keepPreviousData: true,
     refetchOnWindowFocus: false,
   });
 
   const userData = useQuery({
     queryKey: ['userData', userIds],
-    queryFn: () =>
-      axios
-        .get(`${API_URL}/api/collections/users/records`, {
-          params: {
-            // 필터 문자열을 동적으로 구성
-            filter: userIds.map((id) => `id='${id}'`).join(' || '),
-          },
-        })
-        .then((res) => {
-          const items = res.data.items || [];
-
-          // userId 배열과 일치하는 순서로 사용자 데이터 정렬
-          const sortedItems = userIds.map(
-            (id) =>
-              items.find((item) => item.id === id) || {
-                id,
-                name: 'Unknown User',
-              }
-          );
-
-          //   console.log("정렬된 유저 데이터:", sortedItems);
-          return { ...res.data, items: sortedItems };
-        }),
+    queryFn: ({ signal }) => fetchUserData(userIds, signal),
     enabled: userIds.length > 0,
   });
-
-  useEffect(() => {
-    // console.log('rankCardList:', rankCardList);
-  }, [rankCardList]);
 
   // 모달 onFillBtn 버튼 클릭 시 로그인 페이지로 이동
   const handleLoginRedirect = () => {
@@ -87,7 +84,12 @@ export function Component() {
     '로그인 이후 이용 가능합니다.\n로그인 페이지로 이동하시겠습니까?'
   );
 
-  if (rankData.isLoading || userData.isLoading) {
+  if (
+    rankData.isLoading ||
+    userData.isLoading ||
+    !rankData.data ||
+    !userData.data
+  ) {
     return <AppSpinner />;
   }
 
@@ -118,7 +120,7 @@ export function Component() {
         </div>
         {rankCardList.length > 0 &&
           rankCardList.length !== rankData.data?.totalItems && (
-            <CommonBtn small onClick={() => setPage(page + 1)}>
+            <CommonBtn small onClick={throttledIncreasePage}>
               더보기
             </CommonBtn>
           )}

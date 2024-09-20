@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import useHomeStore from '@/stores/useHomeStore';
 import Card from '@/components/Card/Card';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
-
+import pb from '@/api/pb';
 import S from './CardList.module.css';
 
 export default function PostList() {
@@ -11,36 +11,31 @@ export default function PostList() {
   const page = useHomeStore((state) => state.page);
   const selectedCategory = useHomeStore((state) => state.selectedCategory);
   const setPage = useHomeStore((state) => state.setPage);
-  const API_URL = import.meta.env.VITE_PB_URL;
 
   const postData = useQuery({
     queryKey: ['posts', page, selectedCategory],
-    queryFn: () =>
-      fetch(
-        `${API_URL}/api/collections/posts/records?page=${page}&perPage=8&sort=-created${
-          selectedCategory === '전체'
-            ? ''
-            : `&filter=(category="${selectedCategory}")`
-        }`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          const newItems = data.items || [];
-          setPostCardList((prevList) =>
-            page === 1 ? newItems : [...prevList, ...newItems]
-          );
-          return data; // 원본 데이터를 그대로 반환
-        }),
-    keepPreviousData: true, // 이전 데이터를 유지하여 더 나은 사용자 경험 제공
+    queryFn: async () => {
+      const filter =
+        selectedCategory !== '전체' ? `category="${selectedCategory}"` : '';
+      const result = await pb.collection('posts').getList(page, 8, {
+        sort: '-created',
+        filter: filter,
+      });
+      const newItems = result.items || [];
+      setPostCardList((prevList) =>
+        page === 1 ? newItems : [...prevList, ...newItems]
+      );
+      return result;
+    },
+    keepPreviousData: true,
     refetchOnWindowFocus: false,
   });
 
-  // console.log("게시글 데이터:", postData.data);
-  // console.log("현재 postCardList:", postCardList);
+  // console.log('게시글 데이터:', postData.data);
+  // console.log('현재 postCardList:', postCardList);
 
   return (
     <section className={S.post}>
-      {/* {error && <p className={`body1 ${S.error}`}>{error}</p>} */}
       <div className={S.postCardList}>
         {postCardList?.map((item, idx) => {
           return (
