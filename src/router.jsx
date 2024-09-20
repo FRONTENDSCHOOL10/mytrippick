@@ -4,11 +4,12 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-import MyPage from './pages/MyPage';
 import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
 import EditUserInfo from './pages/EditUserInfo';
 import Curation from './pages/Curation';
+import ConfirmPassword from './pages/ConfirmPassword';
+import DeleteAccount from './pages/DeleteAccount';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -30,7 +31,7 @@ const navigation = [
   {
     text: '마이페이지',
     path: '/mypage',
-    element: <MyPage />,
+    lazy: () => import('@/pages/MyPage'),
   },
   {
     text: '인기 여행지 랭킹',
@@ -49,14 +50,23 @@ const navigation = [
   },
   {
     text: '게시글 상세',
-    path: '/post/:postId',
+    path: '/posts/:postId',
     lazy: () => import('@/pages/PostDetail'),
-    // element: <PostDetailPage />,
+  },
+  {
+    text: '비밀번호 확인',
+    path: '/mypage/confirmpassword',
+    element: <ConfirmPassword />,
   },
   {
     text: '회원정보수정',
     path: '/mypage/edituserinfo',
     element: <EditUserInfo />,
+  },
+  {
+    text: '회원탈퇴',
+    path: '/mypage/deleteaccount',
+    element: <DeleteAccount />,
   },
   {
     text: '나만의 큐레이션',

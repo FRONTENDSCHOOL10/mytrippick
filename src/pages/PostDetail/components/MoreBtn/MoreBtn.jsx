@@ -1,8 +1,8 @@
 import Dots from '@/assets/svg/dots.svg?react';
-import S from './MoreBtn.module.css';
-import { bool } from 'prop-types';
 import clsx from 'clsx';
+import { bool } from 'prop-types';
 import { useRef } from 'react';
+import S from './MoreBtn.module.css';
 
 MoreBtn.propTypes = {
   small: bool,

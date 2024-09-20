@@ -8,7 +8,7 @@ import S from './Header.module.css';
 
 const Header = () => {
   const location = useLocation();
-  const isDetailPage = location.pathname.includes('/post/');
+  const isDetailPage = location.pathname.includes('/posts/');
 
   const scrollDirection = useGlobalStore((state) => state.scrollDirection);
 
