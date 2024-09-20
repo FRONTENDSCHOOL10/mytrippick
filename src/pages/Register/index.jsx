@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import {
   testEmailRegExp,
   testNickNameRegExp,
@@ -148,6 +149,7 @@ function Register() {
 
   return (
     <section className={S.component}>
+      <AppHelmet title={'회원가입'} />
       <h1 className="headline1">회원가입</h1>
       <form>
         <article className="inputContainer">
