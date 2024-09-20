@@ -153,6 +153,7 @@ function Register() {
       <h1 className="headline1">회원가입</h1>
       <form>
         <article className="inputContainer">
+          <h3 className="sr-only">이메일 주소 입력</h3>
           <AppInput
             label={'이메일 주소'}
             labelHidden={false}
@@ -175,6 +176,7 @@ function Register() {
         </article>
 
         <article className="inputContainer">
+          <h3 className="sr-only">초기 비밀번호 입력</h3>
           <AppInput
             label={'비밀번호'}
             labelHidden={false}
@@ -198,6 +200,7 @@ function Register() {
         </article>
 
         <article className="inputContainer">
+          <h3 className="sr-only">입력된 비밀번호 확인</h3>
           <AppInput
             label={'비밀번호 확인'}
             labelHidden={false}
@@ -218,6 +221,7 @@ function Register() {
         </article>
 
         <article className="inputContainer">
+          <h3 className="sr-only">닉네임 입력</h3>
           <AppInput
             label={'닉네임'}
             labelHidden={false}
