@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { throttle } from '@/utils';
+import { getStorageData, throttle } from '@/utils';
 import { CreateDatas } from '@/api/CreateDatas';
 import usePlaceDateStore from '@/stores/usePlaceDataStore';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
@@ -38,11 +38,19 @@ function PostWrite() {
     setIsModalOpen(false);
   };
 
+  const getUserId = async () => {
+    const authData = await getStorageData('pocketbase_auth');
+    return authData.model.id;
+  };
+
   const navitation = useNavigate();
 
-  const handleSendPostDates = (e) => {
+  const handleSendPostDates = async (e) => {
     e.preventDefault();
+
     try {
+      const userId = await getUserId();
+
       const formData = new FormData();
 
       formData.append('placeName', placeName);
@@ -50,7 +58,8 @@ function PostWrite() {
       formData.append('placeLatLong', JSON.stringify(placeLatLong));
       formData.append('category', category);
       formData.append('visitedDate', date.toISOString());
-      formData.append('contens', comments);
+      formData.append('contents', comments);
+      formData.append('userId', userId);
 
       if (image) {
         formData.append('photo', image);
