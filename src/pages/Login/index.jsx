@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import S from './Login.module.css';
 import { testEmailRegExp, testPasswordExp, throttle } from '@/utils';
 import { submitLogin } from '@/api/submitLogin';
@@ -110,6 +111,7 @@ function Login() {
 
   return (
     <section className={S.component}>
+      <AppHelmet title={'로그인'} />
       <h1 className="headline1">로그인</h1>
       <form onSubmit={handleSubmit}>
         <article className="inputContainer">
@@ -167,7 +169,12 @@ function Login() {
       </form>
 
       {showModal && (
-        <BasicTextModal text="환영합니다" onClose={handleCloseModal} />
+        <BasicTextModal
+          message="환영합니다"
+          type="default"
+          btnText="확인"
+          onBtnClick={handleCloseModal}
+        />
       )}
     </section>
   );

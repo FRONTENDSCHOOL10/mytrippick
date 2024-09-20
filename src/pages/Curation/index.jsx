@@ -1,93 +1,69 @@
 import { Fragment, useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import useHomeStore from '@/stores/useHomeStore';
 import Card from '@/components/Card/Card';
-import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import pb from '@/api/pb';
 import S from './Curation.module.css';
-import useGlobalStore from '@/stores/useGlobalStore';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 
-export default function Curation() {
-  const [curationCardList, setCurationCardList] = useState([]);
-  const page = useHomeStore((state) => state.page);
-  const selectedCategory = useHomeStore((state) => state.selectedCategory);
-  const setPage = useHomeStore((state) => state.setPage);
+function Curation() {
+  const [bookmarkCardList, setBookmarkCardList] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [bookmarkedPostIds, setBookmarkedPostIds] = useState([]);
 
-  // useGlobalStore의 상태를 불러오기
-  const {
-    isMenuOpen,
-    scrollDirection,
-    isLoggedIn,
-    profileImage,
-    nickname,
-    likedPostIds,
-    bookmarkedPostIds,
-    toggles,
-  } = useGlobalStore();
+  const loggedInUserId = pb.authStore.model?.id;
 
-  // useEffect로 상태를 콘솔에 출력
+  if (!loggedInUserId) {
+    console.error('로그인된 사용자의 정보를 가져오지 못했습니다.');
+    return null;
+  }
+
+  const fetchAllBookmarkedPosts = async () => {
+    setIsFetching(true);
+    try {
+      const bookmarkResponse = await pb.collection('bookmarks').getFullList({
+        filter: `userId="${loggedInUserId}"`,
+      });
+
+      const bookmarkedPostIds = bookmarkResponse.flatMap((bookmark) =>
+        Array.isArray(bookmark.postId) ? bookmark.postId : [bookmark.postId]
+      );
+      setBookmarkedPostIds(bookmarkedPostIds);
+
+      if (bookmarkedPostIds.length > 0) {
+        const postResponses = await Promise.all(
+          bookmarkedPostIds.map(async (postId) => {
+            const postResponse = await pb.collection('posts').getOne(postId);
+            return postResponse;
+          })
+        );
+
+        setBookmarkCardList(postResponses);
+      } else {
+        console.log('북마크된 postId가 없습니다.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setIsFetching(false);
+  };
+
   useEffect(() => {
-    console.log('isMenuOpen:', isMenuOpen);
-    console.log('scrollDirection:', scrollDirection);
-    console.log('isLoggedIn:', isLoggedIn);
-    console.log('profileImage:', profileImage);
-    console.log('nickname:', nickname);
-    console.log('likedPostIds:', likedPostIds);
-    console.log('bookmarkedPostIds:', bookmarkedPostIds);
-    console.log('toggles:', toggles);
-  }, [
-    isMenuOpen,
-    scrollDirection,
-    isLoggedIn,
-    profileImage,
-    nickname,
-    likedPostIds,
-    bookmarkedPostIds,
-    toggles,
-  ]);
-
-  const curationData = useQuery({
-    queryKey: ['curations', page, selectedCategory],
-    queryFn: () =>
-      fetch(
-        `${pb}/api/collections/curations/records?page=${page}&perPage=8&sort=-created${
-          selectedCategory === '전체'
-            ? ''
-            : `&filter=(category="${selectedCategory}")`
-        }`
-      )
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return res.json();
-        })
-        .then((data) => {
-          console.log('Fetched Data:', data); // 데이터를 여기서 출력
-          const newItems = data.items || [];
-          setCurationCardList((prevList) =>
-            page === 1 ? newItems : [...prevList, ...newItems]
-          );
-          return data;
-        })
-        .catch((error) => {
-          console.error('Fetching data failed:', error); // 에러 로그 추가
-        }),
-
-    keepPreviousData: true,
-    refetchOnWindowFocus: false,
-  });
+    fetchAllBookmarkedPosts();
+  }, [loggedInUserId]);
 
   return (
     <section className={S.curation}>
-      <div className={S.curationCardList}>
-        {curationCardList?.map((item, idx) => {
-          return (
+      <AppHelmet title={'큐레이션'} />
+      {isFetching ? (
+        <AppSpinner />
+      ) : (
+        <div className={S.curationCardList}>
+          {bookmarkCardList.map((item, idx) => (
             <Fragment key={idx}>
               <Card
-                type="curation"
+                type="post"
                 id={item.id}
-                curationId={item.id}
+                postId={item.id}
                 photo={item.photo}
                 collectionId={item.collectionId}
                 likedNum={item.likedNum || 0}
@@ -96,19 +72,11 @@ export default function Curation() {
                 userId={item.userId}
               />
             </Fragment>
-          );
-        })}
-      </div>
-      {curationCardList.length > 0 &&
-        curationCardList.length !== curationData.data?.totalItems && (
-          <CommonBtn
-            small
-            onClick={() => setPage(page + 1)}
-            disabled={curationData.isFetching}
-          >
-            더보기
-          </CommonBtn>
-        )}
+          ))}
+        </div>
+      )}
     </section>
   );
 }
+
+export default Curation;

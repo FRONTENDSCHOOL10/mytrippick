@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { Fragment, useState, useEffect, useRef, useCallback } from 'react';
 import useGeolocation from '@/hooks/useGeolocation';
 import AppInput2 from '../AppInput/AppInput2';
 import S from './MapContainer.module.css';
@@ -9,6 +9,7 @@ import Modal from './Modal';
 import markerImageSrc from '../../assets/svg/marker.svg';
 import { getSortedPostIdsByDistance } from '@/api/getDistance';
 import Card from '../Card/Card';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
 
 const { kakao } = window;
 
@@ -16,9 +17,10 @@ const MapContainer = () => {
   const location = useGeolocation();
   const [showMap, setShowMap] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [sortedPostIds, setSortedPostIds] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sortedPostIds, setSortedPostIds] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const MapContainer = () => {
     mapRef.current = createdMap;
 
     const fetchPosts = async () => {
+      setIsFetching(true);
       try {
         const records = await pb.collection('posts').getFullList();
         const filteredPosts = records.filter((post) => {
@@ -80,6 +83,8 @@ const MapContainer = () => {
         setSortedPostIds(sortedIds);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsFetching(false);
       }
     };
 
@@ -113,10 +118,6 @@ const MapContainer = () => {
     setSelectedPostId(null);
   }, []);
 
-  if (!location.loaded) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className={S.container}>
       {showMap ? (
@@ -141,24 +142,33 @@ const MapContainer = () => {
               <ToggleMap />
             </div>
           </div>
-          <div className={S.cardList}>
-            {sortedPostIds.map((postId) => {
-              const postData = posts.find((post) => post.id === postId);
-              if (!postData) return null;
-              return (
-                <Card
-                  key={postData.id}
-                  type="post"
-                  id={postData.id}
-                  photo={postData.photo}
-                  placeName={postData.placeName}
-                  likedNum={postData.likedNum || 0}
-                  collectionId={postData.collectionId}
-                  userId={postData.userId}
-                />
-              );
-            })}
-          </div>
+          {isFetching ? (
+            <AppSpinner />
+          ) : (
+            <section className={S.listView}>
+              <div className={S.cardList}>
+                {sortedPostIds.map((postId, idx) => {
+                  const postData = posts.find((post) => post.id === postId);
+                  if (!postData) return null;
+                  return (
+                    <Fragment key={idx}>
+                      <Card
+                        type="post"
+                        id={postData.id}
+                        postId={postData.id}
+                        photo={postData.photo}
+                        collectionId={postData.collectionId}
+                        likedNum={postData.likedNum || 0}
+                        placeName={postData.placeName}
+                        placePosition={postData.placePosition}
+                        userId={postData.userId}
+                      />
+                    </Fragment>
+                  );
+                })}
+              </div>
+            </section>
+          )}
         </>
       )}
     </div>

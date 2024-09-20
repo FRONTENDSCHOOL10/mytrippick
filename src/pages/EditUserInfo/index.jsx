@@ -14,10 +14,11 @@ import pb from '@/api/pb';
 import useGlobalStore from '@/stores/useGlobalStore';
 import PasswordAccordion from './components/PasswordAccordion/PasswordAccordion';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import LinkBtn from '@/components/LinkBtn/LinkBtn';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 import S from './EditUserInfo.module.css';
-import LinkBtn from '@/components/LinkBtn/LinkBtn';
 
 function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
@@ -67,6 +68,7 @@ function EditUserInfo() {
     };
 
     handleGetUserOriginData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleInputDatas = (e) => {
@@ -164,9 +166,7 @@ function EditUserInfo() {
       userEditData.oldPassword = beforePassword;
 
       try {
-        const editing = await pb
-          .collection('users')
-          .update(userID, userEditData);
+        await pb.collection('users').update(userID, userEditData);
         alert('비밀번호 변경에 성공하셨습니다');
         logout();
         navigation('/login');
@@ -176,9 +176,7 @@ function EditUserInfo() {
     }
 
     try {
-      const editing = await pb
-        .collection('users')
-        .update('xum3wfl4o5mhtue', userEditData);
+      await pb.collection('users').update('xum3wfl4o5mhtue', userEditData);
       alert('회원정보가 수정되었습니다');
       navigation('/mypage');
     } catch (error) {
@@ -189,6 +187,7 @@ function EditUserInfo() {
   return (
     <section className={S.component}>
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
+      <AppHelmet title={'회원정보 수정'} />
       <ChangeUserProfilePic />
       <div>
         <AppInputWithValue
