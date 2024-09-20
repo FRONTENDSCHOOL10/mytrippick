@@ -24,7 +24,7 @@ export function Component() {
 
   useEffect(() => {
     initializeUser();
-  }, []);
+  }, [initializeUser]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +48,7 @@ export function Component() {
     };
 
     fetchData();
-  }, []);
+  }, [currentUserId]);
 
   const noPost = postList.length === 0;
 

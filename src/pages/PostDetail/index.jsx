@@ -27,7 +27,7 @@ export function Component() {
 
   useEffect(() => {
     initializeUser();
-  }, []);
+  }, [initializeUser]);
 
   useEffect(() => {
     const fetchData = async () => {
