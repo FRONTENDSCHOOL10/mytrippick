@@ -3,6 +3,7 @@ import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import ScrollDirectionDetector from '@/components/ScrollDirectionDetector';
 import { Outlet } from 'react-router-dom';
+import LikesHandler from '@/components/LikesHandler';
 
 const queryClient = new QueryClient();
 
@@ -12,6 +13,7 @@ function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <Header />
         <ScrollDirectionDetector />
+        <LikesHandler />
         <main className="container">
           <Outlet />
         </main>

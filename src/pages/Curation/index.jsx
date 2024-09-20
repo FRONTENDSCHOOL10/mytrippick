@@ -3,6 +3,7 @@ import Card from '@/components/Card/Card';
 import pb from '@/api/pb';
 import S from './Curation.module.css';
 import AppSpinner from '@/components/AppSpinner/AppSpinner';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 
 function Curation() {
   const [bookmarkCardList, setBookmarkCardList] = useState([]);
@@ -52,6 +53,7 @@ function Curation() {
 
   return (
     <section className={S.curation}>
+      <AppHelmet title={'큐레이션'} />
       {isFetching ? (
         <AppSpinner />
       ) : (

@@ -1,29 +1,13 @@
-import MarkerFill from '@/assets/svg/marker-fill.svg?react';
+// import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import S from './Card.module.css';
 import { string, bool, number } from 'prop-types';
+import MarkerFill from '@/assets/svg/marker-fill.svg?react';
+import S from './Card.module.css';
 import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
 import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-
-Card.propTypes = {
-  type: string.isRequired,
-  fullSize: bool,
-  postId: string,
-  photo: string,
-  placePosition: string,
-  placeName: string,
-  likedNum: number,
-  collectionId: string,
-  id: string,
-  userId: string,
-  nickName: string,
-  userProfile: string,
-  idx: number,
-  isLiked: bool,
-  isBookmarked: bool,
-};
+import pb from '@/api/pb';
+import getPbImageURL from '@/api/getPbImageURL';
 
 function Card({
   type,
@@ -33,7 +17,7 @@ function Card({
   placeName,
   likedNum,
   collectionId,
-  id, //postId
+  id,
   userId,
   nickName,
   userProfile,
@@ -41,9 +25,6 @@ function Card({
   isLiked,
   isBookmarked,
 }) {
-  // 카드 스타일을 결정하는 로직
-  const rankStyled = type === 'rank' && fullSize ? S.rankCardFull : S.rankCard;
-  const API_URL = import.meta.env.VITE_PB_URL;
   const likedPostIds = useGlobalStore((state) => state.likedPostIds);
   const setLikedPostIds = useGlobalStore((state) => state.setLikedPostIds);
   const [num, setNum] = useState(null);
@@ -54,12 +35,12 @@ function Card({
 
   const updatePostLikes = async () => {
     try {
-      await axios.patch(`${API_URL}/api/collections/posts/records/${id}`, {
-        likedNum: isLiked ? num - 1 : num + 1,
+      await pb.collection('posts').update(id, {
+        likedNum: isLiked ? likedNum - 1 : likedNum + 1,
       });
-      console.log('게시물 업데이트 성공');
+      console.log('게시물 좋아요 업데이트 성공');
     } catch (error) {
-      console.error('게시물 업데이트 실패:', error);
+      console.error('게시물 좋아요 업데이트 실패:', error);
     }
   };
 
@@ -82,11 +63,15 @@ function Card({
     } else {
       setBookmarkedPostIds([...bookmarkedPostIds, id]);
     }
+    // updatePostBookmarks();
   };
 
   useEffect(() => {
     setNum(likedNum);
   }, [likedNum]);
+
+  // 카드 스타일을 결정하는 로직
+  const rankStyled = type === 'rank' && fullSize ? S.rankCardFull : S.rankCard;
 
   // 카드에 표시될 정보 (타입에 따라 다른 스타일 적용)
   const placeInfo =
@@ -95,9 +80,10 @@ function Card({
         <div className={S.cardHeader}>
           <div className={S.userInfos}>
             <img
-              src={`${
-                import.meta.env.VITE_PB_API
-              }/files/_pb_users_auth_/${userId}/${userProfile}`}
+              src={getPbImageURL(
+                { collectionId: '_pb_users_auth_', id: userId, userProfile },
+                'userProfile'
+              )}
               alt={`${nickName} 프로필 이미지`}
               aria-hidden="true"
             />
@@ -113,9 +99,7 @@ function Card({
           <figure>
             <img
               className={S.placePhoto}
-              src={`${
-                import.meta.env.VITE_PB_API
-              }/files/${collectionId}/${id}/${photo}`}
+              src={getPbImageURL({ collectionId, id, photo }, 'photo')}
               alt={placeName}
             />
             <span role="none" className={S.dimThumb}></span>
@@ -135,9 +119,7 @@ function Card({
             </div>
           </Link>
           <div className={S.likeWrapper}>
-            {/* 좋아요 수 표시 */}
-            <span>{num}</span>
-            {/* 좋아요 토글 버튼 */}
+            <span>{likedNum}</span>
             <ToggleBtn isToggle={isLiked} onClick={handleLikes} />
           </div>
         </div>
@@ -145,7 +127,11 @@ function Card({
     ) : (
       <article className={S.listCard}>
         <div className={S.cardHeader}>
-          <ToggleBtn bookmark />
+          <ToggleBtn
+            bookmark
+            isToggle={isBookmarked}
+            onClick={handleBookmarks}
+          />
         </div>
         <Link to={`/posts/${id}`} className={S.link}>
           <figure>
@@ -170,10 +156,30 @@ function Card({
         </Link>
       </article>
     );
+
   return (
     <div className={`${S.component} ${type === 'post' ? S.postComponent : ''}`}>
       {placeInfo}
     </div>
   );
 }
+
+Card.propTypes = {
+  type: string.isRequired,
+  fullSize: bool,
+  postId: string,
+  photo: string,
+  placePosition: string,
+  placeName: string,
+  likedNum: number,
+  collectionId: string,
+  id: string,
+  userId: string,
+  nickName: string,
+  userProfile: string,
+  idx: number,
+  isLiked: bool,
+  isBookmarked: bool,
+};
+
 export default Card;
