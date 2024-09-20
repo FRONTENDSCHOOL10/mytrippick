@@ -70,6 +70,21 @@ function PlaceSearchModal({ closeModal }) {
     };
   }, [setPlaceName, setPlaceAddress, setPlaceLatLang]);
 
+  // esc키 클릭 시 모달창 종료
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeModal?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeModal]);
+
   const handlePlaceClick = (place) => {
     setPlaceName(place.place_name);
     setPlaceAddress(place.road_address_name || place.address_name);

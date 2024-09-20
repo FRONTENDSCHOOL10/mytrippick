@@ -187,7 +187,7 @@ function EditUserInfo() {
   return (
     <section className={S.component}>
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
-      <AppHelmet title={'회원정보 수정'} />
+      <AppHelmet title={'회원 정보 수정'} />
       <ChangeUserProfilePic />
       <div>
         <AppInputWithValue
