@@ -22,6 +22,30 @@ const viteConfig = defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          'react-router-dom': ['react-router-dom'],
+          'react-ecosystem': [
+            'immer',
+            'use-immer',
+            '@tanstack/react-query',
+            'react-helmet-async',
+            'react-datepicker',
+            'react-spinners',
+            'zustand',
+            'swiper',
+            'axios',
+            'clsx',
+          ],
+          components: [],
+        },
+      },
+    },
+  },
 });
 
 export default viteConfig;
