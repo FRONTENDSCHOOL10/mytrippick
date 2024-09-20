@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   checkCommentsMySelfLength,
+  getStorageData,
   testNickNameRegExp,
   throttle,
 } from '@/utils';
@@ -17,6 +18,7 @@ import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 import S from './EditUserInfo.module.css';
+import LinkBtn from '@/components/LinkBtn/LinkBtn';
 
 function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
@@ -44,11 +46,11 @@ function EditUserInfo() {
 
   useEffect(() => {
     const handleGetUserOriginData = async () => {
+      const authData = getStorageData('pocketbase_auth');
+      const userId = authData.model.id;
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_PB_API
-          }/collections/users/records/xum3wfl4o5mhtue`
+          `${import.meta.env.VITE_PB_API}/collections/users/records/${userId}`
         );
 
         setEditUserData({
@@ -119,10 +121,34 @@ function EditUserInfo() {
     }
   };
 
+  const handleDeleteBeforeData = (e) => {
+    const button = e.target.closest('button');
+
+    if (button) {
+      const inputElement = button.previousElementSibling;
+      if (inputElement.name === 'newNickName') {
+        setEditUserData((prevState) => ({
+          ...prevState,
+          newNickName: '',
+        }));
+      } else if (inputElement.name === 'newCommentsMySelf') {
+        setEditUserData((prevState) => ({
+          ...prevState,
+          newCommentsMySelf: '',
+        }));
+      }
+    } else {
+      console.log('버튼을 찾을 수 없습니다.');
+    }
+  };
+
   const navigation = useNavigate();
 
   const handleSendEditUserInfo = async (e) => {
     e.preventDefault();
+
+    const authData = await getStorageData('pocketbase_auth');
+    const userID = authData.model.id;
 
     const userEditData = {
       nickName: editUserData.newNickName,
@@ -141,7 +167,7 @@ function EditUserInfo() {
       try {
         const editing = await pb
           .collection('users')
-          .update('xum3wfl4o5mhtue', userEditData);
+          .update(userID, userEditData);
         alert('비밀번호 변경에 성공하셨습니다');
         logout();
         navigation('/login');
@@ -174,6 +200,7 @@ function EditUserInfo() {
           value={editUserData.newNickName}
           isPencilOff={false}
           onChange={handleInputDatas}
+          onClick={handleDeleteBeforeData}
         />
         <span className="caption" style={{ color: '#ff4a4a' }}>
           {errorMessage.newNickNameMessage}
@@ -188,6 +215,7 @@ function EditUserInfo() {
           value={editUserData.newCommentsMySelf}
           isPencilOff={false}
           onChange={handleInputDatas}
+          onClick={handleDeleteBeforeData}
         />
         <span className="caption" style={{ color: '#ff4a4a' }}>
           {errorMessage.newCommentsMySelfMessage}
@@ -205,12 +233,12 @@ function EditUserInfo() {
       />
       <PasswordAccordion />
       <div className={S.userOutBtnArea}>
-        <Link to="회원탈퇴페이지이동" className={S.moveToDeleteUserPage}>
+        <LinkBtn link={'회원탈퇴페이지'} small={true}>
           회원탈퇴
-        </Link>
+        </LinkBtn>
       </div>
       <div className={S.btnContainer}>
-        <CommonBtn className={S.cancle}>취소</CommonBtn>
+        <LinkBtn link={'/mypage'}>취소</LinkBtn>
         <CommonBtn
           submit={true}
           className={S.confirm}
