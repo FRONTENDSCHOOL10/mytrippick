@@ -5,6 +5,7 @@ import { CreateDatas } from '@/api/CreateDatas';
 import usePlaceDateStore from '@/stores/usePlaceDataStore';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
 import usePostDateStore from '@/stores/usePostDateStore';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import AppTextArea from '@/components/AppTextArea/AppTextArea';
 import CategoryBtnList from './components/CategoryBtnList/CategotyBtnList';
@@ -79,6 +80,7 @@ function PostWrite() {
 
   return (
     <section className={S.component}>
+      <AppHelmet title={'게시글 등록'} />
       <UploadImage />
       <article className={S.searchPlaceBtnWrapper}>
         <h3 className="label">여행지명</h3>
