@@ -8,6 +8,8 @@ import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
 import EditUserInfo from './pages/EditUserInfo';
 import Curation from './pages/Curation';
+import ConfirmPassword from './pages/ConfirmPassword';
+import DeleteAccount from './pages/DeleteAccount';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -52,9 +54,19 @@ const navigation = [
     lazy: () => import('@/pages/PostDetail'),
   },
   {
+    text: '비밀번호 확인',
+    path: '/mypage/confirmpassword',
+    element: <ConfirmPassword />,
+  },
+  {
     text: '회원정보수정',
     path: '/mypage/edituserinfo',
     element: <EditUserInfo />,
+  },
+  {
+    text: '회원탈퇴',
+    path: '/mypage/deleteaccount',
+    element: <DeleteAccount />,
   },
   {
     text: '나만의 큐레이션',

@@ -25,7 +25,7 @@ function ProfileBox({ userData }) {
           </div>
         </div>
         <Link
-          to="/mypage/edituserinfo"
+          to="/mypage/confirmpassword"
           aria-label="회원 정보 수정"
           title="회원 정보 수정"
         >
