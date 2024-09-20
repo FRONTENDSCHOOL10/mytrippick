@@ -1,4 +1,4 @@
-import pluginReact from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
@@ -9,21 +9,13 @@ const viteConfig = defineConfig({
     host: 'localhost',
     port: 3000,
   },
-  plugins: [
-    pluginReact({
-      jsxRuntime: 'automatic',
-    }),
-    svgr({
-      svgrOptions: {},
-    }),
-  ],
+  plugins: [react(), svgr()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   build: {
-    outDir: 'dist',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -41,7 +33,10 @@ const viteConfig = defineConfig({
             'axios',
             'clsx',
           ],
-          components: [],
+          components: [
+            './src/components/ToggleBtn/ToggleBtn.jsx',
+            './src/components/Card/Card.jsx',
+          ],
         },
       },
     },
