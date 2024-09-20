@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import usePlaceDateStore from '@/stores/usePlaceDataStore';
+import { motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { debounce } from '@/utils';
 import { func } from 'prop-types';
 import Search from '@/assets/svg/search.svg?react';
@@ -68,6 +70,21 @@ function PlaceSearchModal({ closeModal }) {
     };
   }, [setPlaceName, setPlaceAddress, setPlaceLatLang]);
 
+  // esc키 클릭 시 모달창 종료
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeModal?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeModal]);
+
   const handlePlaceClick = (place) => {
     setPlaceName(place.place_name);
     setPlaceAddress(place.road_address_name || place.address_name);
@@ -85,9 +102,9 @@ function PlaceSearchModal({ closeModal }) {
   };
 
   const clearSearch = () => {
-    setSearchTerm(''); // 검색어 초기화
-    searchInputRef.current.value = ''; // input 필드 초기화
-    setPlaces([]); // 검색 결과 초기화
+    setSearchTerm('');
+    searchInputRef.current.value = '';
+    setPlaces([]);
     setPagination(null);
   };
 
@@ -132,39 +149,51 @@ function PlaceSearchModal({ closeModal }) {
   };
 
   return (
-    <article style={{ width: '100%', padding: 0 }} className={S.component}>
-      <div className={S.searchHeader}>
-        <h2 className="headline4">여행지 주소</h2>
-        <button type="button" onClick={handleCloseModal}>
-          <XButton aria-label="모달 나가기 버튼 이미지" />
-        </button>
-      </div>
-      <div className={S.inputWrapper}>
-        <label htmlFor="SearchAddress">
-          <Search aria-label="검색 아이콘" />
-        </label>
-        <input
-          ref={searchInputRef}
-          id="SearchAddress"
-          name="SearchAddress"
-          type="text"
-          placeholder="여행지를 검색해보세요"
-          defaultValue={searchTerm}
-        />
-        {searchTerm && (
-          <button type="button" onClick={clearSearch} className={S.clearButton}>
-            <XButton aria-label="검색어 지우기 버튼" />
+    <AnimatePresence>
+      <motion.article
+        style={{ width: '100%', padding: 0 }}
+        className={S.component}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className={S.searchHeader}>
+          <h2 className="headline4">여행지 주소</h2>
+          <button type="button" onClick={handleCloseModal}>
+            <XButton aria-label="모달 나가기 버튼 이미지" />
           </button>
-        )}
-      </div>
-
-      <ul id="placesList" className={S.searchDateList}>
-        {renderPlaces()}
-      </ul>
-      <div id="pagination" className={S.pagination}>
-        {renderPagination()}
-      </div>
-    </article>
+        </div>
+        <div className={S.inputWrapper}>
+          <label htmlFor="SearchAddress">
+            <Search aria-label="검색 아이콘" />
+          </label>
+          <input
+            ref={searchInputRef}
+            id="SearchAddress"
+            name="SearchAddress"
+            type="text"
+            placeholder="여행지를 검색해보세요"
+            defaultValue={searchTerm}
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              onClick={clearSearch}
+              className={S.clearButton}
+            >
+              <XButton aria-label="검색어 지우기 버튼" />
+            </button>
+          )}
+        </div>
+        <ul id="placesList" className={S.searchDateList}>
+          {renderPlaces()}
+        </ul>
+        <div id="pagination" className={S.pagination}>
+          {renderPagination()}
+        </div>
+      </motion.article>
+    </AnimatePresence>
   );
 }
 

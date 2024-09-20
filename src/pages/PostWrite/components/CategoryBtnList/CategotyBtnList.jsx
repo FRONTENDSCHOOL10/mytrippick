@@ -1,7 +1,7 @@
-import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
-import { func } from 'prop-types';
-import S from './CategoryBtnList.module.css';
 import { useState } from 'react';
+import { func } from 'prop-types';
+import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
+import S from './CategoryBtnList.module.css';
 
 CategoryBtnList.propTypes = {
   onChecked: func,

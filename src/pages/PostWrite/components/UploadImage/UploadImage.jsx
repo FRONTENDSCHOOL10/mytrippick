@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import FileUpload from '@/assets/svg/add-image.svg?react';
-import S from './UploadImage.module.css';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
+import S from './UploadImage.module.css';
 
 function UploadImage() {
   const id = useId();
@@ -36,9 +36,9 @@ function UploadImage() {
             className={S.imagePreviewURL}
           />
         ) : (
-          <div className={S.imageRounded}>
+          <span className={S.imageRounded}>
             <FileUpload aria-label="파일업로드" />
-          </div>
+          </span>
         )}
       </label>
       <input
