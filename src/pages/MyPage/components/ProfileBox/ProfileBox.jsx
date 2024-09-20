@@ -18,7 +18,11 @@ function ProfileBox({ userData }) {
     <>
       <section className={S.profileContainer}>
         <div className={S.profile} role="group">
-          <img src={profileImage} alt="닉네임 프로필" />
+          <img
+            src={profileImage}
+            alt={`${userData.nickName} 프로필`}
+            title={`${userData.nickName} 프로필 사진`}
+          />
           <div className={S.profileText} role="group">
             <h2 className="headline4">{userData.nickName}</h2>
             <p>{userData.bio}</p>

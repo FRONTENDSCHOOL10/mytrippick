@@ -1,5 +1,6 @@
 import pb from '@/api/pb';
 import Notice from '@/assets/svg/notice.svg?react';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import AppInput from '@/components/AppInput/AppInput';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
@@ -106,6 +107,7 @@ function DeleteAccount() {
 
   return (
     <>
+      <AppHelmet title="마이트립픽 | 회원 탈퇴" />
       <h1 className="a11yHidden">회원 탈퇴 페이지</h1>
       <h2 className={`headline2 ${S.heading}`}>회원 탈퇴</h2>
       <div role="group" className={S.flexContainer}>

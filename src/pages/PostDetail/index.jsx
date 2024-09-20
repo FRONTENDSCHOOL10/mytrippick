@@ -1,15 +1,15 @@
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
 import FilledMarker from '@/assets/svg/filledMarker.svg?react';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import Comment from './components/Comment';
-import MoreBtn from './components/MoreBtn';
-import PostText from './components/PostText';
+import Comment from './components/Comment/Comment';
+import MoreBtn from './components/MoreBtn/MoreBtn';
+import PostText from './components/PostText/PostText';
 import S from './PostDetail.module.css';
 
 // 해야할 일
@@ -56,20 +56,7 @@ export function Component() {
 
   return (
     <>
-      <Helmet>
-        <title>마이트립픽</title>
-        <meta
-          name="description"
-          content="나만의 인생 여행지를 올려 다른 사람들과 공유하고, 가장 높은 순위를 가진 여행지를 선정해 보세요."
-        />
-        <meta property="og:title" content="마이트립픽" />
-        <meta property="og:type" content="site" />
-        <meta
-          property="og:description"
-          content="나만의 인생 여행지를 올려 다른 사람들과 공유하고, 가장 높은 순위를 가진 여행지를 선정해 보세요."
-        />
-        <meta property="og:site:author" content="리액트에서-구해조" />
-      </Helmet>
+      <AppHelmet title={`마이트립픽 | ${postData.placeName}`} />
       <h1 className="a11yHidden">게시글 상세 페이지</h1>
       <section className={S.photoBox}>
         <div role="group" className={S.onPhoto}>

@@ -1,4 +1,5 @@
 import pb from '@/api/pb';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import AppInput from '@/components/AppInput/AppInput';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
@@ -66,6 +67,7 @@ function ConfirmPassword() {
 
   return (
     <>
+      <AppHelmet title="마이트립픽 | 비밀번호 확인" />
       <h1 className="a11yHidden">비밀번호 확인 페이지</h1>
       <h2 className={`headline2 ${S.heading}`}>비밀번호 확인</h2>
       <div role="group" className={S.flexContainer}>

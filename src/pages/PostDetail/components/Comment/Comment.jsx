@@ -7,7 +7,7 @@ import { elapsedTime } from '@/utils/elapsedTime';
 import { string } from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
 import S from './Comment.module.css';
-import MoreBtn from './MoreBtn';
+import MoreBtn from '../MoreBtn/MoreBtn';
 
 Comment.propTypes = {
   postId: string.isRequired,
