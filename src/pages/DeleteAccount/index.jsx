@@ -59,7 +59,31 @@ function DeleteAccount() {
       // PocketBase의 authWithPassword 메서드를 사용하여 인증 시도
       await pb.collection('users').authWithPassword(userEmail, passwordInput);
       // 인증 성공
-      // 회원 정보 삭제 및 모든 포스트/댓글 삭제
+
+      // 유저의 게시글 삭제
+      const posts = await pb.collection('posts').getFullList({
+        filter: `userId = "${currentUserId}"`,
+      });
+      for (const post of posts) {
+        await pb.collection('posts').delete(post.id);
+      }
+
+      // 유저의 댓글 삭제
+      const comments = await pb.collection('comments').getFullList({
+        filter: `userId = "${currentUserId}"`,
+      });
+      for (const comment of comments) {
+        await pb.collection('comments').delete(comment.id);
+      }
+
+      // 유저의 계정 삭제
+      await pb.collection('users').delete(currentUserId);
+
+      // 로컬 스토리지 정보 삭제
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('nickname');
+      localStorage.removeItem('profileImage');
+
       // 탈퇴 완료 모달
       setModalMessage('탈퇴가 완료되었습니다.');
       setIsDeleted(true);
