@@ -123,11 +123,12 @@ function Comment({ postId, currentUser }) {
       </section>
       <section className={S.addComment}>
         <AppInput
+          type="text"
           name="comment"
           label="댓글 입력"
           placeholder="댓글을 입력해주세요"
           onChange={handleCommentChange}
-          value={newComment}
+          defaultValue={newComment}
         ></AppInput>
         <CommonBtn fill disabled={isDisabled} onClick={handleAddComment}>
           등록

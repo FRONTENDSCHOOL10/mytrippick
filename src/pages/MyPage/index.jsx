@@ -1,12 +1,13 @@
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
 import AppSpinner from '@/components/AppSpinner/AppSpinner';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import useGlobalStore from '@/stores/useGlobalStore';
+import useModalStore from '@/stores/useModalStore';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import LoginModal from './components/LoginModal';
 import ProfileBox from './components/ProfileBox';
 import S from './MyPage.module.css';
 
@@ -19,6 +20,7 @@ export function Component() {
 
   const { isLoggedIn, initializeUser, currentUserId, logout } =
     useGlobalStore();
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const navigate = useNavigate();
 
@@ -62,13 +64,26 @@ export function Component() {
   const handleLogin = () => {
     navigate('/login');
   };
+  const handleClose = () => {
+    closeModal();
+    navigate('/');
+  };
 
   if (isLoading) {
     return <AppSpinner />;
   }
 
   if (!isLoggedIn) {
-    return <LoginModal isLoggedIn={isLoggedIn} onLogin={handleLogin} />;
+    return (
+      <BasicTextModal
+        message="로그인이 필요한 페이지입니다."
+        type="both"
+        fillBtnText="로그인"
+        btnText="닫기"
+        onFillBtnClick={handleLogin}
+        onBtnClick={handleClose}
+      />
+    );
   }
 
   return (
