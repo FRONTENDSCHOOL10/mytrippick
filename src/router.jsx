@@ -7,7 +7,6 @@ import RegisterPage from './pages/Register';
 import MyPage from './pages/MyPage';
 import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
-import PostDetailPage from '@/pages/PostDetail';
 import EditUserInfo from './pages/EditUserInfo';
 import Curation from './pages/Curation';
 
@@ -50,8 +49,9 @@ const navigation = [
   },
   {
     text: '게시글 상세',
-    path: '/post/:id',
-    element: <PostDetailPage />,
+    path: '/post/:postId',
+    lazy: () => import('@/pages/PostDetail'),
+    // element: <PostDetailPage />,
   },
   {
     text: '회원정보수정',

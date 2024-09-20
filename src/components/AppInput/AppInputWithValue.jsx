@@ -12,6 +12,7 @@ AppInputWithValue.propTypes = {
   value: string,
   onChange: func,
   isPencilOff: bool,
+  onClick: func,
 };
 
 function AppInputWithValue({
@@ -23,6 +24,7 @@ function AppInputWithValue({
   value = '',
   onChange,
   isPencilOff = false,
+  onClick,
   ...restProps
 }) {
   const id = useId();
@@ -44,7 +46,7 @@ function AppInputWithValue({
           onChange={onChange}
           {...restProps}
         />
-        <button type="button" hidden={isPencilOff}>
+        <button type="button" hidden={isPencilOff} onClick={onClick}>
           <PencilIcon />
         </button>
       </div>
