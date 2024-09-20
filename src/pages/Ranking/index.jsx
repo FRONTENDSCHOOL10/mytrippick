@@ -16,7 +16,6 @@ export function Component() {
   const [rankCardList, setRankCardList] = useState([]);
   const [page, setPage] = useState(1);
   const [userIds, setUserIds] = useState([]);
-  // const API_URL = import.meta.env.VITE_PB_URL;
   const likedPostIds = useGlobalStore((state) => state.likedPostIds);
   const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
   const showModal = useModalStore((state) => state.showModal);

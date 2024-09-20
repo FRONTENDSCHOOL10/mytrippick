@@ -23,7 +23,7 @@ export default function RankList() {
       });
       const extractedUserIds = result.items.map((item) => item.userId);
       setUserIds(extractedUserIds);
-      // console.log("추출된 userIds:", extractedUserIds);
+      // console.log('추출된 userIds:', extractedUserIds);
       return result;
     },
   });

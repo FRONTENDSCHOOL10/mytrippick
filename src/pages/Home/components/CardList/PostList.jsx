@@ -1,9 +1,10 @@
-import { Fragment, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Fragment, useState } from 'react';
 import useHomeStore from '@/stores/useHomeStore';
 import Card from '@/components/Card/Card';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import pb from '@/api/pb';
+
 import S from './CardList.module.css';
 
 export default function PostList() {
@@ -31,11 +32,12 @@ export default function PostList() {
     refetchOnWindowFocus: false,
   });
 
-  // console.log('게시글 데이터:', postData.data);
-  // console.log('현재 postCardList:', postCardList);
+  // console.log("게시글 데이터:", postData.data);
+  // console.log("현재 postCardList:", postCardList);
 
   return (
     <section className={S.post}>
+      {/* {error && <p className={`body1 ${S.error}`}>{error}</p>} */}
       <div className={S.postCardList}>
         {postCardList?.map((item, idx) => {
           return (
