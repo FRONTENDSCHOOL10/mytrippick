@@ -4,7 +4,6 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-import MyPage from './pages/MyPage';
 import MapSearchPage from './pages/MapSearch';
 import PostWrite from './pages/PostWrite';
 import EditUserInfo from './pages/EditUserInfo';
@@ -30,7 +29,7 @@ const navigation = [
   {
     text: '마이페이지',
     path: '/mypage',
-    element: <MyPage />,
+    lazy: () => import('@/pages/MyPage'),
   },
   {
     text: '인기 여행지 랭킹',
@@ -51,7 +50,6 @@ const navigation = [
     text: '게시글 상세',
     path: '/post/:postId',
     lazy: () => import('@/pages/PostDetail'),
-    // element: <PostDetailPage />,
   },
   {
     text: '회원정보수정',
