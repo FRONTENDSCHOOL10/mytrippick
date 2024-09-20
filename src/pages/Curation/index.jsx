@@ -2,97 +2,76 @@ import { Fragment, useState, useEffect } from 'react';
 import Card from '@/components/Card/Card';
 import pb from '@/api/pb';
 import S from './Curation.module.css';
+import AppSpinner from '@/components/AppSpinner/AppSpinner';
 
 function Curation() {
   const [bookmarkCardList, setBookmarkCardList] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(10);
-  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [bookmarkedPostIds, setBookmarkedPostIds] = useState([]);
 
   const loggedInUserId = pb.authStore.model?.id;
 
   if (!loggedInUserId) {
-    console.error('로그인된 사용자의 이메일을 가져오지 못했습니다.');
+    console.error('로그인된 사용자의 정보를 가져오지 못했습니다.');
     return null;
   }
 
-  const fetchBookmarkedPostIds = async () => {
-    setIsFetchingMore(true);
+  const fetchAllBookmarkedPosts = async () => {
+    setIsFetching(true);
     try {
       const bookmarkResponse = await pb.collection('bookmarks').getFullList({
         filter: `userId="${loggedInUserId}"`,
       });
 
-      const bookmarkedPostIds = bookmarkResponse.map(
-        (bookmark) => bookmark.postId
+      const bookmarkedPostIds = bookmarkResponse.flatMap((bookmark) =>
+        Array.isArray(bookmark.postId) ? bookmark.postId : [bookmark.postId]
       );
       setBookmarkedPostIds(bookmarkedPostIds);
 
-      console.log(bookmarkedPostIds);
       if (bookmarkedPostIds.length > 0) {
-        const postResponse = await pb.collection('posts').getList(1, 10, {
-          filter: `id in (${bookmarkedPostIds.slice(0, 10).join(',')})`,
-        });
+        const postResponses = await Promise.all(
+          bookmarkedPostIds.map(async (postId) => {
+            const postResponse = await pb.collection('posts').getOne(postId);
+            return postResponse;
+          })
+        );
 
-        setBookmarkCardList(postResponse.items);
+        setBookmarkCardList(postResponses);
+      } else {
+        console.log('북마크된 postId가 없습니다.');
       }
     } catch (error) {
-      console.error('데이터를 가져오는 중 오류 발생:', error);
+      console.error(error);
     }
-    setIsFetchingMore(false);
+    setIsFetching(false);
   };
 
   useEffect(() => {
-    fetchBookmarkedPostIds();
+    fetchAllBookmarkedPosts();
   }, [loggedInUserId]);
-
-  const handleLoadMore = async () => {
-    const nextPostIds = bookmarkedPostIds.slice(
-      visibleCount,
-      visibleCount + 10
-    );
-
-    if (nextPostIds.length > 0) {
-      setIsFetchingMore(true);
-      try {
-        const postResponse = await pb
-          .collection('posts')
-          .getList(1, nextPostIds.length, {
-            filter: `id in (${nextPostIds.map((id) => `"${id}"`).join(',')})`,
-          });
-
-        setBookmarkCardList((prev) => [...prev, ...postResponse.items]);
-        setVisibleCount((prevCount) => prevCount + 10);
-      } catch (error) {
-        console.error('추가 데이터를 가져오는 중 오류 발생:', error);
-      }
-      setIsFetchingMore(false);
-    }
-  };
 
   return (
     <section className={S.curation}>
-      <div className={S.curationCardList}>
-        {bookmarkCardList.map((item, idx) => (
-          <Fragment key={idx}>
-            <Card
-              type="post"
-              id={item.id}
-              postId={item.id}
-              photo={item.photo}
-              collectionId={item.collectionId}
-              likedNum={item.likedNum || 0}
-              placeName={item.placeName}
-              placePosition={item.placePosition}
-              userId={item.userId}
-            />
-          </Fragment>
-        ))}
-      </div>
-      {bookmarkedPostIds && visibleCount < bookmarkedPostIds.length && (
-        <button onClick={handleLoadMore} disabled={isFetchingMore}>
-          {isFetchingMore ? '로딩 중...' : '더보기'}
-        </button>
+      {isFetching ? (
+        <AppSpinner />
+      ) : (
+        <div className={S.curationCardList}>
+          {bookmarkCardList.map((item, idx) => (
+            <Fragment key={idx}>
+              <Card
+                type="post"
+                id={item.id}
+                postId={item.id}
+                photo={item.photo}
+                collectionId={item.collectionId}
+                likedNum={item.likedNum || 0}
+                placeName={item.placeName}
+                placePosition={item.placePosition}
+                userId={item.userId}
+              />
+            </Fragment>
+          ))}
+        </div>
       )}
     </section>
   );
