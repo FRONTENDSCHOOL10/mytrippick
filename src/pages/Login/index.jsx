@@ -167,7 +167,12 @@ function Login() {
       </form>
 
       {showModal && (
-        <BasicTextModal text="환영합니다" onClose={handleCloseModal} />
+        <BasicTextModal
+          message="환영합니다"
+          type="default"
+          btnText="확인"
+          onBtnClick={handleCloseModal}
+        />
       )}
     </section>
   );
