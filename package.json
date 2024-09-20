@@ -14,6 +14,7 @@
     "pocketbase": "pocketbase/pocketbase serve"
   },
   "devDependencies": {
+    "@eslint/compat": "1.1.1",
     "@eslint/js": "9.8.0",
     "@types/node": "22.0.0",
     "@types/prop-types": "15.7.12",
