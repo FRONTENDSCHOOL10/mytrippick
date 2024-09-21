@@ -6,7 +6,7 @@ import S from './Card.module.css';
 import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
 import useGlobalStore from '@/stores/useGlobalStore';
 import { useEffect, useState } from 'react';
-import pb from '@/api/pb';
+import axios from 'axios';
 import getPbImageURL from '@/api/getPbImageURL';
 
 function Card({
@@ -29,18 +29,19 @@ function Card({
   const setLikedPostIds = useGlobalStore((state) => state.setLikedPostIds);
   const [num, setNum] = useState(null);
   const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
+  const API_URL = import.meta.env.VITE_PB_URL;
   const setBookmarkedPostIds = useGlobalStore(
     (state) => state.setBookmarkedPostIds
   );
 
   const updatePostLikes = async () => {
     try {
-      await pb.collection('posts').update(id, {
-        likedNum: isLiked ? likedNum - 1 : likedNum + 1,
+      await axios.patch(`${API_URL}/api/collections/posts/records/${id}`, {
+        likedNum: isLiked ? num - 1 : num + 1,
       });
-      console.log('게시물 좋아요 업데이트 성공');
+      console.log('게시물 업데이트 성공');
     } catch (error) {
-      console.error('게시물 좋아요 업데이트 실패:', error);
+      console.error('게시물 업데이트 실패:', error);
     }
   };
 
@@ -119,7 +120,8 @@ function Card({
             </div>
           </Link>
           <div className={S.likeWrapper}>
-            <span>{likedNum}</span>
+            {/* 좋아요 수 표시 */}
+            <span>{num}</span>
             <ToggleBtn isToggle={isLiked} onClick={handleLikes} />
           </div>
         </div>
