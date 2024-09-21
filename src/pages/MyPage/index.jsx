@@ -1,15 +1,17 @@
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import AppSpinner from '@/components/AppSpinner/AppSpinner';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import useGlobalStore from '@/stores/useGlobalStore';
+import useModalStore from '@/stores/useModalStore';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import LoginModal from './LoginModal';
+import ProfileBox from './components/ProfileBox/ProfileBox';
 import S from './MyPage.module.css';
-import ProfileBox from './ProfileBox';
 
-function MyPage() {
+export function Component() {
   // 상태
   const [profileData, setProfileData] = useState({});
   const [postList, setPostList] = useState([]);
@@ -18,12 +20,13 @@ function MyPage() {
 
   const { isLoggedIn, initializeUser, currentUserId, logout } =
     useGlobalStore();
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     initializeUser();
-  }, []);
+  }, [initializeUser]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +50,7 @@ function MyPage() {
     };
 
     fetchData();
-  }, []);
+  }, [currentUserId]);
 
   const noPost = postList.length === 0;
 
@@ -61,17 +64,31 @@ function MyPage() {
   const handleLogin = () => {
     navigate('/login');
   };
+  const handleClose = () => {
+    closeModal();
+    navigate('/');
+  };
 
   if (isLoading) {
     return <AppSpinner />;
   }
 
   if (!isLoggedIn) {
-    return <LoginModal isLoggedIn={isLoggedIn} onLogin={handleLogin} />;
+    return (
+      <BasicTextModal
+        message="로그인이 필요한 페이지입니다."
+        type="both"
+        fillBtnText="로그인"
+        btnText="닫기"
+        onFillBtnClick={handleLogin}
+        onBtnClick={handleClose}
+      />
+    );
   }
 
   return (
     <>
+      <AppHelmet title="마이트립픽 | 마이페이지" />
       <h1 className="a11yHidden">마이페이지</h1>
       <ProfileBox userData={profileData} />
       <section>
@@ -92,7 +109,7 @@ function MyPage() {
             {postList.map((item) => {
               return (
                 <li key={item.id}>
-                  <Link to={`/post/${item.id}`}>
+                  <Link to={`/posts/${item.id}`}>
                     {/* 링크는 각 게시글 상세페이지로 연결되도록 추후 수정 */}
                     <img
                       src={getPbImageURL(item)}
@@ -115,5 +132,3 @@ function MyPage() {
     </>
   );
 }
-
-export default MyPage;
