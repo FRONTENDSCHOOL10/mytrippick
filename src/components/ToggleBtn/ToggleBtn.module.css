@@ -10,9 +10,14 @@
   background: none;
   cursor: pointer;
 
-  path {
-    stroke: var(--white);
-    fill: transparent;
+  svg {
+    width: 100%;
+    height: 100%;
+
+    path {
+      stroke: var(--white);
+      fill: transparent;
+    }
   }
 }
 
