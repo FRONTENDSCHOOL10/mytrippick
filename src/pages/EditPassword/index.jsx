@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useEditPasswordStore from '@/stores/useEditPasswordStore';
-import { testPasswordExp, throttle } from '@/utils';
+import { getStorageData, testPasswordExp, throttle } from '@/utils';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
@@ -26,6 +26,16 @@ function EditPassword() {
     setIsChangePassword,
     setIsChangePasswordConfirm,
   } = useEditPasswordStore();
+
+  useEffect(() => {
+    const getUserEmail = () => {
+      const authData = getStorageData('pocketbase_auth');
+      const userEmail = authData.model.email;
+      setEmail(userEmail);
+    };
+
+    getUserEmail();
+  }, []);
 
   const handleInputChange = throttle((e) => {
     const { name, value } = e.target;
@@ -78,7 +88,9 @@ function EditPassword() {
           label={'이메일 주소'}
           type={'text'}
           name={'email'}
+          value={email}
           isPencilOff={true}
+          style={{ color: '#6E6E6E' }}
           readOnly
         />
       </div>
