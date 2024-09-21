@@ -96,7 +96,7 @@
           .placePosition {
             display: flex;
             flex-flow: row;
-            align-items: center;
+            align-items: flex-start;
             gap: 2px;
             margin-block-start: 5px;
 
@@ -107,6 +107,7 @@
             .marker {
               width: 12px;
               height: 12px;
+              margin-block-start: 2px;
               path {
                 fill: var(--text-100);
               }
@@ -137,114 +138,7 @@
     }
   }
 
-  .rankCardFull {
-    width: 100%;
-    position: relative;
-
-    .placePhoto {
-      width: 100%;
-      border-radius: var(--rounded-md);
-    }
-
-    .cardHeader {
-      width: 100%;
-      position: absolute;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      top: 0;
-      left: 0;
-      padding: 12px 12px 0 12px;
-      z-index: 1;
-
-      .userInfos {
-        display: flex;
-        align-items: center;
-        gap: 9px;
-
-        img {
-          width: var(--space-10);
-          height: var(--space-10);
-          border-radius: var(--rounded-full);
-        }
-
-        p {
-          color: var(--white);
-          font-family: 'Pretendard Variable';
-          font-size: 15px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: 140%;
-        }
-      }
-    }
-
-    .places {
-      width: 100%;
-      display: flex;
-      flex-flow: row;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-
-      .placeInfos {
-        display: flex;
-        flex-flow: column;
-        gap: 5px;
-
-        p {
-          color: var(--white);
-          font-family: 'Pretendard Variable';
-          font-size: 18px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: 140%;
-        }
-
-        .placePosition {
-          display: flex;
-          flex-flow: row;
-          align-items: center;
-          gap: 2px;
-          padding-left: 15px;
-
-          span {
-            color: var(--text-100);
-            font-family: 'Pretendard Variable';
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 140%;
-          }
-
-          .marker {
-            width: 12px;
-            height: 12px;
-            path {
-              fill: var(--text-100);
-            }
-          }
-        }
-      }
-
-      .heartWrapper {
-        display: flex;
-        flex-flow: row;
-        align-items: center;
-
-        span {
-          color: var(--white);
-          font-family: 'Pretendard Variable';
-          font-size: 12px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 140%;
-        }
-      }
-    }
-  }
-
-  .listCard {
+  .postCard {
     width: 100%;
     position: relative;
 
@@ -272,11 +166,13 @@
       .placePosition {
         display: flex;
         flex-flow: row;
-        align-items: center;
+        align-items: flex-start;
+        gap: 2px;
 
         .marker {
           width: 12px;
           height: 12px;
+          margin-block-start: 2px;
           path {
             fill: var(--text-100);
           }
@@ -300,6 +196,10 @@
   width: 100%;
 }
 
-.postComponent {
+.postHalf {
   width: calc(50% - var(--space-1, 4px));
+}
+
+.postFull {
+  width: 100%;
 }
