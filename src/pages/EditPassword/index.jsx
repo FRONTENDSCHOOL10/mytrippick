@@ -6,10 +6,14 @@ import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import LinkBtn from '@/components/LinkBtn/LinkBtn';
 import S from './EditPassword.module.css';
+import pb from '@/api/pb';
+import useGlobalStore from '@/stores/useGlobalStore';
 
 function EditPassword() {
   const [email, setEmail] = useState('');
   const [isTouchedPassword, setIsTouchedPassword] = useState(false);
+
+  const [isPasswordChangeOkay, setIsPasswordChangeOkay] = useState(false);
 
   const {
     beforePassword,
@@ -26,6 +30,8 @@ function EditPassword() {
     setIsChangePassword,
     setIsChangePasswordConfirm,
   } = useEditPasswordStore();
+
+  const { logout } = useGlobalStore();
 
   useEffect(() => {
     const getUserEmail = () => {
@@ -77,6 +83,25 @@ function EditPassword() {
         setChangePasswordConfirmMessage('');
         setIsChangePasswordConfirm(true);
       }
+    }
+  };
+
+  const handleSendChangePWData = async (e) => {
+    e.preventDefault();
+
+    const authData = await getStorageData('pocketbase_auth');
+    const userID = authData.model.id;
+
+    const data = {
+      password: changePassword,
+      passwordConfirm: changePasswordConfirm,
+      oldPassword: beforePassword,
+    };
+
+    try {
+      await pb.collection('users').update(userID, data);
+    } catch (error) {
+      alert(`${error}같은 문제로 비밀번호 변경에 실패했습니다`);
     }
   };
 
@@ -144,7 +169,7 @@ function EditPassword() {
       </div>
       <div className={S.btnWrapper}>
         <LinkBtn link="/mypage/edituserinfo">취소</LinkBtn>
-        <CommonBtn submit={false} fill={true}>
+        <CommonBtn submit={false} fill={true} onClick={handleSendChangePWData}>
           비밀번호 변경
         </CommonBtn>
       </div>
