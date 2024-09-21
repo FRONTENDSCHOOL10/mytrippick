@@ -66,7 +66,7 @@ const navigation = [
   },
   {
     text: '게시글 수정',
-    path: '/posts/:postid/postedit',
+    path: '/posts/:postId/postedit',
     element: <PostEdit />,
   },
 ];

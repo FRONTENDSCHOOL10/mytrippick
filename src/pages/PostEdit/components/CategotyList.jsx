@@ -1,5 +1,11 @@
+import { string, func } from 'prop-types';
 import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
 import S from './CategoryList.module.css';
+
+CategoryList.propTypes = {
+  selectedCategory: string,
+  onCategoryChange: func,
+};
 
 function CategoryList({ selectedCategory, onCategoryChange }) {
   const categories = ['여행', '문화생활', '카페', '맛집', '자연', '액티비티'];
