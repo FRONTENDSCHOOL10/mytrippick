@@ -13,8 +13,11 @@ const useGlobalStore = create((set) => ({
   likedPostIds: [],
   setLikedPostIds: (likedPostIds) => set({ likedPostIds }),
 
-  bookmarkedPostIds: null,
+  bookmarkedPostIds: [],
   setBookmarkedPostIds: (bookmarkedPostIds) => set({ bookmarkedPostIds }),
+
+  changedBookmarks: [],
+  setChangedBookmarks: (changedBookmarks) => set({ changedBookmarks }),
 
   setIsLoggedIn: (isLoggedIn) => {
     localStorage.setItem('isLoggedIn', isLoggedIn ? 'true' : '');

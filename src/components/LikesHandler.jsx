@@ -47,7 +47,7 @@ export default function LikesHandler() {
     };
 
     updateLikes();
-  }, [likedPostIds, likesPbId]);
+  }, [likedPostIds, likesPbId, API_URL]);
 
   return null;
 }
