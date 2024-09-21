@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react';
 import useHomeStore from '@/stores/useHomeStore';
 import Card from '@/components/Card/Card';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
+import useGlobalStore from '@/stores/useGlobalStore';
 
 import S from './CardList.module.css';
 
@@ -12,6 +13,7 @@ export default function PostList() {
   const selectedCategory = useHomeStore((state) => state.selectedCategory);
   const setPage = useHomeStore((state) => state.setPage);
   const API_URL = import.meta.env.VITE_PB_URL;
+  const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
 
   const postData = useQuery({
     queryKey: ['posts', page, selectedCategory],
@@ -55,6 +57,7 @@ export default function PostList() {
                 placeName={item.placeName}
                 placePosition={item.placePosition}
                 userId={item.userId}
+                isBookmarked={bookmarkedPostIds.includes(item.id)}
               />
             </Fragment>
           );

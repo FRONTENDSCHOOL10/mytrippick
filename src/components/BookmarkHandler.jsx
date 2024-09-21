@@ -5,21 +5,20 @@ import useGlobalStore from '@/stores/useGlobalStore';
 
 export default function BookmarkHandler() {
   const API_URL = import.meta.env.VITE_PB_URL;
+  const currentUserId = useGlobalStore((state) => state.currentUserId);
   const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
   const setBookmarkedPostIds = useGlobalStore(
     (state) => state.setBookmarkedPostIds
   );
   const [bookmarksPbId, setBookmarksPbId] = useState(null);
 
-  const userId = '3bvc1x2g5ij8asg';
-
   useQuery({
-    queryKey: ['bookmarks', userId],
+    queryKey: ['bookmarks', currentUserId],
     queryFn: () =>
       axios
         .get(`${API_URL}/api/collections/bookmarks/records`, {
           params: {
-            filter: `(userId="${userId}")`,
+            filter: `(userId="${currentUserId}")`,
           },
         })
         .then((res) => {
@@ -30,9 +29,9 @@ export default function BookmarkHandler() {
   });
 
   useEffect(() => {
-    if (!bookmarksPbId || bookmarkedPostIds?.length <= 0) return;
+    if (!bookmarksPbId || bookmarkedPostIds?.length < 0) return;
 
-    const updateLikes = async () => {
+    const updatebookmarks = async () => {
       try {
         await axios.patch(
           `${API_URL}/api/collections/bookmarks/records/${bookmarksPbId}`,
@@ -46,8 +45,8 @@ export default function BookmarkHandler() {
       }
     };
 
-    updateLikes();
-  }, [bookmarkedPostIds, bookmarksPbId]);
+    updatebookmarks();
+  }, [bookmarkedPostIds, bookmarksPbId, API_URL]);
 
   return null;
 }
