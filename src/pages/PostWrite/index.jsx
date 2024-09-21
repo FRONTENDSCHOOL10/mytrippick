@@ -22,9 +22,10 @@ function PostWrite() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comments, setComments] = useState('');
   const [category, setCategory] = useState('');
-  const { placeName, placeAddress, placeLatLong } = usePlaceDateStore();
-  const { image } = usePostPhotoFileStore();
-  const { date } = usePostDateStore();
+  const { placeName, placeAddress, placeLatLong, setPlaceName } =
+    usePlaceDateStore();
+  const { image, setImageURL } = usePostPhotoFileStore();
+  const { date, setDate } = usePostDateStore();
 
   const [isPostOkay, setIsPostOkay] = useState(false);
   const {
@@ -78,7 +79,10 @@ function PostWrite() {
       formData.append('placePosition', placeAddress);
       formData.append('placeLatLong', JSON.stringify(placeLatLong));
       formData.append('category', category);
-      formData.append('visitedDate', date.toISOString());
+      const adjustedDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      formData.append('visitedDate', adjustedDate.toISOString().split('T')[0]); // 시간이 맞지 않아 DB에 저장되는 날짜가 달라지는 문제 해결을 위한 코드
       formData.append('contents', comments);
       formData.append('userId', userId);
 
@@ -88,6 +92,9 @@ function PostWrite() {
 
       CreateDatas('posts', formData);
       setIsPostOkay(true);
+      setImageURL('');
+      setDate('');
+      setPlaceName(null);
     } catch (error) {
       console.log(error);
       alert('게시물을 보내는 도중 에러가 발생했습니다!');
