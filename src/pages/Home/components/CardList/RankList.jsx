@@ -14,6 +14,8 @@ export default function RankList() {
   const [userIds, setUserIds] = useState([]);
   const likedPostIds = useGlobalStore((state) => state.likedPostIds);
   const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
+  console.log('자동배포완료');
+
   // 상단 인기 여행지 TOP3 (좋아요 수 기준 상위 3개)
   const rankData = useQuery({
     queryKey: ['top3'],
