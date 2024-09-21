@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 const viteConfig = defineConfig({
-  base: 'https://mytrippick.pockethost.io',
+  base: '/',
   server: {
     host: 'localhost',
     port: 3000,
