@@ -31,7 +31,7 @@ const CustomInput = forwardRef(({ value, onClick, onKeyDown }, ref) => (
   </div>
 ));
 
-function DateInput() {
+function DateInput({ label = '방문한 날짜' }) {
   const { date, setDate } = usePostDateStore();
 
   const handleKeyDown = (e) => {
@@ -51,7 +51,7 @@ function DateInput() {
   return (
     <article className={S.component}>
       <h3 className="sr-only">날짜 선택 input 공간</h3>
-      <label className="label">방문한 날짜</label>
+      <label className="label">{label}</label>
       <DatePicker
         selected={date}
         onChange={(date) => setDate(date)}
@@ -73,6 +73,10 @@ function DateInput() {
     </article>
   );
 }
+
+DateInput.propTypes = {
+  label: string,
+};
 
 CustomInput.displayName = 'CustomInput';
 

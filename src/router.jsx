@@ -10,6 +10,7 @@ import EditUserInfo from './pages/EditUserInfo';
 import Curation from './pages/Curation';
 import ConfirmPassword from './pages/ConfirmPassword';
 import DeleteAccount from './pages/DeleteAccount';
+import PostEdit from './pages/PostEdit';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -72,6 +73,11 @@ const navigation = [
     text: '나만의 큐레이션',
     path: '/curation',
     element: <Curation />,
+  },
+  {
+    text: '게시글 수정',
+    path: '/posts/:postId/postedit',
+    element: <PostEdit />,
   },
 ];
 
