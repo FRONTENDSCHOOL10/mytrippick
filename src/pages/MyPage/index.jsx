@@ -35,11 +35,11 @@ export function Component() {
         const record = await pb.collection('users').getOne(currentUserId);
         setProfileData(record);
 
-        const currentUserPosts = await pb.collection('posts').getList(1, 50, {
+        const currentUserPosts = await pb.collection('posts').getFullList({
           filter: `userId = "${currentUserId}"`,
           sort: '-created',
         });
-        setPostList(currentUserPosts.items);
+        setPostList(currentUserPosts);
         setIsLoading(false);
       } catch (error) {
         // 에러 처리
