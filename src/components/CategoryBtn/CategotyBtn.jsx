@@ -22,8 +22,7 @@ function CategoryBtn({ label, checked = false, onChecked }) {
         type="radio"
         name="category"
         value={label}
-        defaultChecked={checked}
-        onClick={onChecked}
+        checked={checked}
         onChange={handleChange}
       />
       <label htmlFor={id}>{label}</label>

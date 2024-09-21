@@ -1,7 +1,7 @@
 import CategoryBtn from '@/components/CategoryBtn/CategotyBtn';
 import S from './CategoryList.module.css';
 
-function CategoryList() {
+function CategoryList({ selectedCategory, onCategoryChange }) {
   const categories = ['여행', '문화생활', '카페', '맛집', '자연', '액티비티'];
 
   return (
@@ -12,7 +12,11 @@ function CategoryList() {
         {categories.map((item, index) => {
           return (
             <li className={S.categoryItems} key={index}>
-              <CategoryBtn label={item} />
+              <CategoryBtn
+                label={item}
+                checked={selectedCategory === item}
+                onChecked={onCategoryChange}
+              />
             </li>
           );
         })}
