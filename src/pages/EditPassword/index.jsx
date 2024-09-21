@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useEditPasswordStore from '@/stores/useEditPasswordStore';
+import useGlobalStore from '@/stores/useGlobalStore';
+import useModalStore from '@/stores/useModalStore';
+import pb from '@/api/pb';
 import { getStorageData, testPasswordExp, throttle } from '@/utils';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import LinkBtn from '@/components/LinkBtn/LinkBtn';
 import S from './EditPassword.module.css';
-import pb from '@/api/pb';
-import useGlobalStore from '@/stores/useGlobalStore';
 
 function EditPassword() {
   const [email, setEmail] = useState('');
@@ -33,6 +37,8 @@ function EditPassword() {
 
   const { logout } = useGlobalStore();
 
+  const { showModal, setShowModal, closeModal } = useModalStore();
+
   useEffect(() => {
     const getUserEmail = () => {
       const authData = getStorageData('pocketbase_auth');
@@ -42,6 +48,13 @@ function EditPassword() {
 
     getUserEmail();
   }, []);
+
+  useEffect(() => {
+    if (isPasswordChangeOkay) {
+      setShowModal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPasswordChangeOkay]);
 
   const handleInputChange = throttle((e) => {
     const { name, value } = e.target;
@@ -86,6 +99,8 @@ function EditPassword() {
     }
   };
 
+  const navigation = useNavigate();
+
   const handleSendChangePWData = async (e) => {
     e.preventDefault();
 
@@ -100,13 +115,24 @@ function EditPassword() {
 
     try {
       await pb.collection('users').update(userID, data);
+      setIsPasswordChangeOkay(true);
+      logout();
+      setBeforePassword('');
+      setChangePassword('');
+      setChangePasswordConfirm('');
     } catch (error) {
       alert(`${error}같은 문제로 비밀번호 변경에 실패했습니다`);
     }
   };
 
+  const handleModalClick = () => {
+    closeModal();
+    navigation('/login');
+  };
+
   return (
     <section className={S.component}>
+      <AppHelmet title={'비밀번호 변경'} />
       <h2 className="headline2">비밀번호 변경</h2>
       <div>
         <AppInputWithValue
@@ -173,6 +199,15 @@ function EditPassword() {
           비밀번호 변경
         </CommonBtn>
       </div>
+
+      {showModal && (
+        <BasicTextModal
+          message={'비밀번호 변경에 성공하였습니다🎊'}
+          fillBtnText={'확인'}
+          type={'fill'}
+          onFillBtnClick={handleModalClick}
+        />
+      )}
     </section>
   );
 }
