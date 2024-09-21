@@ -29,7 +29,7 @@ export default function RankList() {
       return result;
     },
   });
-  // console.log('rankData:', rankData.data);
+  console.log('rankData:', rankData.data);
 
   // top3 유저 데이터 가져오기
   const userData = useQuery({
