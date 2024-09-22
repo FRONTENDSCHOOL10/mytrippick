@@ -14,7 +14,6 @@ function Curation() {
   );
 
   const API_URL = import.meta.env.VITE_PB_URL;
-
   const loggedInUserId = pb.authStore.model?.id;
   const [list, setList] = useState();
   const [count, setCount] = useState(0);
@@ -30,15 +29,10 @@ function Curation() {
         })
         .then((res) => {
           const items = res.data.items || [];
-          // console.log('items?.[0]?.postId:', items);
-
           setBookmarkedPostIds(items?.[0]?.postId);
-          // console.log("추출된 userIds:", extractedUserIds);
-          return res.data; // 원본 데이터를 그대로 반환
+          return res.data;
         }),
   });
-
-  // console.log(bookmarkData);
 
   useQuery({
     queryKey: ['postData', bookmarkedPostIds],
@@ -51,8 +45,6 @@ function Curation() {
         })
         .then((res) => {
           const items = res.data.items || [];
-          // console.log(items, 'res.data.items');
-          // bookmakredPostIds 배열과 일치하는 순서로 postData 정렬
           const sortedItems = bookmarkedPostIds.map(
             (id) =>
               items.find((item) => item.id === id) || {
@@ -62,49 +54,47 @@ function Curation() {
           );
           setCount(count + 1);
           count === 0 && setList(sortedItems.reverse());
-
-          //   console.log("정렬된 유저 데이터:", sortedItems);
           return { ...res.data, items: sortedItems.reverse() };
         }),
   });
 
-  // console.log(postData?.data, 'postData');
+  useEffect(() => {}, [list]);
 
-  useEffect(() => {
-    // console.log(list, 'list');
-  }, [list]);
-
-  useEffect(() => {
-    // console.log(count, 'count');
-  }, [count]);
+  useEffect(() => {}, [count]);
 
   return (
     <>
       <h1 className={`headline2 ${S.sectionTitle}`}>나만의 큐레이션</h1>
       <section className={S.curation}>
         <AppHelmet title={'나만의 큐레이션'} />
-
-        <div className={S.curationCardList}>
-          {list?.map((item, idx) => (
-            <Fragment key={idx}>
-              <Card
-                type="post"
-                id={item.id}
-                postId={item.id}
-                photo={item.photo}
-                collectionId={item.collectionId}
-                likedNum={item.likedNum || 0}
-                placeName={item.placeName}
-                placePosition={item.placePosition}
-                userId={item.userId}
-                isBookmarked={bookmarkedPostIds?.includes(item.id)}
-              />
-            </Fragment>
-          ))}
+  
+        <div className={list?.length > 0 ? S.curationCardList : S.noPost}>
+          {list?.length > 0 ? (
+            list.map((item, idx) => (
+              <Fragment key={idx}>
+                <Card
+                  type="post"
+                  id={item.id}
+                  postId={item.id}
+                  photo={item.photo}
+                  collectionId={item.collectionId}
+                  likedNum={item.likedNum || 0}
+                  placeName={item.placeName}
+                  placePosition={item.placePosition}
+                  userId={item.userId}
+                  isBookmarked={bookmarkedPostIds?.includes(item.id)}
+                />
+              </Fragment>
+            ))
+          ) : (
+            <p className={S.emptyMessage}>
+              아직 북마크한 여행지가 없어요.<br /> 마음에 드는 여행지를 북마크해 보세요!
+            </p>
+          )}
         </div>
       </section>
     </>
-  );
+  );  
 }
 
 export default Curation;

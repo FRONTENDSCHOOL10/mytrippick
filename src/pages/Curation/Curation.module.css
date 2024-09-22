@@ -23,3 +23,17 @@
 .moreBtn {
   margin-block-start: 40px;
 }
+
+.noPost {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  min-height: 428px;
+  color: var(--text-200);
+  flex-flow: column;
+
+  p {
+    text-align: center;
+  }
+}
