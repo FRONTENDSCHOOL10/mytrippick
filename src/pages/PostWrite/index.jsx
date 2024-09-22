@@ -134,8 +134,8 @@ function PostWrite() {
           onChange={handleCommentsChange}
         />
         {comments === '' ? (
-          <span className="caption" style={{ color: '#6e6e6e' }}>
-            후기는 한글자 이상 작성해주세요!!
+          <span className="caption inputCaption" style={{ color: '#6e6e6e' }}>
+            최소 한 글자 이상의 후기를 작성해 주세요.
           </span>
         ) : (
           <></>

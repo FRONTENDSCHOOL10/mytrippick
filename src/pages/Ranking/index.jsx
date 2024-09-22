@@ -4,6 +4,7 @@ import Card from '@/components/Card/Card';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 import AppSpinner from '@/components/AppSpinner/AppSpinner';
+import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import { useState, Fragment } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -95,6 +96,7 @@ export function Component() {
 
   return (
     <>
+      <AppHelmet title={'인기 여행지 랭킹'} />
       <h1 className={`headline2 ${S.sectionTitle}`}>인기 여행지 랭킹</h1>
       <section className={S.container}>
         <div className={S.rankCardList}>

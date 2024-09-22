@@ -7,6 +7,7 @@
     width: 100%;
     padding: var(--space-2-half) var(--space-4);
     margin: 0;
+    background-color: var(--gray-500);
   }
 
   input:focus-visible {
