@@ -28,7 +28,7 @@ function Menu() {
     }
 
     initializeUser();
-  }, []);
+  }, [initializeUser]);
 
   const handleProtectedLinkClick = (e) => {
     if (!isLoggedIn) {
