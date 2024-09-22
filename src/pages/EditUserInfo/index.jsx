@@ -7,6 +7,7 @@ import {
   testNickNameRegExp,
   throttle,
 } from '@/utils';
+import useModalStore from '@/stores/useModalStore';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
@@ -16,6 +17,7 @@ import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import ChangeUserProfilePic from './components/ChangeUserProfilePic/ChangeUserProfilePic';
 import AppInputWithValue from '@/components/AppInput/AppInputWithValue';
 import S from './EditUserInfo.module.css';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 
 function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
@@ -36,6 +38,9 @@ function EditUserInfo() {
 
   const { userImage, setUserImageURL } = usePostPhotoFileStore();
 
+  const [isEditUserDataOkay, setIsEditUserDataOkay] = useState(false);
+  const { showModal, setShowModal, closeModal } = useModalStore();
+
   useEffect(() => {
     const handleGetUserOriginData = async () => {
       const authData = getStorageData('pocketbase_auth');
@@ -55,13 +60,21 @@ function EditUserInfo() {
           setUserImageURL(getPbImageURL(response.data, 'userProfile'));
         }
       } catch (error) {
-        console.error('API 요청 실패:', error);
+        alert(`${error}와 같은 이유로 데이터를 받아오는데 실패하였습니다!`);
       }
     };
 
     handleGetUserOriginData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (isEditUserDataOkay) {
+      setShowModal(true);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditUserDataOkay]);
 
   const handleInputDatas = (e) => {
     const { name, value } = e.target;
@@ -154,11 +167,15 @@ function EditUserInfo() {
 
     try {
       await pb.collection('users').update(userID, userEditData);
-      alert('회원정보가 수정되었습니다');
-      navigation('/mypage');
+      setIsEditUserDataOkay(true);
     } catch (error) {
-      console.log(error);
+      alert(`${error}와 같은 문제로 수정 데이터 전송에 실패했습니다`);
     }
+  };
+
+  const handleModalBtnClick = () => {
+    closeModal();
+    navigation('/mypage');
   };
 
   return (
@@ -166,6 +183,16 @@ function EditUserInfo() {
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
       <AppHelmet title={'회원 정보 수정'} />
       <ChangeUserProfilePic />
+      <AppInputWithValue
+        label={'이메일'}
+        labelHidden={false}
+        type={'email'}
+        name={'userEmail'}
+        value={editUserData.email}
+        isPencilOff={true}
+        style={{ color: '#6E6E6E' }}
+        readOnly
+      />
       <div>
         <AppInputWithValue
           label={'닉네임'}
@@ -196,17 +223,10 @@ function EditUserInfo() {
           {errorMessage.newCommentsMySelfMessage}
         </span>
       </div>
-      <AppInputWithValue
-        label={'이메일'}
-        labelHidden={false}
-        type={'email'}
-        name={'userEmail'}
-        value={editUserData.email}
-        isPencilOff={true}
-        style={{ color: '#6E6E6E' }}
-        readOnly
-      />
-      <LinkBtn link={'/mypage/edituserinfo/editpassword'}>
+      <LinkBtn
+        style={{ height: '44px' }}
+        link={'/mypage/edituserinfo/editpassword'}
+      >
         비밀번호 변경
       </LinkBtn>
       <div className={S.userOutBtnArea}>
@@ -225,6 +245,15 @@ function EditUserInfo() {
           확인
         </CommonBtn>
       </div>
+
+      {showModal && (
+        <BasicTextModal
+          message={'회원 정보 수정에 성공하셨습니다✨'}
+          fillBtnText={'확인'}
+          type={'fill'}
+          onFillBtnClick={handleModalBtnClick}
+        />
+      )}
     </section>
   );
 }
