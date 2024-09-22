@@ -97,7 +97,7 @@ function Curation() {
                 placeName={item.placeName}
                 placePosition={item.placePosition}
                 userId={item.userId}
-                isBookmarked={bookmarkedPostIds.includes(item.id)}
+                isBookmarked={bookmarkedPostIds?.includes(item.id)}
               />
             </Fragment>
           ))}
