@@ -23,7 +23,7 @@ const useGlobalStore = create((set) => ({
     localStorage.setItem('isLoggedIn', isLoggedIn ? 'true' : '');
     set({ isLoggedIn });
   },
-  setCurrentUserId: (currentUserId) => set({ currentUserId }),
+  setCurrentUserId: (currentUserId) => set( { currentUserId }),
 
   initializeUser: () => {
     const loggedIn = localStorage.getItem('isLoggedIn');
@@ -42,6 +42,9 @@ const useGlobalStore = create((set) => ({
 
   logout: () => {
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('profileImage');
+    localStorage.removeItem('nickname');
+
     set({
       isLoggedIn: false,
     });
