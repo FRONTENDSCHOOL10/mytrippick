@@ -8,11 +8,8 @@ import {
   throttle,
 } from '@/utils';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
-import useEditPasswordStore from '@/stores/useEditPasswordStore';
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
-import useGlobalStore from '@/stores/useGlobalStore';
-import PasswordAccordion from './components/PasswordAccordion/PasswordAccordion';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import LinkBtn from '@/components/LinkBtn/LinkBtn';
 import AppHelmet from '@/components/AppHelmet/AppHelmet';
@@ -38,11 +35,6 @@ function EditUserInfo() {
   });
 
   const { userImage, setUserImageURL } = usePostPhotoFileStore();
-
-  const { beforePassword, changePassword, changePasswordConfirm } =
-    useEditPasswordStore();
-
-  const { logout } = useGlobalStore();
 
   useEffect(() => {
     const handleGetUserOriginData = async () => {
@@ -160,21 +152,6 @@ function EditUserInfo() {
       userEditData.userProfile = userImage;
     }
 
-    if (changePassword) {
-      userEditData.password = changePassword;
-      userEditData.passwordConfirm = changePasswordConfirm;
-      userEditData.oldPassword = beforePassword;
-
-      try {
-        await pb.collection('users').update(userID, userEditData);
-        alert('비밀번호 변경에 성공하셨습니다');
-        logout();
-        navigation('/login');
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
     try {
       await pb.collection('users').update(userID, userEditData);
       alert('회원정보가 수정되었습니다');
@@ -229,7 +206,9 @@ function EditUserInfo() {
         style={{ color: '#6E6E6E' }}
         readOnly
       />
-      <PasswordAccordion />
+      <LinkBtn link={'/mypage/edituserinfo/editpassword'}>
+        비밀번호 변경
+      </LinkBtn>
       <div className={S.userOutBtnArea}>
         <LinkBtn link={'/mypage/deleteaccount'} small={true}>
           회원탈퇴
