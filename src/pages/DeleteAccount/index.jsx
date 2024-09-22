@@ -18,6 +18,7 @@ function DeleteAccount() {
   const [modalMessage, setModalMessage] = useState('');
   const [isDeleted, setIsDeleted] = useState(false);
 
+  const logout = useGlobalStore((state) => state.logout);
   const showModal = useModalStore((state) => state.showModal); // showModal 상태 가져오기
   const openModal = useModalStore((state) => state.openModal); // openModal 함수 가져오기
   const closeModal = useModalStore((state) => state.closeModal); // closeModal 함수 가져오기
@@ -55,7 +56,9 @@ function DeleteAccount() {
     navigate('/mypage');
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+
     try {
       // PocketBase의 authWithPassword 메서드를 사용하여 인증 시도
       await pb.collection('users').authWithPassword(userEmail, passwordInput);
@@ -99,7 +102,9 @@ function DeleteAccount() {
 
   const handleClose = () => {
     if (isDeleted) {
-      return navigate('/');
+      logout();
+      navigate('/');
+      return closeModal();
     } else {
       return closeModal();
     }
@@ -110,7 +115,7 @@ function DeleteAccount() {
       <AppHelmet title="마이트립픽 | 회원 탈퇴" />
       <h1 className="a11yHidden">회원 탈퇴 페이지</h1>
       <h2 className={`headline2 ${S.heading}`}>회원 탈퇴</h2>
-      <div role="group" className={S.flexContainer}>
+      <form className={S.formContainer}>
         <section className={S.inputContainer}>
           <AppInputWithValue
             type="text"
@@ -142,11 +147,11 @@ function DeleteAccount() {
         </section>
         <section className={S.btnContainer}>
           <CommonBtn onClick={handleCancel}>취소</CommonBtn>
-          <CommonBtn fill onClick={handleConfirm} disabled={isDisabled}>
+          <CommonBtn submit fill onClick={handleConfirm} disabled={isDisabled}>
             확인
           </CommonBtn>
         </section>
-      </div>
+      </form>
       {/* 모달 렌더링 */}
       {showModal && (
         <BasicTextModal

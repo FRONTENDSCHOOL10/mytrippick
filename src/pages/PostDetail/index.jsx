@@ -2,39 +2,39 @@ import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
 import FilledMarker from '@/assets/svg/filledMarker.svg?react';
 import AppHelmet from '@/components/AppHelmet/AppHelmet';
+import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
 import ToggleBtn from '@/components/ToggleBtn/ToggleBtn';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import useGlobalStore from '@/stores/useGlobalStore';
+import useModalStore from '@/stores/useModalStore';
+import { formatTextWithBreaks } from '@/utils';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Comment from './components/Comment/Comment';
 import MoreBtn from './components/MoreBtn/MoreBtn';
 import PostText from './components/PostText/PostText';
 import S from './PostDetail.module.css';
-import { useNavigate } from 'react-router-dom';
-
-// 해야할 일
-// 1. 토글 버튼 상태 고민...
 
 export function Component() {
   const [userData, setUserData] = useState({});
   const [postData, setPostData] = useState({});
   const [commentsList, setCommentsList] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [, setError] = useState(null);
 
   const { initializeUser, currentUserId } = useGlobalStore();
   // 좋아요/북마크에 아래 전역 상태 변경 추가?
-  // const likedPostIds = useGlobalStore((state) => state.likedPostIds);
-  // const setLikedPostIds = useGlobalStore((state) => state.setLikedPostIds);
-  // const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
-  // const setBookmarkedPostIds = useGlobalStore(
-  //   (state) => state.setBookmarkedPostIds
-  // );
+  const likedPostIds = useGlobalStore((state) => state.likedPostIds);
+  const setLikedPostIds = useGlobalStore((state) => state.setLikedPostIds);
+  const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
+  const setBookmarkedPostIds = useGlobalStore(
+    (state) => state.setBookmarkedPostIds
+  );
+
+  const showModal = useModalStore((state) => state.showModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+  const navigate = useNavigate();
 
   const { postId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     initializeUser();
@@ -95,22 +95,32 @@ export function Component() {
   };
 
   const handleLikes = () => {
-    if (!isLiked) {
-      setIsLiked(true);
+    if (likedPostIds?.includes(postId)) {
+      setLikedPostIds(likedPostIds.filter((likedId) => likedId !== postId));
     } else {
-      setIsLiked(false);
+      setLikedPostIds([...likedPostIds, postId]);
     }
   };
   const handleBookmarks = () => {
-    if (!isBookmarked) {
-      setIsBookmarked(true);
+    if (bookmarkedPostIds?.includes(postId)) {
+      setBookmarkedPostIds(
+        bookmarkedPostIds.filter((bookmarkedId) => bookmarkedId !== postId)
+      );
     } else {
-      setIsBookmarked(false);
+      setBookmarkedPostIds([...bookmarkedPostIds, postId]);
     }
   };
-  // 토글 안 됨,,,
-  // console.log('좋아요 상태 :', isLiked);
-  // console.log('북마크 상태 :', isBookmarked);
+
+  // 모달 '로그인' 버튼 클릭 시 로그인 페이지로 이동
+  const handleLoginRedirect = () => {
+    closeModal(); // 모달 닫기
+    navigate('/login'); // 로그인 페이지로 이동
+  };
+
+  // 모달 메시지
+  const message = formatTextWithBreaks(
+    '로그인 이후 이용 가능합니다.\n로그인 페이지로 이동하시겠습니까?'
+  );
 
   return (
     <>
@@ -133,10 +143,13 @@ export function Component() {
           <FilledMarker /> {postData.placePosition} • {postData.category}
         </div>
         <div role="group" className={S.toggleBox}>
-          <ToggleBtn isToggle={isLiked} onClick={handleLikes} />
+          <ToggleBtn
+            isToggle={likedPostIds?.includes(postId)}
+            onClick={handleLikes}
+          />
           <ToggleBtn
             bookmark
-            isToggle={isBookmarked}
+            isToggle={bookmarkedPostIds?.includes(postId)}
             onClick={handleBookmarks}
           />
         </div>
@@ -148,6 +161,18 @@ export function Component() {
         commentsList={commentsList}
         setCommentsList={setCommentsList}
       />
+      {/* 모달 렌더링 */}
+      {/* 홈페이지 모달 가져옴 */}
+      {showModal && (
+        <BasicTextModal
+          type="both"
+          message={message}
+          fillBtnText="로그인"
+          btnText="닫기"
+          onFillBtnClick={handleLoginRedirect} // 로그인 페이지로 이동
+          onBtnClick={closeModal} // 모달 닫기
+        />
+      )}
     </>
   );
 }

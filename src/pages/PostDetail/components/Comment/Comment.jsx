@@ -1,15 +1,13 @@
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import getPbImageURL from '@/api/getPbImageURL';
 import pb from '@/api/pb';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
-import { throttle } from '@/utils';
 import { elapsedTime } from '@/utils/elapsedTime';
-import { string } from 'prop-types';
-import { useEffect, useMemo, useState } from 'react';
+import { string, array, func } from 'prop-types';
 import S from './Comment.module.css';
 import MoreBtn from '../MoreBtn/MoreBtn';
-import { array } from 'prop-types';
-import { func } from 'prop-types';
+import useGlobalStore from '@/stores/useGlobalStore';
 
 Comment.propTypes = {
   postId: string.isRequired,
@@ -19,55 +17,77 @@ Comment.propTypes = {
 };
 
 function Comment({ postId, currentUser, commentsList, setCommentsList }) {
-  const [commentUsers, setCommentUsers] = useState([]);
+  const [commentUsers, setCommentUsers] = useState({});
   const [newComment, setNewComment] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
   const [, setError] = useState(null);
+  const subscriptionRef = useRef(null);
+
+  const isLoggedIn = useGlobalStore((state) => state.isLoggedIn);
+
+  const fetchCommentUsers = useCallback(async () => {
+    try {
+      const userMap = {};
+      for (const item of commentsList) {
+        if (item.expand?.userId) {
+          userMap[item.userId] = item.expand.userId;
+        } else if (!userMap[item.userId]) {
+          const user = await pb.collection('users').getOne(item.userId);
+          userMap[item.userId] = user;
+        }
+      }
+      setCommentUsers(userMap);
+    } catch (error) {
+      setError('사용자 데이터를 불러오는 중 오류가 발생했습니다.');
+      console.error('Error fetching user data:', error);
+    }
+  }, [commentsList]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // 데이터 가져오기
-
-        const userMap = {};
-        commentsList.forEach((item) => {
-          if (item.expand?.userId) {
-            userMap[item.userId] = item.expand.userId;
-          }
-        });
-
-        setCommentUsers(userMap);
-      } catch (error) {
-        // 에러 처리
-        setError('데이터를 불러오는 중 오류가 발생했습니다.');
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    const subscribeToComments = () => {
-      pb.collection('comments').subscribe('*', (payload) => {
-        if (payload.action === 'create' && payload.record.postId === postId) {
-          setCommentsList((prev) => [...prev, payload.record]);
-        }
-      });
-    };
-
     if (postId) {
-      fetchData();
-      subscribeToComments(); // 댓글 구독
-    }
+      fetchCommentUsers();
 
-    return () => {
-      pb.collection('comments').unsubscribe(); // 컴포넌트 언마운트 시 구독 해제
-    };
-  }, [commentsList, postId, setCommentsList]);
+      if (!subscriptionRef.current) {
+        subscriptionRef.current = pb
+          .collection('comments')
+          .subscribe('*', async (payload) => {
+            if (
+              payload.action === 'create' &&
+              payload.record.postId === postId
+            ) {
+              setCommentsList((prev) => {
+                // 중복 추가 방지
+                if (prev.some((comment) => comment.id === payload.record.id)) {
+                  return prev;
+                }
+                return [...prev, payload.record];
+              });
+              const user = await pb
+                .collection('users')
+                .getOne(payload.record.userId);
+              setCommentUsers((prev) => ({
+                ...prev,
+                [payload.record.userId]: user,
+              }));
+            } else if (payload.action === 'delete') {
+              setCommentsList((prev) =>
+                prev.filter((comment) => comment.id !== payload.record.id)
+              );
+            }
+          });
+      }
+
+      return () => {
+        if (subscriptionRef.current) {
+          pb.collection('comments').unsubscribe(subscriptionRef.current);
+          subscriptionRef.current = null;
+        }
+      };
+    }
+  }, [postId, setCommentsList, fetchCommentUsers]);
 
   const handleDelete = async (commentId) => {
     try {
       await pb.collection('comments').delete(commentId);
-      setCommentsList((prev) =>
-        prev.filter((comment) => comment.id !== commentId)
-      );
     } catch (error) {
       console.error('Error deleting comment:', error);
       setError('댓글을 삭제하는 중 오류가 발생했습니다.');
@@ -76,31 +96,47 @@ function Comment({ postId, currentUser, commentsList, setCommentsList }) {
 
   const noComment = useMemo(() => commentsList.length < 1, [commentsList]);
 
-  const handleCommentChange = throttle((e) => {
+  const handleCommentChange = useCallback((e) => {
     const value = e.target.value;
     setNewComment(value);
-    setIsDisabled(value.trim().length === 0);
-  }, 500);
+  }, []);
 
-  const handleAddComment = async () => {
-    console.log('클릭!');
+  const handleAddComment = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    const newCommentData = {
-      postId,
-      userId: currentUser,
-      contents: newComment,
-    };
+      if (!newComment.trim()) return;
 
-    await pb.collection('comments').create(newCommentData);
+      const newCommentData = {
+        postId,
+        userId: currentUser,
+        contents: newComment,
+      };
 
-    setCommentsList((prev) => [...prev, newCommentData]);
-    setNewComment(''); // 입력 필드 초기화
-    setIsDisabled(true); // 댓글 추가 후 버튼 비활성화
-  };
+      try {
+        const createdComment = await pb
+          .collection('comments')
+          .create(newCommentData);
+        setNewComment('');
+        // 로컬 상태 업데이트 (서버 구독과 중복되지 않도록 주의)
+        setCommentsList((prev) => {
+          if (prev.some((comment) => comment.id === createdComment.id)) {
+            return prev;
+          }
+          return [...prev, createdComment];
+        });
+      } catch (error) {
+        console.error('Error adding comment:', error);
+        setError('댓글을 추가하는 중 오류가 발생했습니다.');
+      }
+    },
+    [newComment, postId, currentUser, setCommentsList]
+  );
 
   return (
     <>
       <section className={S.commentContainer}>
+        {/* 변경: commentsList.length를 사용하여 실시간으로 댓글 개수 반영 */}
         <span>댓글 {commentsList.length}</span>
         {noComment ? (
           <p className={S.noComment}>첫 댓글을 남겨보세요.</p>
@@ -133,24 +169,34 @@ function Comment({ postId, currentUser, commentsList, setCommentsList }) {
                   </li>
                 );
               }
+              return null;
             })}
           </ul>
         )}
       </section>
-      <section className={S.addComment}>
+      <form className={S.addComment}>
         <AppInput
           type="text"
           name="comment"
           label="댓글 입력"
-          placeholder="댓글을 입력해주세요"
+          placeholder={
+            isLoggedIn
+              ? '댓글을 입력해주세요'
+              : '로그인 후 댓글을 입력해주세요.'
+          }
           onChange={handleCommentChange}
-          defaultValue={newComment}
-        ></AppInput>
-        <CommonBtn fill disabled={isDisabled} onClick={handleAddComment}>
+          value={newComment}
+          disabled={!isLoggedIn}
+        />
+        <CommonBtn
+          submit
+          fill
+          disabled={!newComment.trim() || !isLoggedIn}
+          onClick={handleAddComment}
+        >
           등록
         </CommonBtn>
-        {/* 코멘트 입력 시 버튼 활성화되는 기능 필요 */}
-      </section>
+      </form>
     </>
   );
 }

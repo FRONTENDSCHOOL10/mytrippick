@@ -2,7 +2,7 @@
   margin: var(--space-5) var(--container-m-md);
 }
 
-.flexContainer {
+.formContainer {
   margin: 0 var(--container-m-md);
   height: calc(100vh - var(--header-height) * 2 - var(--footer-height));
   display: flex;
