@@ -11,6 +11,7 @@ import Curation from './pages/Curation';
 import ConfirmPassword from './pages/ConfirmPassword';
 import DeleteAccount from './pages/DeleteAccount';
 import PostEdit from './pages/PostEdit';
+import EditPassword from './pages/EditPassword';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -78,6 +79,11 @@ const navigation = [
     text: '게시글 수정',
     path: '/posts/:postId/postedit',
     element: <PostEdit />,
+  },
+  {
+    text: '비밀번호 변경',
+    path: '/mypage/edituserinfo/editpassword',
+    element: <EditPassword />,
   },
 ];
 

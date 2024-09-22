@@ -8,14 +8,17 @@ import { string } from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
 import S from './Comment.module.css';
 import MoreBtn from '../MoreBtn/MoreBtn';
+import { array } from 'prop-types';
+import { func } from 'prop-types';
 
 Comment.propTypes = {
   postId: string.isRequired,
   currentUser: string.isRequired,
+  commentsList: array,
+  setCommentsList: func,
 };
 
-function Comment({ postId, currentUser }) {
-  const [commentList, setCommentList] = useState([]);
+function Comment({ postId, currentUser, commentsList, setCommentsList }) {
   const [commentUsers, setCommentUsers] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -25,15 +28,9 @@ function Comment({ postId, currentUser }) {
     const fetchData = async () => {
       try {
         // 데이터 가져오기
-        const comments = await pb.collection('comments').getList(1, 50, {
-          filter: `postId = "${postId}"`,
-          expand: 'userId',
-        });
-
-        setCommentList(comments.items);
 
         const userMap = {};
-        comments.items.forEach((item) => {
+        commentsList.forEach((item) => {
           if (item.expand?.userId) {
             userMap[item.userId] = item.expand.userId;
           }
@@ -50,7 +47,7 @@ function Comment({ postId, currentUser }) {
     const subscribeToComments = () => {
       pb.collection('comments').subscribe('*', (payload) => {
         if (payload.action === 'create' && payload.record.postId === postId) {
-          setCommentList((prev) => [...prev, payload.record]);
+          setCommentsList((prev) => [...prev, payload.record]);
         }
       });
     };
@@ -63,9 +60,21 @@ function Comment({ postId, currentUser }) {
     return () => {
       pb.collection('comments').unsubscribe(); // 컴포넌트 언마운트 시 구독 해제
     };
-  }, [postId]);
+  }, [commentsList, postId, setCommentsList]);
 
-  const noComment = useMemo(() => commentList.length < 1, [commentList]);
+  const handleDelete = async (commentId) => {
+    try {
+      await pb.collection('comments').delete(commentId);
+      setCommentsList((prev) =>
+        prev.filter((comment) => comment.id !== commentId)
+      );
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      setError('댓글을 삭제하는 중 오류가 발생했습니다.');
+    }
+  };
+
+  const noComment = useMemo(() => commentsList.length < 1, [commentsList]);
 
   const handleCommentChange = throttle((e) => {
     const value = e.target.value;
@@ -84,7 +93,7 @@ function Comment({ postId, currentUser }) {
 
     await pb.collection('comments').create(newCommentData);
 
-    setCommentList((prev) => [...prev, newCommentData]);
+    setCommentsList((prev) => [...prev, newCommentData]);
     setNewComment(''); // 입력 필드 초기화
     setIsDisabled(true); // 댓글 추가 후 버튼 비활성화
   };
@@ -92,12 +101,12 @@ function Comment({ postId, currentUser }) {
   return (
     <>
       <section className={S.commentContainer}>
-        <span>댓글 {commentList.length}</span>
+        <span>댓글 {commentsList.length}</span>
         {noComment ? (
           <p className={S.noComment}>첫 댓글을 남겨보세요.</p>
         ) : (
           <ul className={S.commentList}>
-            {commentList.map((item) => {
+            {commentsList.map((item) => {
               const user = commentUsers[item.userId];
 
               if (user) {
@@ -107,7 +116,14 @@ function Comment({ postId, currentUser }) {
                     <div role="group" className={S.comment}>
                       <div role="group" className={S.nickName}>
                         <p>{user.nickName}</p>
-                        {user.id === currentUser ? <MoreBtn small /> : ''}
+                        {user.id === currentUser ? (
+                          <MoreBtn
+                            small
+                            onClickDelete={() => handleDelete(item.id)}
+                          />
+                        ) : (
+                          ''
+                        )}
                       </div>
                       <p className="body3">{item.contents}</p>
                       <span className={S.commentDate}>
