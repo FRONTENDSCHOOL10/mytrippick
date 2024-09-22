@@ -183,6 +183,16 @@ function EditUserInfo() {
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
       <AppHelmet title={'회원 정보 수정'} />
       <ChangeUserProfilePic />
+      <AppInputWithValue
+        label={'이메일'}
+        labelHidden={false}
+        type={'email'}
+        name={'userEmail'}
+        value={editUserData.email}
+        isPencilOff={true}
+        style={{ color: '#6E6E6E' }}
+        readOnly
+      />
       <div>
         <AppInputWithValue
           label={'닉네임'}
@@ -213,17 +223,10 @@ function EditUserInfo() {
           {errorMessage.newCommentsMySelfMessage}
         </span>
       </div>
-      <AppInputWithValue
-        label={'이메일'}
-        labelHidden={false}
-        type={'email'}
-        name={'userEmail'}
-        value={editUserData.email}
-        isPencilOff={true}
-        style={{ color: '#6E6E6E' }}
-        readOnly
-      />
-      <LinkBtn link={'/mypage/edituserinfo/editpassword'}>
+      <LinkBtn
+        style={{ height: '44px' }}
+        link={'/mypage/edituserinfo/editpassword'}
+      >
         비밀번호 변경
       </LinkBtn>
       <div className={S.userOutBtnArea}>
