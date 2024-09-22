@@ -21,7 +21,7 @@ export const parseLatLng = (placeLatLong) => {
     return { lat: parsed.lat, lng: parsed.lng };
   } catch (error) {
     console.error('Error parsing placeLatLong:', error);
-    return { lat: null, lng: null };
+    return { lat: null, lng: null };  
   }
 };
 
@@ -32,6 +32,8 @@ export const getSortedPostIdsByDistance = (posts, searchLocation) => {
       const distance = calculateDistance(searchLocation, { lat, lng });
       return { id: post.id, distance };
     })
+    .filter((post) => post.distance <= 10)
     .sort((a, b) => a.distance - b.distance)
     .map((post) => post.id);
 };
+
