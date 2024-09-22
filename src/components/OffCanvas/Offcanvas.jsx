@@ -1,16 +1,19 @@
 import useGlobalStore from '@/stores/useGlobalStore';
 import Menu from '../Menu/Menu';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import S from './Offcanvas.module.css';
 
 const Offcanvas = () => {
   const isMenuOpen = useGlobalStore((state) => state.isMenuOpen);
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Escape' && isMenuOpen) {
-      useGlobalStore.setState({ isMenuOpen: false });
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        useGlobalStore.setState({ isMenuOpen: false });
+      }
+    },
+    [isMenuOpen]
+  );
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -22,7 +25,7 @@ const Offcanvas = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, handleKeyDown]);
 
   return (
     <div className={S.offcanvas}>

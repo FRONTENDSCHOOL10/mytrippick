@@ -6,8 +6,7 @@
 
   .inputWrapper {
     display: flex;
-    height: 44px;
-    padding: 10px var(--space-4, 16px);
+    padding: 0 var(--space-4, 16px);
     flex-flow: row;
     gap: var(--space-4);
     background-color: var(--gray-500);

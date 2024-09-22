@@ -38,6 +38,7 @@
 
     input {
       background-color: inherit;
+      border: 1px solid transparent;
     }
 
     button {
