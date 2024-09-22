@@ -137,21 +137,36 @@ function Register() {
 
   const handlePostUserData = (e) => {
     e.preventDefault();
-
+  
     const userData = {
       email: formDatas.email,
       password: formDatas.password,
       passwordConfirm: formDatas.checkPassword,
       nickName: formDatas.nickName,
     };
-    try {
-      CreateDatas('users', userData);
-      setIsRegisterd(true);
-    } catch (error) {
-      alert(`${error}과 같은 문제로 에러가 발생했습니다`);
-      setIsRegisterd(false);
-    }
+  
+    CreateDatas('users', userData)
+      .then((userRecord) => {
+        const userId = userRecord.id;
+  
+        const bookmarkData = {
+          userId: userId,
+          postId: []
+        };
+  
+        return CreateDatas('bookmarks', bookmarkData);
+      })
+      .then(() => {
+        setIsRegisterd(true); 
+      })
+      .catch((error) => {
+        console.error('에러 응답:', error);
+        alert(`${error.message}와 같은 문제로 에러가 발생했습니다`);
+        setIsRegisterd(false);
+      });
   };
+  
+  
 
   const handleClosedModal = () => {
     closeModal();
