@@ -19,12 +19,7 @@ function Curation() {
   const [list, setList] = useState();
   const [count, setCount] = useState(0);
 
-  // if (!loggedInUserId) {
-  //   console.error('로그인된 사용자의 정보를 가져오지 못했습니다.');
-  //   return null;
-  // }
-
-  const bookmarkData = useQuery({
+  useQuery({
     queryKey: ['bookmark', loggedInUserId],
     queryFn: () =>
       axios
@@ -35,8 +30,7 @@ function Curation() {
         })
         .then((res) => {
           const items = res.data.items || [];
-          // const extractedUserIds = items.map((item) => item.userId);
-          console.log('items?.[0]?.postId:', items);
+          // console.log('items?.[0]?.postId:', items);
 
           setBookmarkedPostIds(items?.[0]?.postId);
           // console.log("추출된 userIds:", extractedUserIds);
@@ -44,9 +38,9 @@ function Curation() {
         }),
   });
 
-  console.log(bookmarkData);
+  // console.log(bookmarkData);
 
-  const postData = useQuery({
+  useQuery({
     queryKey: ['postData', bookmarkedPostIds],
     queryFn: () =>
       axios
@@ -57,7 +51,7 @@ function Curation() {
         })
         .then((res) => {
           const items = res.data.items || [];
-          console.log(items, 'res.data.items');
+          // console.log(items, 'res.data.items');
           // bookmakredPostIds 배열과 일치하는 순서로 postData 정렬
           const sortedItems = bookmarkedPostIds.map(
             (id) =>
@@ -74,14 +68,14 @@ function Curation() {
         }),
   });
 
-  console.log(postData?.data, 'postData');
+  // console.log(postData?.data, 'postData');
 
   useEffect(() => {
-    console.log(list, 'list');
+    // console.log(list, 'list');
   }, [list]);
 
   useEffect(() => {
-    console.log(count, 'count');
+    // console.log(count, 'count');
   }, [count]);
 
   return (

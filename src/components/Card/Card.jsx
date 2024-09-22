@@ -11,7 +11,6 @@ import getPbImageURL from '@/api/getPbImageURL';
 
 function Card({
   type,
-  fullSize = false,
   photo,
   placePosition,
   placeName,
@@ -24,6 +23,7 @@ function Card({
   idx,
   isLiked,
   isBookmarked,
+  fullSize = false,
 }) {
   const likedPostIds = useGlobalStore((state) => state.likedPostIds);
   const setLikedPostIds = useGlobalStore((state) => state.setLikedPostIds);
@@ -71,13 +71,14 @@ function Card({
     setNum(likedNum);
   }, [likedNum]);
 
-  // 카드 스타일을 결정하는 로직
-  const rankStyled = type === 'rank' && fullSize ? S.rankCardFull : S.rankCard;
+  // postCard 스타일에 따라 클래스 다르게 적용
+  const postStyled =
+    type === 'post' ? (fullSize ? S.postFull : S.postHalf) : '';
 
   // 카드에 표시될 정보 (타입에 따라 다른 스타일 적용)
   const placeInfo =
     type === 'rank' ? (
-      <article className={`${S.rankCard} ${rankStyled}`}>
+      <article className={S.rankCard}>
         <div className={S.cardHeader}>
           <div className={S.userInfos}>
             <img
@@ -127,7 +128,7 @@ function Card({
         </div>
       </article>
     ) : (
-      <article className={S.listCard}>
+      <article className={`${S.postCard}`}>
         <div className={S.cardHeader}>
           <ToggleBtn
             bookmark
@@ -159,11 +160,7 @@ function Card({
       </article>
     );
 
-  return (
-    <div className={`${S.component} ${type === 'post' ? S.postComponent : ''}`}>
-      {placeInfo}
-    </div>
-  );
+  return <div className={`${S.component} ${postStyled}`}>{placeInfo}</div>;
 }
 
 Card.propTypes = {

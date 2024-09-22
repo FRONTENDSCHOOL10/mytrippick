@@ -210,7 +210,7 @@ function EditUserInfo() {
         비밀번호 변경
       </LinkBtn>
       <div className={S.userOutBtnArea}>
-        <LinkBtn link={'회원탈퇴페이지'} small={true}>
+        <LinkBtn link={'/mypage/deleteaccount'} small={true}>
           회원탈퇴
         </LinkBtn>
       </div>

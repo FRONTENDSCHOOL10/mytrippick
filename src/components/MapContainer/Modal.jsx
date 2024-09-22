@@ -4,6 +4,7 @@ import pb from '@/api/pb';
 import Card from '../Card/Card';
 import S from './Modal.module.css';
 import AppSpinner from '../AppSpinner/AppSpinner';
+import useGlobalStore from '@/stores/useGlobalStore';
 
 Modal.propTypes = {
   id: PropTypes.string.isRequired,
@@ -12,6 +13,7 @@ Modal.propTypes = {
 
 function Modal({ id, onClose }) {
   const [postData, setPostData] = useState(null);
+  const bookmarkedPostIds = useGlobalStore((state) => state.bookmarkedPostIds);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -51,7 +53,8 @@ function Modal({ id, onClose }) {
             placeName={postData.placeName}
             placePosition={postData.placePosition}
             userId={postData.userId}
-            className={S.postComponentInModal}
+            isBookmarked={bookmarkedPostIds.includes(postData.id)}
+            fullSize={true}
           />
         ) : (
           <AppSpinner />
