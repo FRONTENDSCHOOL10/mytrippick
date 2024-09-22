@@ -13,10 +13,9 @@
 .modalContent {
   background-color: black;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--rounded-lg, 20px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  max-width: 524px;
-  width: auto;
+  width: 240px;
   margin: 0 auto;
 }
 
