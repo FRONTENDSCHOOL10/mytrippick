@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect, useRef, useCallback } from 'react';
 import useGeolocation from '@/hooks/useGeolocation';
-import AppInput2 from '../AppInput/AppInput2';
+import PlaceSearch from '../AppInput/PlaceSearch';
 import S from './MapContainer.module.css';
 import ToggleList from '@/assets/svg/toggle-list.svg?react';
 import ToggleMap from '@/assets/svg/toggle-map.svg?react';
@@ -123,7 +123,7 @@ const MapContainer = () => {
       {showMap ? (
         <>
           <div className={S.searchBox}>
-            <AppInput2 onSearch={handleSearch} />
+            <PlaceSearch onSearch={handleSearch} />
           </div>
           <div className={S.toggleBox} onClick={toggleView}>
             <div className={S.circleBox}>
