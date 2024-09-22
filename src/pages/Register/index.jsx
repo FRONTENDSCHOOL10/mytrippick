@@ -156,6 +156,15 @@ function Register() {
   
         return CreateDatas('bookmarks', bookmarkData);
       })
+      .then((bookmarkRecord) => {
+        const userId = bookmarkRecord.userId;
+  
+        const likeData = {
+          userId: userId,
+          postId: []
+        };
+        return CreateDatas('likes', likeData);
+      })
       .then(() => {
         setIsRegisterd(true); 
       })
@@ -165,6 +174,7 @@ function Register() {
         setIsRegisterd(false);
       });
   };
+  
   
   
 
