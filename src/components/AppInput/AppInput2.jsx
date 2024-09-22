@@ -31,6 +31,7 @@ function AppInput2({ onSearch }) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          className={S.Searchinput}
         />
         {inputValue && (
           <button onClick={deleteContent} className={S.clearButton}>

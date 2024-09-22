@@ -14,15 +14,6 @@
     background-color: var(--gray-500);
     border-radius: var(--rounded-md);
 
-    input {
-      margin: 0;
-      border: none;
-      border-radius: var(--rounded-md);
-      width: 100%;
-      background-color: var(--gray-500);
-      color: var(--white);
-    }
-
     input::placeholder {
       color: var(--text-200, #888);
     }
@@ -36,7 +27,7 @@
       display: flex;
       border: none;
       border-radius: var(--rounded-md);
-      background-color: var(--gray-500);
+      border: 1px solid transparent;
     }
 
     button:focus {
@@ -51,4 +42,15 @@
   .inputWrapper:focus-within {
     border: 1px solid var(--line-200);
   }
+}
+
+input {
+  margin: 0;
+  border: none;
+  border-radius: var(--rounded-md);
+  width: 100%;
+  height: 44px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: var(--white);
 }

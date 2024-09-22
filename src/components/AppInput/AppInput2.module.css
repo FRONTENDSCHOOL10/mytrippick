@@ -17,14 +17,13 @@
   backdrop-filter: blur(10px);
 }
 
-input {
+.Searchinput {
   width: 100%;
   border: none;
   border-radius: 12px;
   background: #1e1e1b;
   backdrop-filter: blur(10px);
   color: var(--white);
-  font-family: 'Pretendard Variable';
   font-size: 17px;
   font-weight: 500;
   letter-spacing: -0.34px;

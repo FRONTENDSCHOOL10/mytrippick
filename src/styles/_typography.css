@@ -117,3 +117,8 @@
   font-weight: 500;
   line-height: 1.4;
 }
+
+.inputCaption {
+  display: block;
+  margin-block-start: var(--space-1-half, 6px);
+}
