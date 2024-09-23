@@ -119,9 +119,9 @@ const MapContainer = () => {
   }, []);
 
   return (
-    <div className={S.container}>
+    <>
       {showMap ? (
-        <>
+        <div className={S.mapContainer}>
           <div className={S.searchBox}>
             <PlaceSearch onSearch={handleSearch} />
           </div>
@@ -134,9 +134,9 @@ const MapContainer = () => {
           {isModalOpen && selectedPostId && (
             <Modal id={selectedPostId} onClose={closeModal} />
           )}
-        </>
+        </div>
       ) : (
-        <>
+        <div className={S.listContainer}>
           <div className={S.toggleBox} onClick={toggleView}>
             <div className={S.circleBox}>
               <ToggleMap />
@@ -169,9 +169,9 @@ const MapContainer = () => {
               </div>
             </section>
           )}
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
