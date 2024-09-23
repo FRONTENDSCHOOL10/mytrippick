@@ -1,5 +1,4 @@
 import { useId } from 'react';
-import DefaultUserIcon from '@/assets/svg/default-user.svg?react';
 import CameraIcon from '@/assets/svg/camera.svg?react';
 import usePostPhotoFileStore from '@/stores/usePostPhotoFileStore';
 import S from './ChangeUserProfilePic.module.css';
@@ -53,7 +52,7 @@ function ChangeUserProfilePic() {
           ) : (
             <>
               <span className={S.userProfile}>
-                <DefaultUserIcon aria-label="기본 시용자 사진 아이콘" />
+                <img src="/default_user.webp" alt="기본 유저 사진" />
               </span>
               <span className={S.cameraIcons}>
                 <CameraIcon aria-label="카메라 아이콘" />

@@ -23,7 +23,6 @@ function EditUserInfo() {
   const [editUserData, setEditUserData] = useState({
     newNickName: '',
     newCommentsMySelf: '',
-    email: '',
   });
 
   const [errorMessage, setErrorMessage] = useState({
@@ -53,7 +52,6 @@ function EditUserInfo() {
         setEditUserData({
           newNickName: response.data.nickName,
           newCommentsMySelf: response.data.bio,
-          email: response.data.email,
         });
 
         if (response.data.userProfile !== '') {
@@ -183,16 +181,6 @@ function EditUserInfo() {
       <h1 className="sr-only">회원 정보 수정 페이지</h1>
       <AppHelmet title={'마이트립픽 | 회원 정보 수정'} />
       <ChangeUserProfilePic />
-      <AppInputWithValue
-        label={'이메일'}
-        labelHidden={false}
-        type={'email'}
-        name={'userEmail'}
-        value={editUserData.email}
-        isPencilOff={true}
-        style={{ color: '#6E6E6E' }}
-        readOnly
-      />
       <div>
         <AppInputWithValue
           label={'닉네임'}
