@@ -30,7 +30,7 @@ export default function LikesHandler() {
 
   useEffect(() => {
     if (!likesPbId || likedPostIds?.length < 0) return;
-    console.log('Updating likes:', likedPostIds);
+    // console.log('Updating likes:', likedPostIds);
 
     const updateLikes = async () => {
       try {
@@ -40,7 +40,7 @@ export default function LikesHandler() {
             postId: likedPostIds,
           }
         );
-        console.log('Likes updated successfully');
+        // console.log('Likes updated successfully');
       } catch (error) {
         console.error('Error updating likes:', error);
       }

@@ -21,7 +21,7 @@ function ToggleBtn({ bookmark = false, isToggle = false, onClick }) {
       openModal(); // 로그인되어 있지 않으면 모달 열기
     } else {
       onClick && onClick(); // 좋아요 상태 변경
-      console.log('좋아요 상태 변경');
+      // console.log('좋아요 상태 변경');
     }
   };
 

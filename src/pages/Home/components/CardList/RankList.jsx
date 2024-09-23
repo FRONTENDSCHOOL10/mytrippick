@@ -24,7 +24,7 @@ export default function RankList() {
           params: { page: 1, perPage: 3, sort: '-likedNum' },
         })
         .then((res) => {
-          console.log('rankData:', res);
+          // console.log('rankData:', res);
 
           const items = res.data.items || [];
           const extractedUserIds = items.map((item) => item.userId);
