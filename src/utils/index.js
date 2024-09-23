@@ -5,3 +5,4 @@ export * from './throttle.js';
 export * from './testRegExp.js';
 export * from './formatTextWithBreaks.js';
 export * from './getLocalStorage.js';
+export * from './fetchUserDefaultImg.js';

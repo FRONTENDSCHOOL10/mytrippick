@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useModalStore from '@/stores/useModalStore';
+import pb from '@/api/pb';
+import getPbImageURL from '@/api/getPbImageURL';
 import AppInput from '@/components/AppInput/AppInput';
 import CommonBtn from '@/components/CommonBtn/CommonBtn';
 import AppHelmet from '@/components/AppHelmet/AppHelmet';
 import {
+  fetchUserDefaultImg,
   testEmailRegExp,
   testNickNameRegExp,
   testPasswordExp,
   throttle,
 } from '@/utils';
 import { CreateDatas } from '@/api/CreateDatas';
-import S from './Register.module.css';
-import useModalStore from '@/stores/useModalStore';
 import BasicTextModal from '@/components/BasicTextModal/BasicTextModal';
+import S from './Register.module.css';
 
 function Register() {
   const [formDatas, setFormDatas] = useState({
@@ -135,17 +138,21 @@ function Register() {
 
   const navigation = useNavigate();
 
-  const handlePostUserData = (e) => {
+  const handlePostUserData = async (e) => {
     e.preventDefault();
 
-    const userData = {
-      email: formDatas.email,
-      password: formDatas.password,
-      passwordConfirm: formDatas.checkPassword,
-      nickName: formDatas.nickName,
-    };
+    const userFormData = new FormData();
+    userFormData.append('email', formDatas.email);
+    userFormData.append('password', formDatas.password);
+    userFormData.append('passwordConfirm', formDatas.checkPassword);
+    userFormData.append('nickName', formDatas.nickName);
 
-    CreateDatas('users', userData)
+    const image = await pb.collection('avatars').getOne('4xm8c9fgsjzva6t');
+    const defaultImageURL = getPbImageURL(image, 'defaultImage');
+    const defaultImage = await fetchUserDefaultImg(defaultImageURL);
+    userFormData.append('userProfile', defaultImage);
+
+    CreateDatas('users', userFormData)
       .then((userRecord) => {
         const userId = userRecord.id;
 
