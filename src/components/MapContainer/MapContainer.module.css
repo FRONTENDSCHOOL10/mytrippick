@@ -2,7 +2,6 @@
   position: relative;
   width: 100%;
   height: calc(100vh - var(--footer-height));
-  margin-bottom: var(--space-6);
 }
 
 .searchBox {
@@ -31,17 +30,23 @@
 }
 
 .circleBox {
-  background-color: gray;
+  background: rgba(59, 59, 59, 0.8);
+  backdrop-filter: blur(5px);
   width: 56px;
   height: 56px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(36, 36, 36, 0.8);
+  }
 }
 
 .circleBox:hover svg path {
-  stroke: yellow;
+  stroke: var(--brand);
 }
 
 /* 리스트 뷰 관련 스타일 */
