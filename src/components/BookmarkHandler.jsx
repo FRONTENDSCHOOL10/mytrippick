@@ -39,7 +39,7 @@ export default function BookmarkHandler() {
             postId: bookmarkedPostIds,
           }
         );
-        console.log('Bookmarks updated successfully');
+        // console.log('Bookmarks updated successfully');
       } catch (error) {
         console.error('Error updating bookmarks:', error);
       }
