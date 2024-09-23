@@ -52,7 +52,9 @@ function ConfirmPassword() {
     navigate('/mypage');
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+
     try {
       // PocketBase의 authWithPassword 메서드를 사용하여 인증 시도
       await pb.collection('users').authWithPassword(userEmail, passwordInput);
@@ -70,7 +72,7 @@ function ConfirmPassword() {
       <AppHelmet title="마이트립픽 | 비밀번호 확인" />
       <h1 className="a11yHidden">비밀번호 확인 페이지</h1>
       <h2 className={`headline2 ${S.heading}`}>비밀번호 확인</h2>
-      <div role="group" className={S.flexContainer}>
+      <form className={S.formContainer}>
         <section className={S.inputContainer}>
           <AppInputWithValue
             type="text"
@@ -94,11 +96,11 @@ function ConfirmPassword() {
         </section>
         <section className={S.btnContainer}>
           <CommonBtn onClick={handleCancel}>취소</CommonBtn>
-          <CommonBtn fill onClick={handleConfirm} disabled={isDisabled}>
+          <CommonBtn submit fill onClick={handleConfirm} disabled={isDisabled}>
             확인
           </CommonBtn>
         </section>
-      </div>
+      </form>
       {/* 모달 렌더링 */}
       {showModal && (
         <BasicTextModal
