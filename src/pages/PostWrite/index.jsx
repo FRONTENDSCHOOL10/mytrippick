@@ -112,7 +112,7 @@ function PostWrite() {
   return (
     <section className={S.component}>
       <h2 className="sr-only">게시물 등록 페이지</h2>
-      <AppHelmet title={'게시글 등록'} />
+      <AppHelmet title={'마이트립픽 | 게시글 등록'} />
       <UploadImage />
       <article className={S.searchPlaceBtnWrapper}>
         <h3 className="label">여행지명</h3>

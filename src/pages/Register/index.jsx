@@ -137,36 +137,36 @@ function Register() {
 
   const handlePostUserData = (e) => {
     e.preventDefault();
-  
+
     const userData = {
       email: formDatas.email,
       password: formDatas.password,
       passwordConfirm: formDatas.checkPassword,
       nickName: formDatas.nickName,
     };
-  
+
     CreateDatas('users', userData)
       .then((userRecord) => {
         const userId = userRecord.id;
-  
+
         const bookmarkData = {
           userId: userId,
-          postId: []
+          postId: [],
         };
-  
+
         return CreateDatas('bookmarks', bookmarkData);
       })
       .then((bookmarkRecord) => {
         const userId = bookmarkRecord.userId;
-  
+
         const likeData = {
           userId: userId,
-          postId: []
+          postId: [],
         };
         return CreateDatas('likes', likeData);
       })
       .then(() => {
-        setIsRegisterd(true); 
+        setIsRegisterd(true);
       })
       .catch((error) => {
         console.error('에러 응답:', error);
@@ -174,9 +174,6 @@ function Register() {
         setIsRegisterd(false);
       });
   };
-  
-  
-  
 
   const handleClosedModal = () => {
     closeModal();
@@ -191,7 +188,7 @@ function Register() {
 
   return (
     <section className={S.component}>
-      <AppHelmet title={'회원가입'} />
+      <AppHelmet title={'마이트립픽 | 회원가입'} />
       <h1 className="headline1">회원가입</h1>
       <form>
         <article className="inputContainer">

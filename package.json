@@ -1,7 +1,7 @@
 {
   "type": "module",
   "private": true,
-  "name": "my-vite-custom-template-react",
+  "name": "mytrippick",
   "version": "0.0.1",
   "description": "나만의 인생 여행지를 올려 다른 사람들과 공유하고 가장 높은 순위를 가진 여행지 선정하는 앱",
   "scripts": {
