@@ -132,7 +132,7 @@ function EditPassword() {
 
   return (
     <section className={S.component}>
-      <AppHelmet title={'비밀번호 변경'} />
+      <AppHelmet title={'마이트립픽 | 비밀번호 변경'} />
       <h2 className="headline2">비밀번호 변경</h2>
       <div>
         <AppInputWithValue

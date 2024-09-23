@@ -106,7 +106,7 @@ function PostEdit() {
 
   return (
     <section className={S.component}>
-      <AppHelmet title="게시글 수정" />
+      <AppHelmet title="마이트립픽 | 게시글 수정" />
       <h2 className="headline2">게시글 수정</h2>
       <UploadImage />
       <DateInput label={'방문한 날짜 수정'} />

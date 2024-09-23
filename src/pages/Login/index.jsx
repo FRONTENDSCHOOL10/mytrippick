@@ -111,7 +111,7 @@ function Login() {
 
   return (
     <section className={S.component}>
-      <AppHelmet title={'로그인'} />
+      <AppHelmet title={'마이트립픽 | 로그인'} />
       <h1 className="headline1">로그인</h1>
       <form onSubmit={handleSubmit}>
         <article className="inputContainer">

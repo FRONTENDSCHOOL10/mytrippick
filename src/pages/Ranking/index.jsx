@@ -96,7 +96,7 @@ export function Component() {
 
   return (
     <>
-      <AppHelmet title={'인기 여행지 랭킹'} />
+      <AppHelmet title={'마이트립픽 | 인기 여행지 랭킹'} />
       <h1 className={`headline2 ${S.sectionTitle}`}>인기 여행지 랭킹</h1>
       <section className={S.container}>
         <div className={S.rankCardList}>

@@ -66,8 +66,8 @@ function Curation() {
     <>
       <h1 className={`headline2 ${S.sectionTitle}`}>나만의 큐레이션</h1>
       <section className={S.curation}>
-        <AppHelmet title={'나만의 큐레이션'} />
-  
+        <AppHelmet title={'마이트립픽 | 나만의 큐레이션'} />
+
         <div className={list?.length > 0 ? S.curationCardList : S.noPost}>
           {list?.length > 0 ? (
             list.map((item, idx) => (
@@ -88,13 +88,14 @@ function Curation() {
             ))
           ) : (
             <p className={S.emptyMessage}>
-              아직 북마크한 여행지가 없어요.<br /> 마음에 드는 여행지를 북마크해 보세요!
+              아직 북마크한 여행지가 없어요.
+              <br /> 마음에 드는 여행지를 북마크해 보세요!
             </p>
           )}
         </div>
       </section>
     </>
-  );  
+  );
 }
 
 export default Curation;
