@@ -23,6 +23,16 @@ MyTripPick<br/>
 <hr />
 <br />
 
+<h3>🗺 프로젝트 User Flow 🗺</h3>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1287997118950281227/image.png?ex=66f3944a&is=66f242ca&hm=b844e51e66c150a6f083ea906e1c5cfe11fe31d34b2b5af89a9732b0b20ceba5&=&format=webp&quality=lossless&width=1422&height=578' alt='프로젝트 Flow Chart 사진'>
+<hr/>
+<br/>
+
+<h3>🎨 프로젝트 디자인 🎨</h3>
+<img src='' alt='프로젝트 Flow Chart 사진'>
+<hr/>
+<br/>
+
 <h3>🎥 프로젝트 기능 소개 🎥</h3>
 
 <table>
@@ -133,14 +143,14 @@ MyTripPick<br/>
 <table>
 <tr>
 <td align="center">
-<img src='' alt=''/>
+<img src='https://avatars.githubusercontent.com/u/130888050?v=4' alt='정혜수 프로필 사진'/>
 </td>
-<td align="center"><img src='' alt=''/>
+<td align="center"><img src='https://media.discordapp.net/attachments/1276470458463686760/1287994777215827988/2024-06-25_20_53_57.png?ex=66f3921c&is=66f2409c&hm=cda29f22073f320875d53c18c221051046cc7d953d7c549027bec854e3209dc5&=&format=webp&quality=lossless&width=500&height=500' alt='김가현 프로필 사진'/>
 </td>
 <td align="center">
-<img src='' alt=''/>
+<img src='https://avatars.githubusercontent.com/u/80378694?v=4' alt='손승우 프로필 사진'/>
 </td>
-<td align="center"><img src='' alt=''/></td>
+<td align="center"><img src='https://media.discordapp.net/attachments/1276470458463686760/1287994192445964388/image_2.png?ex=66f39191&is=66f24011&hm=651087106984b21df5bac84bb97df9d24bd59c7ca4b72332669cc12155d0ddec&=&format=webp&quality=lossless&width=275&height=278' alt='오성훈 프로필 사진'/></td>
 </tr>
 <tr>
 <td align="center" width="25%">
@@ -186,7 +196,13 @@ MyTripPick<br/>
 (승우님 담당)
 </td>
 <td align="center">
-(성훈님 담당)
+  <ul>
+    <li>회원가입 페이지</li>
+    <li>게시글 등록 페이지</li>
+    <li>게시글 수정 페이지</li>
+    <li>회원정보 수정 페이지</li>
+    <li>비밀번호 변경 페이지</li>
+  </ul>
 </td>
 </tr>
 </table>
