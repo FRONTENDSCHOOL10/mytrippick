@@ -24,12 +24,40 @@ MyTripPick<br/>
 <br />
 
 <h3>🗺 프로젝트 User Flow 🗺</h3>
-<img src='https://media.discordapp.net/attachments/1276470850177990716/1287997118950281227/image.png?ex=66f3944a&is=66f242ca&hm=b844e51e66c150a6f083ea906e1c5cfe11fe31d34b2b5af89a9732b0b20ceba5&=&format=webp&quality=lossless&width=1422&height=578' alt='프로젝트 Flow Chart 사진'>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1287997118950281227/image.png?ex=66f3944a&is=66f242ca&hm=b844e51e66c150a6f083ea906e1c5cfe11fe31d34b2b5af89a9732b0b20ceba5&=&format=webp&quality=lossless&width=1422&height=578' alt='홈 & 메뉴 사진'>
 <hr/>
 <br/>
 
 <h3>🎨 프로젝트 디자인 🎨</h3>
-<img src='' alt='프로젝트 Flow Chart 사진'>
+<h4><홈 & 메뉴 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288007732032700459/-.png?ex=66f39e2d&is=66f24cad&hm=4b1bbf81f5a299008857538db3d9a2ac245b9883e8d7426bad1a9334bd7da7b3&=&format=webp&quality=lossless&width=888&height=600' alt='홈 & 메뉴 디자인 사진'>
+
+<h4><회원가입 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288007770032832522/901c9abd7e52ec11.png?ex=66f39e36&is=66f24cb6&hm=a516181da317f8f41703caea9c50ef82abb2a05dd21d665e60368ed0676038b1&=&format=webp&quality=lossless&width=1161&height=600' alt='회원가입 디자인 사진'>
+
+<h4><로그인 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288007805344677949/71e2ef21c98981fd.png?ex=66f39e3e&is=66f24cbe&hm=6732411acc7af0d221f9ed572590ca09203a43bee10b17d97e7fa51b9d66425f&=&format=webp&quality=lossless&width=1193&height=600' alt='로그인 디자인 사진'>
+
+<h4><마이페이지 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288007843202727956/d00c05054e6b6c2d.png?ex=66f39e47&is=66f24cc7&hm=99d356e52e547b224e841555aaab1066397d372e60c1b9f390d4a46c4c42d362&=&format=webp&quality=lossless&width=466&height=600' alt='마이페이지 디자인 사진'>
+
+<h4><인기 여행지 보기 & 나만의 큐레이션 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288007901293576323/-.png?ex=66f39e55&is=66f24cd5&hm=22154213b1f0b1a714616c98b4d2e8d33ac28cbb714ece0f766625b29deb2633&=&format=webp&quality=lossless&width=888&height=600' alt='인기 여행지 보기 & 나만의 큐레이션 디자인 사진'>
+
+<h4><내 주변 여행지 찾기 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288007937725562890/576822c7bdcb442d.png?ex=66f39e5e&is=66f24cde&hm=a4485f22a06edba4b8808ef06d27b6a50c76c04890e08744017568f1ca47eb14&=&format=webp&quality=lossless&width=888&height=600' alt='내 주변 여행지 찾기 디자인 사진'>
+
+<h4><게시물 작성 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288007978603253770/c404e1e2f65d4003.png?ex=66f39e68&is=66f24ce8&hm=e440833108037d9cf0fb463d9f506bdd064feddf75d223c8fc6a4e9d885d1f7b&=&format=webp&quality=lossless&width=801&height=600' alt='게시물 작성 디자인 사진'>
+
+<h4><게시물 상세 페이지 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288008008802242560/8b23eff7a623224f.png?ex=66f39e6f&is=66f24cef&hm=4bae2be8a093e8a56675d24917d7050fa1ea848e773f4800244bf59f9a90947a&=&format=webp&quality=lossless&width=493&height=600' alt='게시물 상세 페이지 디자인 사진'>
+
+<h4><비밀번호 변경 페이지 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288008048341942322/ed146e0953f8cd19.png?ex=66f39e78&is=66f24cf8&hm=9e8c8f0c6da00d2bada50bf3d8c056f776d5706e727eb25f24b65a556139ead9&=&format=webp&quality=lossless&width=881&height=600' alt='비밀번호 변경 페이지 디자인 사진'>
+
+<h4><회원정보 수정 & 회원 탈퇴 디자인></h4>
+<img src='https://media.discordapp.net/attachments/1276470850177990716/1288008081870946335/-.png?ex=66f39e80&is=66f24d00&hm=0a165ad78b94ad3b20164744e54c9000abc57b365fd704ca8da0bd9e2b27b44d&=&format=webp&quality=lossless&width=861&height=600' alt='회원정보 수정 & 회원 탈퇴 디자인 사진'>
 <hr/>
 <br/>
 
